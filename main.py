@@ -17,9 +17,9 @@ class Imports(object):
         """
         Loading the actual data
         """
-        self.load_courses(f"{courses}")
-        self.load_rooms(f"{rooms}")
-        self.load_students(f"{students}")
+        self.load_courses(f"data/{courses}")
+        self.load_rooms(f"data/{rooms}")
+        self.load_students(f"data/{students}")
     
 
     def load_courses(self, filename):
@@ -29,7 +29,7 @@ class Imports(object):
                 line = f.readline()
                 line = line.strip()
                 line = line.split(",")
-                self.Courses[f"{line[0]}"] = Course(line[0], line[1], line[2], line[3], line[4], line[5], line[6])
+                self.Courses[f"{line[0]}"] = course.Course(line[0], line[1], line[2], line[3], line[4], line[5], line[6])
     
     def load_rooms(self, filename):
         with open(filename) as f:
@@ -38,7 +38,7 @@ class Imports(object):
                 line = f.readline()
                 line = line.strip()
                 line = line.split(",")
-                self.Rooms[f"{line[0]}"] = Room(line[0], line[1])
+                self.Rooms[f"{line[0]}"] =room.Room(line[0], line[1])
 
     def load_students(self, filename):
         with open(filename) as f:
@@ -47,7 +47,7 @@ class Imports(object):
                 line = f.readline()
                 line = line.strip()
                 line = line.split(",")
-                self.Students[f"{line[2]}"] = Student(line[2], f"{line[0]}"+f"{line[1]}")
+                self.Students[f"{line[2]}"] = student.Student(line[2], f"{line[0]}"+f"{line[1]}")
                 for i in range(1,4):
                     if line[i]!="":
                         self.Courses[line[i]].register(line[2])
