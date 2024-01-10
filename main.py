@@ -1,12 +1,11 @@
-from code.classes.room import Room
-from code.classes.course import Course
-from code.classes.student import Student
+from code.classes import room, course, student
+
 
 
 
 class Imports(object):
 
-    def __init__(self, courses, rooms, students):
+    def __init__(self, courses: str, rooms: str, students: str):
         """
         Dictionaries to load in data objects
         """
