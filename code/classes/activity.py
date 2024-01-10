@@ -32,6 +32,12 @@ class Activity:
         """
         return self.timeslot
     
+    def __repr__(self) -> str:
+        """
+        Returns the course name with activity id
+        """
+        return self.course + self.id
+    
     def set_timeslot(self, new_timeslot: str) -> None:
         """
         Sets class timeslot to the given timeslot
@@ -51,4 +57,3 @@ class Activity:
         """
         self.room = new_room
         pass
-    
