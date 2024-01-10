@@ -56,13 +56,16 @@ class Imports(object):
                 if line[0] == "":
                     break
                 self.Students[f"{line[2]}"] = student.Student(line[2], f"{line[0]}"+f"{line[1]}")
-                for i in range(1,4):
+                for i in range(3,8):
                     if line[i]!="":
                         self.Courses[line[i]].register(line[2])
+                    else:
+                        break
 
 
 
 if __name__ == "__main__":
 
     imports = Imports("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
+
     
