@@ -11,8 +11,8 @@ class Course(object):
         self.students = []
         self.activities = []
     
-    def register(self, student):
-        self.students.append(student)
+    def register(self, studentnumber):
+        self.students.append(studentnumber)
     
     def activity(self, activiteit):
         self.activities.append(activiteit)
