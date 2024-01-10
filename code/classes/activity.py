@@ -51,7 +51,4 @@ class Activity:
         """
         self.room = new_room
         pass
-
-
-
-
+    
