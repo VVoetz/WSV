@@ -67,5 +67,4 @@ class Imports(object):
 if __name__ == "__main__":
 
     imports = Imports("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
-
     
