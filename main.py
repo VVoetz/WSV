@@ -1,4 +1,5 @@
-from code.classes import room, course, student
+from code.classes import room, course, student, activity
+from testalgo import Testalgo
 
 
 
@@ -67,4 +68,6 @@ class Imports(object):
 if __name__ == "__main__":
 
     imports = Imports("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
+    test = Testalgo(imports)
+    test.run()
     
