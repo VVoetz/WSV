@@ -1,10 +1,10 @@
 class Student():
 
-    def __init__(self, studentnumber: str, name: str, courses: list[str]) -> None:
+    def __init__(self, studentnumber: str, name: str) -> None:
         """
         Constructor of class
         """
-        self.courses = [courses]
+        self.courses = []
         self.studentnumber = studentnumber
         self.name = name
 

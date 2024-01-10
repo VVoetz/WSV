@@ -1,5 +1,5 @@
 class Room():
-    def __init__(self, name: str, capacity: int) -> None:
+    def __init__(self, name: str, capacity: str) -> None:
         """
         constructs Room class
         """
@@ -31,9 +31,9 @@ class Room():
         if self.check_empty(slot) == True:
             self.activity_dict[slot] = activity
         else:
-            return False
+            raise ValueError("Slot is already occupied, check first with check_empty(slot)")
     
-    def check_empty(self, slot: str):
+    def check_empty(self, slot: str) -> bool:
         """
         checks if timeslot is empty. returns True if empty and False if not
         """
@@ -51,7 +51,7 @@ class Room():
                 if self.activity_dict[day + str(timeslot)] == activity:
                     self.activity_dict[day + str(timeslot)] = None
                     return
-        return False
+        raise ValueError("Activity not in dictionary")
 
     def return_availability(self) -> list():
         """
