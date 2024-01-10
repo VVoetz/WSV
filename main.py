@@ -24,29 +24,37 @@ class Imports(object):
 
     def load_courses(self, filename):
         with open(filename) as f:
-            while True:
-                #next(f) skips header?
+            next(f) 
+            while True: 
                 line = f.readline()
                 line = line.strip()
                 line = line.split(",")
+                if line[0] == "":
+                    break
                 self.Courses[f"{line[0]}"] = course.Course(line[0], line[1], line[2], line[3], line[4], line[5], line[6])
     
     def load_rooms(self, filename):
         with open(filename) as f:
+            next(f) 
             while True:
                 #next(f) skips header
                 line = f.readline()
                 line = line.strip()
                 line = line.split(",")
+                if line[0] == "":
+                    break
                 self.Rooms[f"{line[0]}"] =room.Room(line[0], line[1])
 
     def load_students(self, filename):
         with open(filename) as f:
+            next(f)
             while True:
                 #next(f) skips header
                 line = f.readline()
                 line = line.strip()
                 line = line.split(",")
+                if line[0] == "":
+                    break
                 self.Students[f"{line[2]}"] = student.Student(line[2], f"{line[0]}"+f"{line[1]}")
                 for i in range(1,4):
                     if line[i]!="":
