@@ -1,5 +1,5 @@
 class Room():
-    def __init__(self, name: str, capacity: int) -> None:
+    def __init__(self, name: str, capacity: str) -> None:
         """
         constructs Room class
         """
