@@ -1,19 +1,23 @@
 from code.classes.room import Room
 from code.classes.course import Course
 from code.classes.student import Student
-from code.classes.activity import Activity
 
 
 
 class Imports(object):
 
     def __init__(self, courses, rooms, students):
-
+        """
+        Dictionaries to load in data objects
+        """
         self.Courses = {}
         self.Rooms = {}
         self.Students = {}
         self.Activities = {}
 
+        """
+        Loading the actual data
+        """
         self.load_courses(f"{courses}")
         self.load_rooms(f"{rooms}")
         self.load_students(f"{students}")
