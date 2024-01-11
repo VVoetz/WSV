@@ -58,7 +58,7 @@ class Data_loader(object):
                 self.Students[f"{line[2]}"] = student.Student(line[2], f"{line[0]}"+f"{line[1]}")
                 for i in range(3,8):
                     if line[i]!="":
-                        self.Courses[line[i]].register(line[2])
+                        self.Courses[line[i]].register(self.Students[f"{line[2]}"])
                     else:
                         break
 
@@ -69,8 +69,10 @@ if __name__ == "__main__":
     data = Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
     test = testalgo.Testalgo(data)
     test.run()
-    print(data.Activities)
     for room in test.rooms:
-        visualisation.visualize_room_schedule(test.rooms[room])
-    
+        visualisation.visualize_room_schedule(test.rooms[room])    
+
+        
+    #for item in test.students:
+    #    print(f"{item}: {test.students[item].activities}")    
     make_google_calendar.make_google_calendar_csv(data)

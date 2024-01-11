@@ -7,6 +7,7 @@ class Student():
         self.courses = []
         self.studentnumber = studentnumber
         self.name = name
+        self.activities = list()
 
     def get_name(self) -> str:
         """
@@ -19,3 +20,15 @@ class Student():
         Returns student number of this student as a string
         """
         return self.studentnumber
+
+    def add_activity(self, activity) -> None:
+        """
+        Adds activity to list of activities 
+        """
+        self.activities.append(activity)
+    
+    def show_activities(self):
+        """
+        Returns list of activities
+        """
+        return self.activities
