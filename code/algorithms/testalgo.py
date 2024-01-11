@@ -21,6 +21,7 @@ class Testalgo():
                 id = "h" + str(i + 1)
                 test_act = activity.Activity(course, id)
                 total_activities.append(test_act)
+                self.courses[course].activity(test_act)
             
             seminars = self.courses[course].num_wc
             if self.courses[course].max_wc != "":
@@ -32,6 +33,7 @@ class Testalgo():
                 id = "w" + str(j + 1)
                 test_act = activity.Activity(course, id)
                 total_activities.append(test_act)
+                self.courses[course].activity(test_act)
 
             practica = self.courses[course].num_pr
             if self.courses[course].max_pr != "":
@@ -43,9 +45,10 @@ class Testalgo():
                 id = "p" + str(k + 1)
                 test_act = activity.Activity(course, id)
                 total_activities.append(test_act)
+                self.courses[course].activity(test_act)
         
         assign_all(total_activities, self.rooms)
-            
+
 def assign_all(activities, rooms) -> None:
     for activity in activities:
         fill_first_room(rooms, activity)
