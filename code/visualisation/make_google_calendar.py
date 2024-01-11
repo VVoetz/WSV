@@ -15,7 +15,7 @@ def make_google_calendar_csv(data) -> None:
     end_times: list[str] = []
     descriptions: list[str] = []
 
-    for room in data.rooms.values():
+    for room in data.Rooms.values():
         for timeslot, activity in room.activity_dict.items():
 
             # split day from time
