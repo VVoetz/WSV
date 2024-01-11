@@ -45,12 +45,16 @@ class Schedule_algo2(object):
                 max = int(self.courses[course].max_pr)
                 test = math.ceil(int(self.courses[course].expected) / max)
                 practica = int(practica) * int(test)
+                for k in range(int(practica)):
+                    id = "p" + str(k + 1)
+                    test_act = activity.Activity(course, id)
+                    total_activities.append(test_act)
+            else:
+                expected = int(self.courses[course].expected)
+                id = "p" + str(1) 
+                test_act = activity.Activity(course, id, expected)
+                total_activities.append(test_act)    
             
-            for k in range(int(practica)):
-                id = "p" + str(k + 1)
-                test_act = activity.Activity(course, id)
-                total_activities.append(test_act)
-        
         assign_all(total_activities, self.rooms)
 
 

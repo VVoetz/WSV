@@ -1,6 +1,6 @@
 from code.classes import room, course, student
 from code.classes import activity
-import math
+import math, random
 
 class Testalgo():
     def __init__(self, data) -> None:
@@ -50,8 +50,8 @@ class Testalgo():
         assign_all(total_activities, self.rooms)
 
 def assign_all(activities, rooms) -> None:
-    for activity in activities:
-        fill_first_room(rooms, activity)
+    for activity in random.shuffle(activities.keys()):
+        fill_first_room(rooms, activities[activity])
 
 def fill_first_room(rooms, activity) -> None:
     for room in rooms:
