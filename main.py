@@ -1,6 +1,6 @@
-from code.classes import room, course, student, activity
+from code.classes import room, course, student
 from testalgo import Testalgo
-
+from code.visualisation import visualisation
 
 
 
@@ -70,4 +70,5 @@ if __name__ == "__main__":
     imports = Imports("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
     test = Testalgo(imports)
     test.run()
-    
+    for room in test.rooms:
+        visualisation.visualize_room_schedule(test.rooms[room])

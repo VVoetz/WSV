@@ -21,7 +21,7 @@ def visualize_room_schedule(room) -> None:
         if room.activity_dict[key] != None:
             schedule_matrix[timeslot][day_to_index[day]] = room.activity_dict[key]
     
-    width = 20
+    width = 37
     print_schedule_matrix(schedule_matrix, width)
 
 def create_empty_schedule(x: int, y: int) -> list[list[str]]:
@@ -53,7 +53,7 @@ def print_schedule_matrix(matrix: list[list[str]], width: int) -> None:
     for i in range(0, 5):
         for j in range(0, 5):
             course_name = matrix[i][j]
-            empty_characters = width - len(course_name)
+            empty_characters = width - len(str(course_name))
 
             print(" " * math.floor(empty_characters / 2), end="")
             print(course_name, end="")

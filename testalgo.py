@@ -3,20 +3,24 @@ from code.classes import activity
 import math
 
 class Testalgo():
-    def __init__(self, data):
+    def __init__(self, data) -> None:
         self.courses = data.Courses
         self.rooms = data.Rooms
         self.students = data.Students
         self.activities = data.Activities
         
     
-    def run(self):
+    def run(self) -> None:
+        
+        total_activities = list()
+
+        # Adds all necessary activities per course
         for course in self.courses:
             lectures = int(self.courses[course].num_hc)
             for i in range(lectures):
                 id = "h" + str(i + 1)
                 test_act = activity.Activity(course, id)
-                room = fill_first_room(self.rooms, test_act)
+                total_activities.append(test_act)
             
             seminars = self.courses[course].num_wc
             if self.courses[course].max_wc != "":
@@ -27,7 +31,7 @@ class Testalgo():
             for j in range(int(seminars)):
                 id = "w" + str(j + 1)
                 test_act = activity.Activity(course, id)
-                room = fill_first_room(self.rooms, test_act)
+                total_activities.append(test_act)
 
             practica = self.courses[course].num_pr
             if self.courses[course].max_pr != "":
@@ -38,11 +42,15 @@ class Testalgo():
             for k in range(int(practica)):
                 id = "p" + str(k + 1)
                 test_act = activity.Activity(course, id)
-                room = fill_first_room(self.rooms, test_act)
+                total_activities.append(test_act)
+        
+        assign_all(total_activities, self.rooms)
             
+def assign_all(activities, rooms) -> None:
+    for activity in activities:
+        fill_first_room(rooms, activity)
 
-
-def fill_first_room(rooms, activity):
+def fill_first_room(rooms, activity) -> None:
     for room in rooms:
         slots = rooms[room].return_availability()
         if len(slots) > 0:
@@ -50,4 +58,4 @@ def fill_first_room(rooms, activity):
             rooms[room].add_activity(activity, chosen_slot)
             activity.set_timeslot(chosen_slot)
             activity.set_room(rooms[room])
-            return
+            break
