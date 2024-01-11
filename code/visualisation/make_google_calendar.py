@@ -65,3 +65,40 @@ def format_time(time: str) -> str:
     "4": ("3:00 PM", "5:00 PM")}
 
     return time_dict[time]
+
+def make_student_calendar(data) -> None:
+    
+    subjects = []
+    start_dates = []
+    start_times = []
+    end_times = []
+    descriptions = []
+
+    for student in data.Students:
+        for activity in data.Students[student].activities:
+            # split day from time
+            timeslot = activity.get_timeslot()
+            room = str(activity.room)
+            day = timeslot[0:2]
+            time = timeslot[2]
+
+            # call formatting functions
+            date = format_day(day, 22, "01")
+            start_time, end_time = format_time(time)
+
+            # append existing values to according lists
+            if activity != None:
+                subjects.append(str(activity))
+                start_dates.append(date)
+                start_times.append(start_time)
+                end_times.append(end_time)
+                descriptions.append(str(room))
+        
+        break
+    
+    # create dataframe
+    df = pd.DataFrame({"Subject": subjects, "Start Date": start_dates, "Start Time": start_times, 
+                        "End Time": end_times, "Description": descriptions})
+
+    # this line only works from main.py working directory
+    df.to_csv("code/visualisation/calendar_csv/test.csv")

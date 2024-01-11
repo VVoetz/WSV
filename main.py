@@ -69,11 +69,10 @@ if __name__ == "__main__":
     data = Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
     test = testalgo.Testalgo(data)
     test.run()
-    for room in test.rooms:
-        visualisation.visualize_room_schedule(test.rooms[room])    
-
+    for room in test.Rooms:
+        visualisation.visualize_room_schedule(test.Rooms[room])    
         
-    #for item in test.students:
-    #    print(f"{item}: {test.students[item].activities}") 
-    
-    # make_google_calendar.make_google_calendar_csv(test)
+    #for item in test.Students:
+    #    print(f"{item}: {test.Students[item].activities}")    
+    make_google_calendar.make_google_calendar_csv(data)
+    make_google_calendar.make_student_calendar(data)
