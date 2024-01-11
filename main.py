@@ -1,7 +1,6 @@
 from code.classes import room, course, student
 from code.algorithms import testalgo
-from code.visualisation import visualisation
-
+from code.visualisation import visualisation, output_schedule
 
 
 class Imports(object):
