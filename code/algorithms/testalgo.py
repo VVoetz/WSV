@@ -14,7 +14,7 @@ class Testalgo():
         
         total_activities = list()
 
-                # Adds all necessary activities per course
+        # Adds all necessary activities per course
         for course in self.courses:
             lectures = int(self.courses[course].num_hc)
             expected = int(self.courses[course].expected)
@@ -25,7 +25,6 @@ class Testalgo():
                 self.courses[course].activity(test_act)
             
             seminars = self.courses[course].num_wc
-            print(self.courses[course].num_wc)
             if self.courses[course].max_wc != "":
                 max = int(self.courses[course].max_wc)
                 test = math.ceil(int(self.courses[course].expected) / max)

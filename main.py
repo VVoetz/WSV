@@ -70,10 +70,9 @@ if __name__ == "__main__":
     data = Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
     test = testalgo.Testalgo(data)
     test.run()
-    print(data.Activities)
     for room in test.rooms:
         visualisation.visualize_room_schedule(test.rooms[room])
     
-    
-    for item in test.students:
-        print(f"{item}: {test.students[item].activities}")
+        
+    #for item in test.students:
+    #    print(f"{item}: {test.students[item].activities}")
