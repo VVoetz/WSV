@@ -39,7 +39,6 @@ class Schedule_algo2(object):
                 test_act = activity.Activity(course, id, expected)
                 total_activities.append(test_act)
 
-
             practica = self.courses[course].num_pr
             if self.courses[course].max_pr != "":
                 max = int(self.courses[course].max_pr)
@@ -57,22 +56,23 @@ class Schedule_algo2(object):
             
         assign_all(total_activities, self.rooms)
 
-
-
-
-
-
 def assign_all(activities, rooms) -> None:
-    for activity in activities:
-        fill_first_room(rooms, activity)
+    for activity in sorted(activities, key=lambda x: x.capacity):
+        fill_smallest_room(rooms, activity)
 
-def fill_first_room(rooms, activity) -> None:
-    for room in rooms:
+def fill_smallest_room(rooms, activity) -> None:
+    for room in sorted(rooms, key=lambda x: x.capacity):
+        if activity.capacity>room.capacity:
+            break
         slots = rooms[room].return_availability()
         if len(slots) > 0:
             chosen_slot = slots[0]
             rooms[room].add_activity(activity, chosen_slot)
             activity.set_timeslot(chosen_slot)
             activity.set_room(rooms[room])
-            break
+            return 0
+
+
+
+
 
