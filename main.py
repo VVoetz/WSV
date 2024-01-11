@@ -1,6 +1,6 @@
 from code.classes import room, course, student
 from code.algorithms import testalgo
-from code.visualisation import visualisation, output_schedule
+from code.visualisation import visualisation, make_google_calendar
 
 
 class Data_loader(object):
@@ -72,3 +72,5 @@ if __name__ == "__main__":
     print(data.Activities)
     for room in test.rooms:
         visualisation.visualize_room_schedule(test.rooms[room])
+    
+    make_google_calendar.make_google_calendar_csv(data)
