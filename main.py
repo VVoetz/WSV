@@ -3,7 +3,7 @@ from code.algorithms import testalgo
 from code.visualisation import visualisation, output_schedule
 
 
-class Imports(object):
+class Data_loader(object):
 
     def __init__(self, courses: str, rooms: str, students: str):
         """
@@ -66,8 +66,9 @@ class Imports(object):
 
 if __name__ == "__main__":
 
-    imports = Imports("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
-    test = testalgo.Testalgo(imports)
+    data = Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
+    test = testalgo.Testalgo(data)
     test.run()
+    print(data.Activities)
     for room in test.rooms:
         visualisation.visualize_room_schedule(test.rooms[room])
