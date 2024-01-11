@@ -1,10 +1,11 @@
 class Activity:
-    def __init__(self, course: str, id: str) -> None:
+    def __init__(self, course: str, id: str, capacity: int) -> None:
         """
         Class constructer
         """
         self.course = course
         self.id = id
+        self.capacity = capacity
         self.timeslot = ""
         self.room = ""
     
