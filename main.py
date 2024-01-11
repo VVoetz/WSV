@@ -74,5 +74,6 @@ if __name__ == "__main__":
 
         
     #for item in test.students:
-    #    print(f"{item}: {test.students[item].activities}")    
-    make_google_calendar.make_google_calendar_csv(data)
+    #    print(f"{item}: {test.students[item].activities}") 
+    
+    # make_google_calendar.make_google_calendar_csv(test)

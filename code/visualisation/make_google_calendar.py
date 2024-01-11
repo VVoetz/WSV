@@ -9,13 +9,13 @@ def make_google_calendar_csv(data) -> None:
     post:   outputs a formatted .csv file
     """
 
-    subjects = []
-    start_dates = []
-    start_times = []
-    end_times = []
-    descriptions = []
+    subjects: list[str] = []
+    start_dates: list[str] = []
+    start_times: list[str] = []
+    end_times: list[str] = []
+    descriptions: list[str] = []
 
-    for room in data.Rooms.values():
+    for room in data.rooms.values():
         for timeslot, activity in room.activity_dict.items():
 
             # split day from time
@@ -23,7 +23,7 @@ def make_google_calendar_csv(data) -> None:
             time = timeslot[2]
 
             # call formatting functions
-            date = format_day(day, 15, "02")
+            date = format_day(day, 15, "01")
             start_time, end_time = format_time(time)
 
             # append existing values to according lists
