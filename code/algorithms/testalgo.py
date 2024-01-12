@@ -18,7 +18,6 @@ class Testalgo():
         for course in self.Courses:
             lectures = int(self.Courses[course].num_hc)
             expected = int(self.Courses[course].expected)
-            
             for i in range(lectures):
                 id = "h" + str(i + 1)
                 test_act = activity.Activity(course, id, expected)

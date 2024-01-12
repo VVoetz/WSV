@@ -1,146 +1,146 @@
 ,Subject,Start Date,Start Time,End Time,Description
-0,Technology for gamesw1,15-01-2024,9:00 AM,11:00 AM,A1.04
-1,Autonomous Agents 2h2,15-01-2024,11:00 AM,1:00 PM,A1.04
-2,Advanced Heuristicsp1,15-01-2024,1:00 PM,3:00 PM,A1.04
-3,Webprogrammeren en databasesp1,15-01-2024,3:00 PM,5:00 PM,A1.04
-4,testh5,16-01-2024,9:00 AM,11:00 AM,A1.04
-5,Moderne Databasesw1,16-01-2024,11:00 AM,1:00 PM,A1.04
-6,Moderne Databasesp2,16-01-2024,1:00 PM,3:00 PM,A1.04
-7,Architectuur en computerorganisatieh1,16-01-2024,3:00 PM,5:00 PM,A1.04
-8,Collectieve Intelligentieh3,17-01-2024,9:00 AM,11:00 AM,A1.04
-9,Informatie- en organisatieontwerph2,17-01-2024,11:00 AM,1:00 PM,A1.04
-10,Collectieve Intelligentiep3,17-01-2024,1:00 PM,3:00 PM,A1.04
-11,testh1,17-01-2024,3:00 PM,5:00 PM,A1.04
-12,Data Miningw2,18-01-2024,9:00 AM,11:00 AM,A1.04
-13,Data Miningh1,18-01-2024,11:00 AM,1:00 PM,A1.04
-14,testh12,18-01-2024,1:00 PM,3:00 PM,A1.04
-15,Zoeken sturen en bewegenp2,18-01-2024,3:00 PM,5:00 PM,A1.04
-16,Databases 2h1,19-01-2024,9:00 AM,11:00 AM,A1.04
-17,Heuristieken 2h1,19-01-2024,11:00 AM,1:00 PM,A1.04
-18,Collectieve Intelligentiew1,19-01-2024,1:00 PM,3:00 PM,A1.04
-19,Software engineeringp1,19-01-2024,3:00 PM,5:00 PM,A1.04
-20,Reflectie op de digitale cultuurh1,15-01-2024,9:00 AM,11:00 AM,A1.06
-21,Bioinformaticah1,15-01-2024,11:00 AM,1:00 PM,A1.06
-22,Compilerbouw practicump3,15-01-2024,1:00 PM,3:00 PM,A1.06
-23,Autonomous Agents 2p1,15-01-2024,3:00 PM,5:00 PM,A1.06
-24,Programmeren in Java 2p1,16-01-2024,9:00 AM,11:00 AM,A1.06
-25,Moderne Databasesw2,16-01-2024,11:00 AM,1:00 PM,A1.06
-26,Reflectie op de digitale cultuurw2,16-01-2024,1:00 PM,3:00 PM,A1.06
-27,Data Miningp1,16-01-2024,3:00 PM,5:00 PM,A1.06
-28,Moderne Databasesp1,17-01-2024,9:00 AM,11:00 AM,A1.06
-29,Lineaire Algebrah1,17-01-2024,11:00 AM,1:00 PM,A1.06
-30,Architectuur en computerorganisatieh2,17-01-2024,1:00 PM,3:00 PM,A1.06
-31,Informatie- en organisatieontwerpw2,17-01-2024,3:00 PM,5:00 PM,A1.06
-32,Project Numerical Recipesp3,18-01-2024,9:00 AM,11:00 AM,A1.06
-33,Heuristieken 2w2,18-01-2024,11:00 AM,1:00 PM,A1.06
-34,Software engineeringw2,18-01-2024,1:00 PM,3:00 PM,A1.06
-35,testh2,18-01-2024,3:00 PM,5:00 PM,A1.06
-36,Moderne Databasesh1,19-01-2024,9:00 AM,11:00 AM,A1.06
-37,Netwerken en systeembeveiligingp2,19-01-2024,11:00 AM,1:00 PM,A1.06
-38,Autonomous Agents 2w1,19-01-2024,1:00 PM,3:00 PM,A1.06
-39,testh7,19-01-2024,3:00 PM,5:00 PM,A1.06
-40,Software engineeringw1,15-01-2024,9:00 AM,11:00 AM,A1.08
-41,Data Miningh2,15-01-2024,11:00 AM,1:00 PM,A1.08
-42,Compilerbouw practicump1,15-01-2024,1:00 PM,3:00 PM,A1.08
-43,Technology for gamesh2,15-01-2024,3:00 PM,5:00 PM,A1.08
-44,Informatie- en organisatieontwerph1,16-01-2024,9:00 AM,11:00 AM,A1.08
-45,Informatie- en organisatieontwerpp1,16-01-2024,11:00 AM,1:00 PM,A1.08
-46,Webprogrammeren en databasesw2,16-01-2024,1:00 PM,3:00 PM,A1.08
-47,Kansrekenen 2h1,16-01-2024,3:00 PM,5:00 PM,A1.08
-48,Collectieve Intelligentiep2,17-01-2024,9:00 AM,11:00 AM,A1.08
-49,Calculus 2w3,17-01-2024,11:00 AM,1:00 PM,A1.08
-50,Bioinformaticap2,17-01-2024,1:00 PM,3:00 PM,A1.08
-51,Interactie-ontwerph2,17-01-2024,3:00 PM,5:00 PM,A1.08
-52,Webprogrammeren en databasesw3,18-01-2024,9:00 AM,11:00 AM,A1.08
-53,Collectieve Intelligentiep4,18-01-2024,11:00 AM,1:00 PM,A1.08
-54,Bioinformaticah3,18-01-2024,1:00 PM,3:00 PM,A1.08
-55,testh3,18-01-2024,3:00 PM,5:00 PM,A1.08
-56,Analysemethoden en -techniekenh1,19-01-2024,9:00 AM,11:00 AM,A1.08
-57,Collectieve Intelligentiew3,19-01-2024,11:00 AM,1:00 PM,A1.08
-58,Zoeken sturen en bewegenp3,19-01-2024,1:00 PM,3:00 PM,A1.08
-59,testh14,19-01-2024,3:00 PM,5:00 PM,A1.08
-60,Heuristieken 1w2,15-01-2024,9:00 AM,11:00 AM,A1.10
-61,Autonomous Agents 2h1,15-01-2024,11:00 AM,1:00 PM,A1.10
-62,Advanced Heuristicsh1,15-01-2024,1:00 PM,3:00 PM,A1.10
-63,Reflectie op de digitale cultuurw1,15-01-2024,3:00 PM,5:00 PM,A1.10
-64,Programmeren in Java 2p5,16-01-2024,9:00 AM,11:00 AM,A1.10
-65,Bioinformaticah2,16-01-2024,11:00 AM,1:00 PM,A1.10
-66,Calculus 2h1,16-01-2024,1:00 PM,3:00 PM,A1.10
-67,Bioinformaticaw1,16-01-2024,3:00 PM,5:00 PM,A1.10
-68,testh11,17-01-2024,9:00 AM,11:00 AM,A1.10
-69,Netwerken en systeembeveiligingp1,17-01-2024,11:00 AM,1:00 PM,A1.10
-70,Webprogrammeren en databasesh2,17-01-2024,1:00 PM,3:00 PM,A1.10
-71,Zoeken sturen en bewegenp1,17-01-2024,3:00 PM,5:00 PM,A1.10
-72,Algoritmen en complexiteitp1,18-01-2024,9:00 AM,11:00 AM,A1.10
-73,Autonomous Agents 2w2,18-01-2024,11:00 AM,1:00 PM,A1.10
-74,Advanced Heuristicsp3,18-01-2024,1:00 PM,3:00 PM,A1.10
-75,Project Genetic Algorithmsp2,18-01-2024,3:00 PM,5:00 PM,A1.10
-76,Programmeren in Java 2p3,19-01-2024,9:00 AM,11:00 AM,A1.10
-77,Compilerbouwh2,19-01-2024,11:00 AM,1:00 PM,A1.10
-78,Data Miningw1,19-01-2024,1:00 PM,3:00 PM,A1.10
-79,Heuristieken 1h1,19-01-2024,3:00 PM,5:00 PM,A1.10
-80,Webprogrammeren en databasesp3,15-01-2024,9:00 AM,11:00 AM,B0.201
-81,Software engineeringh1,15-01-2024,11:00 AM,1:00 PM,B0.201
-82,Data Miningp3,15-01-2024,1:00 PM,3:00 PM,B0.201
-83,Programmeren in Java 2p2,15-01-2024,3:00 PM,5:00 PM,B0.201
-84,Heuristieken 1w1,16-01-2024,9:00 AM,11:00 AM,B0.201
-85,Collectieve Intelligentiew4,16-01-2024,11:00 AM,1:00 PM,B0.201
-86,Advanced Heuristicsp2,16-01-2024,1:00 PM,3:00 PM,B0.201
-87,testh13,16-01-2024,3:00 PM,5:00 PM,B0.201
-88,Collectieve Intelligentieh1,17-01-2024,9:00 AM,11:00 AM,B0.201
-89,Informatie- en organisatieontwerpw3,17-01-2024,11:00 AM,1:00 PM,B0.201
-90,Databases 2w1,17-01-2024,1:00 PM,3:00 PM,B0.201
-91,Databases 2w2,17-01-2024,3:00 PM,5:00 PM,B0.201
-92,Compilerbouww2,18-01-2024,9:00 AM,11:00 AM,B0.201
-93,testh4,18-01-2024,11:00 AM,1:00 PM,B0.201
-94,testh6,18-01-2024,1:00 PM,3:00 PM,B0.201
-95,Heuristieken 2w1,18-01-2024,3:00 PM,5:00 PM,B0.201
-96,Reflectie op de digitale cultuurw3,19-01-2024,9:00 AM,11:00 AM,B0.201
-97,testh16,19-01-2024,11:00 AM,1:00 PM,B0.201
+0,Advanced Heuristicsp2,15-01-2024,9:00 AM,11:00 AM,A1.04
+1,Informatie- en organisatieontwerpw3,15-01-2024,11:00 AM,1:00 PM,A1.04
+2,Informatie- en organisatieontwerpp1,15-01-2024,1:00 PM,3:00 PM,A1.04
+3,Informatie- en organisatieontwerpw1,15-01-2024,3:00 PM,5:00 PM,A1.04
+4,Collectieve Intelligentiew3,16-01-2024,9:00 AM,11:00 AM,A1.04
+5,Informatie- en organisatieontwerpp2,16-01-2024,11:00 AM,1:00 PM,A1.04
+6,Autonomous Agents 2p2,16-01-2024,1:00 PM,3:00 PM,A1.04
+7,Moderne Databasesw2,16-01-2024,3:00 PM,5:00 PM,A1.04
+8,Project Genetic Algorithmsp2,17-01-2024,9:00 AM,11:00 AM,A1.04
+9,Heuristieken 2h1,17-01-2024,11:00 AM,1:00 PM,A1.04
+10,Moderne Databasesp3,17-01-2024,1:00 PM,3:00 PM,A1.04
+11,Collectieve Intelligentiew1,17-01-2024,3:00 PM,5:00 PM,A1.04
+12,Webprogrammeren en databasesw1,18-01-2024,9:00 AM,11:00 AM,A1.04
+13,Advanced Heuristicsp1,18-01-2024,11:00 AM,1:00 PM,A1.04
+14,Algoritmen en complexiteitw2,18-01-2024,1:00 PM,3:00 PM,A1.04
+15,Algoritmen en complexiteitw1,18-01-2024,3:00 PM,5:00 PM,A1.04
+16,Zoeken sturen en bewegenp3,19-01-2024,9:00 AM,11:00 AM,A1.04
+17,Software engineeringp1,19-01-2024,11:00 AM,1:00 PM,A1.04
+18,Informatie- en organisatieontwerph1,19-01-2024,1:00 PM,3:00 PM,A1.04
+19,Netwerken en systeembeveiligingp2,19-01-2024,3:00 PM,5:00 PM,A1.04
+20,Calculus 2w1,15-01-2024,9:00 AM,11:00 AM,A1.06
+21,Databases 2w2,15-01-2024,11:00 AM,1:00 PM,A1.06
+22,testh2,15-01-2024,1:00 PM,3:00 PM,A1.06
+23,Netwerken en systeembeveiligingp1,15-01-2024,3:00 PM,5:00 PM,A1.06
+24,Webprogrammeren en databasesp3,16-01-2024,9:00 AM,11:00 AM,A1.06
+25,Collectieve Intelligentieh2,16-01-2024,11:00 AM,1:00 PM,A1.06
+26,Bioinformaticap2,16-01-2024,1:00 PM,3:00 PM,A1.06
+27,Machine Learningh2,16-01-2024,3:00 PM,5:00 PM,A1.06
+28,Data Miningp1,17-01-2024,9:00 AM,11:00 AM,A1.06
+29,Reflectie op de digitale cultuurw2,17-01-2024,11:00 AM,1:00 PM,A1.06
+30,Webprogrammeren en databasesw3,17-01-2024,1:00 PM,3:00 PM,A1.06
+31,Moderne Databasesh1,17-01-2024,3:00 PM,5:00 PM,A1.06
+32,Informatie- en organisatieontwerph2,18-01-2024,9:00 AM,11:00 AM,A1.06
+33,Webprogrammeren en databasesp1,18-01-2024,11:00 AM,1:00 PM,A1.06
+34,testh9,18-01-2024,1:00 PM,3:00 PM,A1.06
+35,Informatie- en organisatieontwerpp3,18-01-2024,3:00 PM,5:00 PM,A1.06
+36,Project Genetic Algorithmsp3,19-01-2024,9:00 AM,11:00 AM,A1.06
+37,Bioinformaticah1,19-01-2024,11:00 AM,1:00 PM,A1.06
+38,testh5,19-01-2024,1:00 PM,3:00 PM,A1.06
+39,testh4,19-01-2024,3:00 PM,5:00 PM,A1.06
+40,Lineaire Algebrah2,15-01-2024,9:00 AM,11:00 AM,A1.08
+41,Algoritmen en complexiteitp2,15-01-2024,11:00 AM,1:00 PM,A1.08
+42,Zoeken sturen en bewegenp2,15-01-2024,1:00 PM,3:00 PM,A1.08
+43,Collectieve Intelligentieh3,15-01-2024,3:00 PM,5:00 PM,A1.08
+44,Compilerbouwh2,16-01-2024,9:00 AM,11:00 AM,A1.08
+45,Webprogrammeren en databasesh2,16-01-2024,11:00 AM,1:00 PM,A1.08
+46,Analysemethoden en -techniekenh1,16-01-2024,1:00 PM,3:00 PM,A1.08
+47,Software engineeringp2,16-01-2024,3:00 PM,5:00 PM,A1.08
+48,Informatie- en organisatieontwerpw2,17-01-2024,9:00 AM,11:00 AM,A1.08
+49,Autonomous Agents 2w2,17-01-2024,11:00 AM,1:00 PM,A1.08
+50,Project Numerical Recipesp3,17-01-2024,1:00 PM,3:00 PM,A1.08
+51,Compilerbouwp2,17-01-2024,3:00 PM,5:00 PM,A1.08
+52,Compilerbouw practicump1,18-01-2024,9:00 AM,11:00 AM,A1.08
+53,testh14,18-01-2024,11:00 AM,1:00 PM,A1.08
+54,Kansrekenen 2h1,18-01-2024,1:00 PM,3:00 PM,A1.08
+55,Interactie-ontwerph1,18-01-2024,3:00 PM,5:00 PM,A1.08
+56,Technology for gamesh2,19-01-2024,9:00 AM,11:00 AM,A1.08
+57,Data Miningw3,19-01-2024,11:00 AM,1:00 PM,A1.08
+58,Reflectie op de digitale cultuurw1,19-01-2024,1:00 PM,3:00 PM,A1.08
+59,Reflectie op de digitale cultuurh1,19-01-2024,3:00 PM,5:00 PM,A1.08
+60,Interactie-ontwerph2,15-01-2024,9:00 AM,11:00 AM,A1.10
+61,Collectieve Intelligentieh1,15-01-2024,11:00 AM,1:00 PM,A1.10
+62,testh15,15-01-2024,1:00 PM,3:00 PM,A1.10
+63,Collectieve Intelligentiep2,15-01-2024,3:00 PM,5:00 PM,A1.10
+64,Bioinformaticah2,16-01-2024,9:00 AM,11:00 AM,A1.10
+65,Bioinformaticaw1,16-01-2024,11:00 AM,1:00 PM,A1.10
+66,Machine Learningh1,16-01-2024,1:00 PM,3:00 PM,A1.10
+67,testh16,16-01-2024,3:00 PM,5:00 PM,A1.10
+68,Zoeken sturen en bewegenp1,17-01-2024,9:00 AM,11:00 AM,A1.10
+69,Programmeren in Java 2p2,17-01-2024,11:00 AM,1:00 PM,A1.10
+70,testh6,17-01-2024,1:00 PM,3:00 PM,A1.10
+71,Heuristieken 1h1,17-01-2024,3:00 PM,5:00 PM,A1.10
+72,Bioinformaticaw2,18-01-2024,9:00 AM,11:00 AM,A1.10
+73,Compilerbouw practicump3,18-01-2024,11:00 AM,1:00 PM,A1.10
+74,Advanced Heuristicsh1,18-01-2024,1:00 PM,3:00 PM,A1.10
+75,Data Miningw2,18-01-2024,3:00 PM,5:00 PM,A1.10
+76,Project Numerical Recipesp1,19-01-2024,9:00 AM,11:00 AM,A1.10
+77,Lineaire Algebrah1,19-01-2024,11:00 AM,1:00 PM,A1.10
+78,Advanced Heuristicsp3,19-01-2024,1:00 PM,3:00 PM,A1.10
+79,Project Genetic Algorithmsp1,19-01-2024,3:00 PM,5:00 PM,A1.10
+80,Collectieve Intelligentiep4,15-01-2024,9:00 AM,11:00 AM,B0.201
+81,Databases 2h1,15-01-2024,11:00 AM,1:00 PM,B0.201
+82,Moderne Databasesw1,15-01-2024,1:00 PM,3:00 PM,B0.201
+83,Heuristieken 2w1,15-01-2024,3:00 PM,5:00 PM,B0.201
+84,Programmeren in Java 2p5,16-01-2024,9:00 AM,11:00 AM,B0.201
+85,Autonomous Agents 2h1,16-01-2024,11:00 AM,1:00 PM,B0.201
+86,Compilerbouww2,16-01-2024,1:00 PM,3:00 PM,B0.201
+87,Moderne Databasesp1,16-01-2024,3:00 PM,5:00 PM,B0.201
+88,testh10,17-01-2024,9:00 AM,11:00 AM,B0.201
+89,Collectieve Intelligentiep3,17-01-2024,11:00 AM,1:00 PM,B0.201
+90,Algoritmen en complexiteitp1,17-01-2024,1:00 PM,3:00 PM,B0.201
+91,testh12,17-01-2024,3:00 PM,5:00 PM,B0.201
+92,Technology for gamesw2,18-01-2024,9:00 AM,11:00 AM,B0.201
+93,testh13,18-01-2024,11:00 AM,1:00 PM,B0.201
+94,Programmeren in Java 2p4,18-01-2024,1:00 PM,3:00 PM,B0.201
+95,Calculus 2w2,18-01-2024,3:00 PM,5:00 PM,B0.201
+96,Algoritmen en complexiteith1,19-01-2024,9:00 AM,11:00 AM,B0.201
+97,Webprogrammeren en databasesh1,19-01-2024,11:00 AM,1:00 PM,B0.201
 98,Technology for gamesw3,19-01-2024,1:00 PM,3:00 PM,B0.201
-99,Algoritmen en complexiteitw1,19-01-2024,3:00 PM,5:00 PM,B0.201
-100,Webprogrammeren en databasesp2,15-01-2024,9:00 AM,11:00 AM,C0.110
-101,Compilerbouwp2,15-01-2024,11:00 AM,1:00 PM,C0.110
-102,Interactie-ontwerph1,15-01-2024,1:00 PM,3:00 PM,C0.110
-103,Reflectie op de digitale cultuurh2,15-01-2024,3:00 PM,5:00 PM,C0.110
-104,Project Numerical Recipesp1,15-01-2024,5:00 PM,7:00 PM,C0.110
-105,Bioinformaticaw2,16-01-2024,9:00 AM,11:00 AM,C0.110
-106,Informatie- en organisatieontwerpp3,16-01-2024,11:00 AM,1:00 PM,C0.110
-107,Compilerbouwp1,16-01-2024,1:00 PM,3:00 PM,C0.110
-108,Collectieve Intelligentiew2,16-01-2024,3:00 PM,5:00 PM,C0.110
-109,Collectieve Intelligentiep1,16-01-2024,5:00 PM,7:00 PM,C0.110
-110,Informatie- en organisatieontwerpw1,17-01-2024,9:00 AM,11:00 AM,C0.110
-111,Calculus 2w2,17-01-2024,11:00 AM,1:00 PM,C0.110
-112,Netwerken en systeembeveiligingp3,17-01-2024,1:00 PM,3:00 PM,C0.110
+99,Autonomous Agents 2p1,19-01-2024,3:00 PM,5:00 PM,B0.201
+100,Architectuur en computerorganisatieh1,15-01-2024,9:00 AM,11:00 AM,C0.110
+101,Netwerken en systeembeveiligingp3,15-01-2024,11:00 AM,1:00 PM,C0.110
+102,Moderne Databasesp2,15-01-2024,1:00 PM,3:00 PM,C0.110
+103,Autonomous Agents 2h2,15-01-2024,3:00 PM,5:00 PM,C0.110
+104,Autonomous Agents 2w1,15-01-2024,5:00 PM,7:00 PM,C0.110
+105,Webprogrammeren en databasesp2,16-01-2024,9:00 AM,11:00 AM,C0.110
+106,Architectuur en computerorganisatieh2,16-01-2024,11:00 AM,1:00 PM,C0.110
+107,Data Miningh2,16-01-2024,1:00 PM,3:00 PM,C0.110
+108,Software engineeringh1,16-01-2024,3:00 PM,5:00 PM,C0.110
+109,Software engineeringw2,16-01-2024,5:00 PM,7:00 PM,C0.110
+110,testh1,17-01-2024,9:00 AM,11:00 AM,C0.110
+111,Data Miningw1,17-01-2024,11:00 AM,1:00 PM,C0.110
+112,Reflectie op de digitale cultuurh2,17-01-2024,1:00 PM,3:00 PM,C0.110
 113,Data Miningp2,17-01-2024,3:00 PM,5:00 PM,C0.110
-114,Calculus 2w1,17-01-2024,5:00 PM,7:00 PM,C0.110
-115,testh8,18-01-2024,9:00 AM,11:00 AM,C0.110
-116,Software engineeringp2,18-01-2024,11:00 AM,1:00 PM,C0.110
-117,Project Genetic Algorithmsp1,18-01-2024,1:00 PM,3:00 PM,C0.110
-118,Data Miningw3,18-01-2024,3:00 PM,5:00 PM,C0.110
-119,testh9,18-01-2024,5:00 PM,7:00 PM,C0.110
-120,Bioinformaticap1,19-01-2024,9:00 AM,11:00 AM,C0.110
-121,Informatie- en organisatieontwerpp2,19-01-2024,11:00 AM,1:00 PM,C0.110
-122,Compilerbouw practicump2,19-01-2024,1:00 PM,3:00 PM,C0.110
-123,Moderne Databasesp3,19-01-2024,3:00 PM,5:00 PM,C0.110
-124,Moderne Databasesw3,19-01-2024,5:00 PM,7:00 PM,C0.110
-125,Webprogrammeren en databasesh1,15-01-2024,9:00 AM,11:00 AM,C1.112
-126,Collectieve Intelligentieh2,15-01-2024,11:00 AM,1:00 PM,C1.112
-127,Programmeren in Java 2p4,15-01-2024,1:00 PM,3:00 PM,C1.112
-128,Compilerbouwh1,15-01-2024,3:00 PM,5:00 PM,C1.112
-129,testh10,16-01-2024,9:00 AM,11:00 AM,C1.112
-130,Technology for gamesw2,16-01-2024,11:00 AM,1:00 PM,C1.112
-131,Algoritmen en complexiteitp2,16-01-2024,1:00 PM,3:00 PM,C1.112
-132,Project Genetic Algorithmsp3,16-01-2024,3:00 PM,5:00 PM,C1.112
-133,Machine Learningh2,17-01-2024,9:00 AM,11:00 AM,C1.112
-134,Algoritmen en complexiteitw2,17-01-2024,11:00 AM,1:00 PM,C1.112
-135,Algoritmen en complexiteith1,17-01-2024,1:00 PM,3:00 PM,C1.112
-136,Technology for gamesh1,17-01-2024,3:00 PM,5:00 PM,C1.112
-137,Machine Learningh1,18-01-2024,9:00 AM,11:00 AM,C1.112
-138,Autonomous Agents 2p2,18-01-2024,11:00 AM,1:00 PM,C1.112
-139,Compilerbouww1,18-01-2024,1:00 PM,3:00 PM,C1.112
-140,Project Numerical Recipesp2,18-01-2024,3:00 PM,5:00 PM,C1.112
-141,testh15,19-01-2024,9:00 AM,11:00 AM,C1.112
-142,Kansrekenen 2h2,19-01-2024,11:00 AM,1:00 PM,C1.112
-143,Lineaire Algebrah2,19-01-2024,1:00 PM,3:00 PM,C1.112
-144,Webprogrammeren en databasesw1,19-01-2024,3:00 PM,5:00 PM,C1.112
+114,Moderne Databasesw3,17-01-2024,5:00 PM,7:00 PM,C0.110
+115,Programmeren in Java 2p3,18-01-2024,9:00 AM,11:00 AM,C0.110
+116,Bioinformaticah3,18-01-2024,11:00 AM,1:00 PM,C0.110
+117,testh8,18-01-2024,1:00 PM,3:00 PM,C0.110
+118,Collectieve Intelligentiep1,18-01-2024,3:00 PM,5:00 PM,C0.110
+119,Calculus 2h1,18-01-2024,5:00 PM,7:00 PM,C0.110
+120,Heuristieken 1w1,19-01-2024,9:00 AM,11:00 AM,C0.110
+121,Programmeren in Java 2p1,19-01-2024,11:00 AM,1:00 PM,C0.110
+122,Reflectie op de digitale cultuurw3,19-01-2024,1:00 PM,3:00 PM,C0.110
+123,Technology for gamesw1,19-01-2024,3:00 PM,5:00 PM,C0.110
+124,Data Miningh1,19-01-2024,5:00 PM,7:00 PM,C0.110
+125,Collectieve Intelligentiew4,15-01-2024,9:00 AM,11:00 AM,C1.112
+126,Heuristieken 2w2,15-01-2024,11:00 AM,1:00 PM,C1.112
+127,Heuristieken 1w2,15-01-2024,1:00 PM,3:00 PM,C1.112
+128,Webprogrammeren en databasesw2,15-01-2024,3:00 PM,5:00 PM,C1.112
+129,Compilerbouww1,16-01-2024,9:00 AM,11:00 AM,C1.112
+130,Compilerbouwp1,16-01-2024,11:00 AM,1:00 PM,C1.112
+131,Databases 2w1,16-01-2024,1:00 PM,3:00 PM,C1.112
+132,Project Numerical Recipesp2,16-01-2024,3:00 PM,5:00 PM,C1.112
+133,testh3,17-01-2024,9:00 AM,11:00 AM,C1.112
+134,Collectieve Intelligentiew2,17-01-2024,11:00 AM,1:00 PM,C1.112
+135,Data Miningp3,17-01-2024,1:00 PM,3:00 PM,C1.112
+136,Calculus 2w3,17-01-2024,3:00 PM,5:00 PM,C1.112
+137,Technology for gamesh1,18-01-2024,9:00 AM,11:00 AM,C1.112
+138,testh7,18-01-2024,11:00 AM,1:00 PM,C1.112
+139,Bioinformaticap1,18-01-2024,1:00 PM,3:00 PM,C1.112
+140,testh11,18-01-2024,3:00 PM,5:00 PM,C1.112
+141,Kansrekenen 2h2,19-01-2024,9:00 AM,11:00 AM,C1.112
+142,Compilerbouw practicump2,19-01-2024,11:00 AM,1:00 PM,C1.112
+143,Compilerbouwh1,19-01-2024,1:00 PM,3:00 PM,C1.112
+144,Software engineeringw1,19-01-2024,3:00 PM,5:00 PM,C1.112
