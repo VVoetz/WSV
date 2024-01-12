@@ -7,8 +7,11 @@ class Room():
         self.activity_dict = {}
         self.capacity = int(capacity)
         self.days = ["mo", "tu", "wo", "th", "fr"]
+        self.slots = 5
+        if name == "C0.110":
+            self.slots = 6
         for day in self.days:
-            for timeslot in range(1, 5):
+            for timeslot in range(1, self.slots):
                 self.activity_dict[day + str(timeslot)] = None
     
     def __repr__(self) -> str:
@@ -47,7 +50,7 @@ class Room():
         returns false if activity not in dictionary
         """
         for day in self.days:
-            for timeslot in range(1, 5):
+            for timeslot in range(1, self.slots):
                 if self.activity_dict[day + str(timeslot)] == activity:
                     self.activity_dict[day + str(timeslot)] = None
                     return
@@ -59,7 +62,7 @@ class Room():
         """
         available = list()
         for day in self.days:
-            for timeslot in range(1, 5):
+            for timeslot in range(1, self.slots):
                 if self.activity_dict[day + str(timeslot)] == None:
                     available.append(day + str(timeslot))
         return available

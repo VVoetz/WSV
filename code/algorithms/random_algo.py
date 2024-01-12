@@ -1,6 +1,6 @@
 from code.classes import room, course, student
 from code.classes import activity
-import math
+import math, random
 
 class Testalgo():
     def __init__(self, data) -> None:
@@ -14,16 +14,14 @@ class Testalgo():
         
         total_activities = list()
 
+        for i in range(1, 17):
+            test_act = activity.Activity('test', 'h' + str(i), 100)
+            total_activities.append(test_act)
+
         # Adds all necessary activities per course
-<<<<<<< HEAD
-        for course in self.courses:
-            lectures = int(self.courses[course].num_hc)
-            expected = int(self.courses[course].expected)
-=======
         for course in self.Courses:
             lectures = int(self.Courses[course].num_hc)
             expected = int(self.Courses[course].expected)
->>>>>>> refs/remotes/origin/main
             for i in range(lectures):
                 id = "h" + str(i + 1)
                 test_act = activity.Activity(course, id, expected)
@@ -53,7 +51,7 @@ class Testalgo():
                 total_activities.append(test_act)
                 self.Courses[course].activity(test_act)
             
-        
+        random.shuffle(total_activities)
         assign_all(total_activities, self.Rooms)
         assign_students(self.Courses)
 

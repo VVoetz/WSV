@@ -56,13 +56,13 @@ def format_time(time: str) -> str:
     """
     Function take in a timeslot and formats it to the according AM and PM time
 
-    pre:    time is an int between 1 and 4
+    pre:    time is an int between 1 and 5
     post:   outputs start and end time strings
     """
 
 
     time_dict = {"1": ("9:00 AM", "11:00 AM"), "2": ("11:00 AM", "1:00 PM"), "3": ("1:00 PM", "3:00 PM"), 
-    "4": ("3:00 PM", "5:00 PM")}
+    "4": ("3:00 PM", "5:00 PM"), "5": ("5:00 PM", "7:00 PM")}
 
     return time_dict[time]
 

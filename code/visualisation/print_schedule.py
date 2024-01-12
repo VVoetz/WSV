@@ -10,7 +10,7 @@ def visualize_room_schedule(room) -> None:
     
     # initialize matrix format
     day_to_index = {"mo": 0, "tu": 1, "wo": 2, "th": 3, "fr": 4}
-    schedule_matrix = create_empty_schedule(4, 5)
+    schedule_matrix = create_empty_schedule(5, 5)
 
     # split day from time and update the schedule matrix for each timeslot
     for key in room.activity_dict:
@@ -46,11 +46,11 @@ def print_schedule_matrix(matrix: list[list[str]], width: int) -> None:
     """
     Function pretty prints the formatted 4x5 matrix
 
-    pre:    matrix is a 4x5 matrix
+    pre:    matrix is a 5x5 matrix
     post:   prints the matrix
     """
 
-    for i in range(0, 5):
+    for i in range(0, 6):
         for j in range(0, 5):
             course_name = matrix[i][j]
             empty_characters = width - len(str(course_name))
