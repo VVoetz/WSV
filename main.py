@@ -15,7 +15,7 @@ if __name__ == "__main__":
     #     print_schedule.visualize_room_schedule(test.Rooms[room])    
     
     # print the malus points of a course's activities
-    for activity in data.Courses["Bioinformatica"].activities:
+    for activity in data.Courses["Calculus 2"].activities:
         print(activity.get_malus())
     
     #for item in test.Students:

@@ -7,7 +7,7 @@ class Activity:
         self.id = id
         self.capacity = capacity
         self.timeslot = ""
-        self.room = None
+        self.room = ""
         self.students = list()
     
     def get_course(self) -> str:
@@ -80,15 +80,20 @@ class Activity:
         post:   returns minus point that the specic activity room combination causes
         """
 
-        # return 0 if room is not assigned
-        if self.room == None:
+        # return 0 if room or timeslot is not assigned
+        if self.room == "" or self.timeslot == "":
             return 0
         
         room_capacity = self.room.capacity
         students = len(self.students)
-        malus_points = room_capacity - students 
+        malus_points = students - room_capacity
 
-        if malus_points > 0:
-            return 0
-        else:
-            return malus_points
+        # if students fit in the room give no malus points
+        if malus_points < 0:
+            malus_points = 0
+
+        # if timeslot is from 5 till 7 add 5 malus points
+        if self.timeslot[2] == "5":
+            malus_points += 5
+
+        return malus_points
