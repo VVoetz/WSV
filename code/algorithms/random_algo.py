@@ -14,6 +14,10 @@ class Testalgo():
         
         total_activities = list()
 
+        for i in range(1, 17):
+            test_act = activity.Activity('test', 'h' + str(i), 100)
+            total_activities.append(test_act)
+
         # Adds all necessary activities per course
         for course in self.Courses:
             lectures = int(self.Courses[course].num_hc)
