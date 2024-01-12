@@ -15,9 +15,15 @@ class Testalgo():
         total_activities = list()
 
         # Adds all necessary activities per course
+<<<<<<< HEAD
+        for course in self.courses:
+            lectures = int(self.courses[course].num_hc)
+            expected = int(self.courses[course].expected)
+=======
         for course in self.Courses:
             lectures = int(self.Courses[course].num_hc)
             expected = int(self.Courses[course].expected)
+>>>>>>> refs/remotes/origin/main
             for i in range(lectures):
                 id = "h" + str(i + 1)
                 test_act = activity.Activity(course, id, expected)
