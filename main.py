@@ -1,6 +1,6 @@
 from code.classes import data_loader
 from code.algorithms import testalgo
-from code.visualisation import visualisation, make_google_calendar
+from code.visualisation import print_schedule, make_google_calendar
 
 
 
@@ -10,7 +10,7 @@ if __name__ == "__main__":
     test = testalgo.Testalgo(data)
     test.run()
     for room in test.Rooms:
-        visualisation.visualize_room_schedule(test.Rooms[room])    
+        print_schedule.visualize_room_schedule(test.Rooms[room])    
         
     #for item in test.Students:
     #    print(f"{item}: {test.Students[item].activities}")    
