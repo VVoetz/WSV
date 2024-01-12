@@ -7,7 +7,7 @@ class Activity:
         self.id = id
         self.capacity = capacity
         self.timeslot = ""
-        self.room = ""
+        self.room = None
         self.students = list()
     
     def get_course(self) -> str:
@@ -71,3 +71,24 @@ class Activity:
         returns students in student list
         """
         return self.students
+    
+    def get_malus(self) -> int:
+        """
+        Returns ammount of minus point that this activity causes
+
+        pre:    activity has a room
+        post:   returns minus point that the specic activity room combination causes
+        """
+
+        # return 0 if room is not assigned
+        if self.room == None:
+            return 0
+        
+        room_capacity = self.room.capacity
+        students = len(self.students)
+        malus_points = room_capacity - students 
+
+        if malus_points > 0:
+            return 0
+        else:
+            return malus_points
