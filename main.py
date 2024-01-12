@@ -9,9 +9,15 @@ if __name__ == "__main__":
     data = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
     test = testalgo.Testalgo(data)
     test.run()
-    for room in test.Rooms:
-        print_schedule.visualize_room_schedule(test.Rooms[room])    
-        
+
+    # print schedule in terminal
+    # for room in test.Rooms:
+    #     print_schedule.visualize_room_schedule(test.Rooms[room])    
+    
+    # print the malus points of a course's activities
+    for activity in data.Courses["Calculus 2"].activities:
+        print(activity.get_malus())
+    
     #for item in test.Students:
     #    print(f"{item}: {test.Students[item].activities}")    
     make_google_calendar.make_google_calendar_csv(data)
