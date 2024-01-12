@@ -56,7 +56,7 @@ class Student():
                     if tussenuur == 2:
                         maluspunt += 1
                     elif tussenuur == 3:
-                        raise ValueError
+                        maluspunt += 1000000
                 for i in range(1, 6):
                     counter = 0
                     for j in activity_dict[day]:
