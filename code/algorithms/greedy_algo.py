@@ -46,7 +46,7 @@ class Schedule_algo2(object):
                 practica = int(practica) * int(test)
                 for k in range(int(practica)):
                     id = "p" + str(k + 1)
-                    test_act = activity.Activity(course, id)
+                    test_act = activity.Activity(course, id, max)
                     total_activities.append(test_act)
             else:
                 expected = int(self.courses[course].expected)

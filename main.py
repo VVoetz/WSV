@@ -1,5 +1,5 @@
 from code.classes import data_loader
-from code.algorithms import testalgo, random_algo
+from code.algorithms import testalgo, random_algo, greedy_algo
 from code.visualisation import print_schedule, make_google_calendar
 
 
@@ -7,7 +7,7 @@ from code.visualisation import print_schedule, make_google_calendar
 if __name__ == "__main__":
 
     data = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
-    test = random_algo.Testalgo(data)
+    test = greedy_algo.Schedule_algo2(data)
     test.run()
 
     # print schedule in terminal
