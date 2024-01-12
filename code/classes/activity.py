@@ -8,6 +8,7 @@ class Activity:
         self.capacity = capacity
         self.timeslot = ""
         self.room = ""
+        self.students = list()
     
     def get_course(self) -> str:
         """
@@ -58,3 +59,15 @@ class Activity:
         """
         self.room = new_room
         pass
+
+    def add_student(self, student) -> None:
+        """
+        Adds student to list
+        """
+        self.students.append(student)
+
+    def student_list(self):
+        """
+        returns students in student list
+        """
+        return self.students

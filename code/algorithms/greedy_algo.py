@@ -71,6 +71,17 @@ def fill_smallest_room(rooms, activity) -> None:
             activity.set_timeslot(chosen_slot)
             activity.set_room(rooms[room])
             return 0
+    #  if no room available that fits capacity, take largest available room to minimise 'maluspunten'   
+    for room in sorted(rooms, key=lambda x: x.capacity, reverse=True):
+        slots = rooms[room].return_availability()
+        if len(slots) > 0:
+            chosen_slot = slots[0]
+            rooms[room].add_activity(activity, chosen_slot)
+            activity.set_timeslot(chosen_slot)
+            activity.set_room(rooms[room])
+            return 1
+
+
 
 
 

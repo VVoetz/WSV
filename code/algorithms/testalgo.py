@@ -1,13 +1,13 @@
 from code.classes import room, course, student
 from code.classes import activity
-import math, random
+import math
 
 class Testalgo():
     def __init__(self, data) -> None:
-        self.courses = data.Courses
-        self.rooms = data.Rooms
-        self.students = data.Students
-        self.activities = data.Activities
+        self.Courses = data.Courses
+        self.Rooms = data.Rooms
+        self.Students = data.Students
+        self.Activities = data.Activities
         
     
     def run(self) -> None:
@@ -15,44 +15,51 @@ class Testalgo():
         total_activities = list()
 
         # Adds all necessary activities per course
+<<<<<<< HEAD
         for course in self.courses:
             lectures = int(self.courses[course].num_hc)
             expected = int(self.courses[course].expected)
+=======
+        for course in self.Courses:
+            lectures = int(self.Courses[course].num_hc)
+            expected = int(self.Courses[course].expected)
+>>>>>>> refs/remotes/origin/main
             for i in range(lectures):
                 id = "h" + str(i + 1)
                 test_act = activity.Activity(course, id, expected)
                 total_activities.append(test_act)
-                self.courses[course].activity(test_act)
+                self.Courses[course].activity(test_act)
             
-            seminars = self.courses[course].num_wc
-            if self.courses[course].max_wc != "":
-                max = int(self.courses[course].max_wc)
-                test = math.ceil(int(self.courses[course].expected) / max)
+            seminars = self.Courses[course].num_wc
+            if self.Courses[course].max_wc != "":
+                max = int(self.Courses[course].max_wc)
+                test = math.ceil(int(self.Courses[course].expected) / max)
                 seminars = int(seminars) * int(test)
-
             for j in range(int(seminars)):
-                id = "w" + str(j + 1)
-                test_act = activity.Activity(course, id)
-                total_activities.append(test_act)
-                self.courses[course].activity(test_act)
-
-            practica = self.courses[course].num_pr
-            if self.courses[course].max_pr != "":
-                max = int(self.courses[course].max_pr)
-                test = math.ceil(int(self.courses[course].expected) / max)
-                practica = int(practica) * int(test)
+                    id = "w" + str(j + 1)
+                    test_act = activity.Activity(course, id, max)
+                    total_activities.append(test_act)
+                    self.Courses[course].activity(test_act)
             
+
+            practica = self.Courses[course].num_pr
+            if self.Courses[course].max_pr != "":
+                max = int(self.Courses[course].max_pr)
+                test = math.ceil(int(self.Courses[course].expected) / max)
+                practica = int(practica) * int(test)
             for k in range(int(practica)):
                 id = "p" + str(k + 1)
-                test_act = activity.Activity(course, id)
+                test_act = activity.Activity(course, id, max)
                 total_activities.append(test_act)
-                self.courses[course].activity(test_act)
+                self.Courses[course].activity(test_act)
+            
         
-        assign_all(total_activities, self.rooms)
+        assign_all(total_activities, self.Rooms)
+        assign_students(self.Courses)
 
 def assign_all(activities, rooms) -> None:
-    for activity in random.shuffle(activities.keys()):
-        fill_first_room(rooms, activities[activity])
+    for activity in activities:
+        fill_first_room(rooms, activity)
 
 def fill_first_room(rooms, activity) -> None:
     for room in rooms:
@@ -63,3 +70,21 @@ def fill_first_room(rooms, activity) -> None:
             activity.set_timeslot(chosen_slot)
             activity.set_room(rooms[room])
             break
+
+def assign_students(courses):
+    for course in courses:
+        for item in courses[course].activities:
+            if str(item.id)[0] == 'h':
+                for student in courses[course].students:
+                    student.add_activity(item)
+                    item.add_student(student)
+            if str(item.id[0]) == 'w':
+                for student in courses[course].students:
+                    student.add_activity(item)
+                    item.add_student(student)
+            if str(item.id[0]) == 'p':
+                for student in courses[course].students:
+                    student.add_activity(item)
+                    item.add_student(student)
+            
+    
