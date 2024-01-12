@@ -30,10 +30,10 @@ class Testalgo():
                 test = math.ceil(int(self.Courses[course].expected) / max)
                 seminars = int(seminars) * int(test)
             for j in range(int(seminars)):
-                    id = "w" + str(j + 1)
-                    test_act = activity.Activity(course, id, max)
-                    total_activities.append(test_act)
-                    self.Courses[course].activity(test_act)
+                id = "w" + str(j + 1)
+                test_act = activity.Activity(course, id, max)
+                total_activities.append(test_act)
+                self.Courses[course].activity(test_act)
             
 
             practica = self.Courses[course].num_pr

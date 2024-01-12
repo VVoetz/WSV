@@ -81,7 +81,7 @@ class Activity:
         """
 
         # return 0 if room or timeslot is not assigned
-        if self.room == "" or self.timeslot == "":
+        if self.room == "" or self.timeslot == "" or len(students) == 0:
             return 0
         
         room_capacity = self.room.capacity
