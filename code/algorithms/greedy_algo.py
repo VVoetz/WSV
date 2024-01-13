@@ -2,7 +2,7 @@ from code.classes import room, course, student
 from code.classes import activity
 import math
 
-class Schedule_algo2(object):
+class Greedy_algo(object):
 
     def __init__(self, data):
         self.courses = data.Courses
