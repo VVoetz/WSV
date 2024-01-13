@@ -2,7 +2,7 @@ from code.classes import room, course, student
 from code.classes import activity
 import math
 
-class Greedy_algo(object):
+class Greedyalgo(object):
 
     def __init__(self, data):
         self.courses = data.Courses
@@ -54,31 +54,31 @@ class Greedy_algo(object):
                 test_act = activity.Activity(course, id, expected)
                 total_activities.append(test_act)    
             
-        assign_all(total_activities, self.rooms)
+        assign_all(total_activities)
 
-def assign_all(activities, rooms) -> None:
+def assign_all(activities) -> None:
     for activity in sorted(activities, key=lambda x: x.capacity):
-        fill_smallest_room(rooms, activity)
+        fill_smallest_room(activity)
 
-def fill_smallest_room(rooms, activity) -> None:
-    for room in sorted(rooms, key=lambda room: room.capacity):
+def fill_smallest_room(self, activity) -> None:
+    for room in sorted(self.rooms, key=lambda room: room.capacity):
         if activity.capacity>room.capacity:
             break
-        slots = rooms[room].return_availability()
+        slots = self.rooms[room].return_availability()
         if len(slots) > 0:
             chosen_slot = slots[0]
-            rooms[room].add_activity(activity, chosen_slot)
+            self.rooms[room].add_activity(activity, chosen_slot)
             activity.set_timeslot(chosen_slot)
-            activity.set_room(rooms[room])
+            activity.set_room(self.rooms[room])
             return 0
     #  if no room available that fits capacity, take largest available room to minimise 'maluspunten'   
-    for room in sorted(rooms, key=lambda room: room.capacity, reverse=True):
-        slots = rooms[room].return_availability()
+    for room in sorted(self.rooms, key=lambda room: room.capacity, reverse=True):
+        slots = self.rooms[room].return_availability()
         if len(slots) > 0:
             chosen_slot = slots[0]
-            rooms[room].add_activity(activity, chosen_slot)
+            self.rooms[room].add_activity(activity, chosen_slot)
             activity.set_timeslot(chosen_slot)
-            activity.set_room(rooms[room])
+            activity.set_room(self.rooms[room])
             return 1
 
 
