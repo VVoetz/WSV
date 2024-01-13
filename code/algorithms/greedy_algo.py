@@ -61,7 +61,7 @@ def assign_all(activities, rooms) -> None:
         fill_smallest_room(rooms, activity)
 
 def fill_smallest_room(rooms, activity) -> None:
-    for room in sorted(rooms, key=lambda x: x.capacity):
+    for room in sorted(rooms, key=lambda room: room.capacity):
         if activity.capacity>room.capacity:
             break
         slots = rooms[room].return_availability()
@@ -72,7 +72,7 @@ def fill_smallest_room(rooms, activity) -> None:
             activity.set_room(rooms[room])
             return 0
     #  if no room available that fits capacity, take largest available room to minimise 'maluspunten'   
-    for room in sorted(rooms, key=lambda x: x.capacity, reverse=True):
+    for room in sorted(rooms, key=lambda room: room.capacity, reverse=True):
         slots = rooms[room].return_availability()
         if len(slots) > 0:
             chosen_slot = slots[0]
