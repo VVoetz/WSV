@@ -12,6 +12,7 @@ if __name__ == "__main__":
     for i in range(1):
         
         data = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
+        print(data.Rooms)
         test = greedy_algo.Greedyalgo(data)
         test.run()
 

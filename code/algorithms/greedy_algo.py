@@ -53,32 +53,33 @@ class Greedyalgo(object):
                 id = "p" + str(1) 
                 test_act = activity.Activity(course, id, expected)
                 total_activities.append(test_act)    
-            
-        assign_all(total_activities)
 
-def assign_all(activities) -> None:
-    for activity in sorted(activities, key=lambda x: x.capacity):
-        fill_smallest_room(activity)
+        rooms = self.rooms.keys()
+        assign_all(total_activities, rooms)
 
-def fill_smallest_room(self, activity) -> None:
-    for room in sorted(self.rooms, key=lambda room: room.capacity):
+def assign_all(activities, rooms: list) -> None:
+    for activity in sorted(activities, key=lambda room: room.capacity):
+        fill_smallest_room(activity, rooms)
+
+def fill_smallest_room(activity, rooms: list) -> None:
+    for room in sorted(rooms, key=lambda room: room.capacity):
         if activity.capacity>room.capacity:
             break
-        slots = self.rooms[room].return_availability()
+        slots = rooms[room].return_availability()
         if len(slots) > 0:
             chosen_slot = slots[0]
-            self.rooms[room].add_activity(activity, chosen_slot)
+            rooms[room].add_activity(activity, chosen_slot)
             activity.set_timeslot(chosen_slot)
-            activity.set_room(self.rooms[room])
+            activity.set_room(rooms[room])
             return 0
     #  if no room available that fits capacity, take largest available room to minimise 'maluspunten'   
-    for room in sorted(self.rooms, key=lambda room: room.capacity, reverse=True):
-        slots = self.rooms[room].return_availability()
+    for room in sorted(rooms, key=lambda room: room.capacity, reverse=True):
+        slots = rooms[room].return_availability()
         if len(slots) > 0:
             chosen_slot = slots[0]
-            self.rooms[room].add_activity(activity, chosen_slot)
+            rooms[room].add_activity(activity, chosen_slot)
             activity.set_timeslot(chosen_slot)
-            activity.set_room(self.rooms[room])
+            activity.set_room(rooms[room])
             return 1
 
 
