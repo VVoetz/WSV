@@ -36,9 +36,13 @@ class Data_loader(object):
                 if line[0] == "":
                     break
 
-                # make course object and add it to the Course dictionary
-                self.Courses[f"{line[0]}"] = course.Course(line[0], line[1], line[2], line[3], line[4], line[5], line[6])
-        
+                # make course object and add it to the course dictionary
+                new_course = course.Course(line[0], line[1], line[2], line[3], line[4], line[5], line[6])
+                self.Courses[f"{line[0]}"] = new_course
+                # add course activities to data activities
+                for activity in new_course.activities:
+                    self.Activities.append(activity)
+
         pass
     
     def load_rooms(self, filename):
