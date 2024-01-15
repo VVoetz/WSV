@@ -16,46 +16,46 @@ class Course(object):
         self.expected = expected
         self.students = []
         self.activities = []
+        self.registrations = 0
 
+    def activities_loader(self):
+        """
+        Loading activities
+        """
         # load activities
-        self.activities_loader()
-    
-    def activities_loader(self) -> None:
         lectures = int(self.num_hc)
-        expected = int(self.expected)
+        self.registrations = len(self.students)
         for i in range(lectures):
             id = "h" + str(i + 1)
-            test_act = Activity(self.name, id, expected)
+            test_act = Activity(self.name, id, self.registrations)
             self.activities.append(test_act)
         
         seminars = self.num_wc
         if self.max_wc != "":
             max = int(self.max_wc)
-            test = math.ceil(int(self.expected) / max)
+            test = math.ceil(self.registrations / max)
             seminars = int(seminars) * int(test)
             for j in range(int(seminars)):
                 id = "w" + str(j + 1)
                 test_act = Activity(self.name, id, max)
                 self.activities.append(test_act)
         else:
-            expected = int(self.expected)
             id = "w" + str(1)
-            test_act = Activity(self.name, id, expected)
+            test_act = Activity(self.name, id, self.registrations)
             self.activities.append(test_act)
 
         practica = self.num_pr
         if self.max_pr != "":
             max = int(self.max_pr)
-            test = math.ceil(int(self.expected) / max)
+            test = math.ceil(self.registrations / max)
             practica = int(practica) * int(test)
             for k in range(int(practica)):
                 id = "p" + str(k + 1)
                 test_act = Activity(self.name, id, max)
                 self.activities.append(test_act)
         else:
-            expected = int(self.expected)
             id = "p" + str(1) 
-            test_act = Activity(self.name, id, expected)
+            test_act = Activity(self.name, id, self.registrations)
             self.activities.append(test_act)    
 
     def register(self, studentnumber: str) -> None:

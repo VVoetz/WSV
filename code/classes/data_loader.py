@@ -37,12 +37,7 @@ class Data_loader(object):
                     break
 
                 # make course object and add it to the course dictionary
-                new_course = course.Course(line[0], line[1], line[2], line[3], line[4], line[5], line[6])
-                self.Courses[f"{line[0]}"] = new_course
-                # add course activities to data activities
-                for activity in new_course.activities:
-                    self.Activities.append(activity)
-
+                self.Courses[f"{line[0]}"] = course.Course(line[0], line[1], line[2], line[3], line[4], line[5], line[6])
         pass
     
     def load_rooms(self, filename):
@@ -99,12 +94,15 @@ class Data_loader(object):
                     else:
                         break
 
-
-
-
-
-
-
+    def load_activities(self):
+        """
+        Adding activities based on number of courses and number of registered students
+        """
+        for course in self.Courses.values():
+            course.activities_loader()
+            for activity in course.activities:
+                self.Activities.append(activity)
+            
 
 
 
