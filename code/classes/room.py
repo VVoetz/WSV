@@ -8,8 +8,12 @@ class Room():
         self.capacity = int(capacity)
         self.days = ["mo", "tu", "wo", "th", "fr"]
         self.slots = 5
+
+        # hardcode largest room
         if name == "C0.110":
             self.slots = 6
+
+        # initialize timeslot dictionary with values None
         for day in self.days:
             for timeslot in range(1, self.slots):
                 self.activity_dict[day + str(timeslot)] = None
@@ -47,8 +51,10 @@ class Room():
     def remove_activity(self, activity) -> None:
         """
         removes activity from room,
-        returns false if activity not in dictionary
+        raises error if activity not in dictionary
         """
+
+        # loop over all timeslots
         for day in self.days:
             for timeslot in range(1, self.slots):
                 if self.activity_dict[day + str(timeslot)] == activity:
@@ -61,6 +67,8 @@ class Room():
         returns list of available slots
         """
         available = list()
+
+        # loop over all timeslots
         for day in self.days:
             for timeslot in range(1, self.slots):
                 if self.activity_dict[day + str(timeslot)] == None:

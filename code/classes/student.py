@@ -4,7 +4,7 @@ class Student():
         """
         Constructor of class
         """
-        self.courses = []
+        self.courses = list()
         self.studentnumber = studentnumber
         self.name = name
         self.activities = list()
@@ -38,30 +38,57 @@ class Student():
         Calculates and returns malus points of student
         """
         activity_dict = {}
-        maluspunt = 0
-        for day in ["mo", "tu", "wo", "th", "fr"]:
+        maluspoint = 0
+        days = ["mo", "tu", "wo", "th", "fr"]
+        
+        # add empty lists with days as keys to activity dictionary
+        for day in days:
             activity_dict[day] = list()
-        for item in self.activities:
-            day = item.timeslot[0] + item.timeslot[1]
-            activity_dict[day].append(int(item.timeslot[2]))
-        for day in ["mo", "tu", "wo", "th", "fr"]:
+
+        # loop over activities of this student then add its timeslot 
+        # to the activity dictionary with the day as key
+        for activity in self.activities:
+            day = activity.timeslot[0:2]
+            activity_dict[day].append(int(activity.timeslot[2]))
+        
+        # loop over all days
+        for day in days:
+
+            # don't check with 1 or 0 activities
             if len(activity_dict[day]) < 2:
                 pass
             else:
+
+                # remove multiple courses on the same timeslot
                 copy = sorted(list(set(activity_dict[day])))
-                tussenuur = 0
-                for i in range(len(copy) - 1):
-                    tussenuur += (copy[i + 1] - copy[i] - 1) 
-                    maluspunt += tussenuur
-                    if tussenuur == 2:
-                        maluspunt += 1
-                    elif tussenuur == 3:
-                        maluspunt += 1000000
-                for i in range(1, 6):
+                class_break = 0
+
+                # loop over all but the last timeslot as int in a day
+                for time in range(len(copy) - 1):
+
+                    # compare current to next timeslot and calculate difference
+                    class_break += (copy[time + 1] - copy[time] - 1) 
+                    maluspoint += class_break
+
+                    # add extra minus point for 2 class breaks (tussenuren)
+                    if class_break == 2:
+                        maluspoint += 1
+                    
+                    # temporary solution for 3 class_breaks
+                    elif class_break == 3:
+                        maluspoint += 1000000
+                
+                # loop over all timeslots and check for duplicates
+                for timeslot in range(1, 6):
                     counter = 0
-                    for j in activity_dict[day]:
-                        if j == i:
+
+                    # loop over all timeslots of this students activities
+                    for activity_timeslot in activity_dict[day]:
+                        if timeslot == activity_timeslot:
                             counter += 1
+                    
+                    # update malus
                     if counter > 1:
-                        maluspunt += counter
-        return maluspunt
+                        maluspoint += counter
+
+        return maluspoint

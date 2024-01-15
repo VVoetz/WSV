@@ -67,16 +67,28 @@ class Data_loader(object):
         pass
 
     def load_students(self, filename):
+        """
+        Reads the given file and adds the students as a student class to a dictionary
+
+        pre:    filename is a file formatted as a student
+        """
         with open(filename) as f:
+
+            # skip header
             next(f)
+
+            # loop to read file by line
             while True:
-                #next(f) skips header
                 line = f.readline()
                 line = line.strip()
                 line = line.split(",")
                 if line[0] == "":
                     break
+
+                # make student object and add it to the student dictionary
                 self.Students[f"{line[2]}"] = student.Student(line[2], f"{line[0]}"+f"{line[1]}")
+
+                # loop over the courses of the student
                 for i in range(3,8):
                     if line[i]!="":
                         self.Courses[line[i]].register(self.Students[f"{line[2]}"])
