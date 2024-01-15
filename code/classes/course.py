@@ -25,38 +25,37 @@ class Course(object):
         # load activities
         lectures = int(self.num_hc)
         self.registrations = len(self.students)
-        for i in range(lectures):
-            id = "h" + str(i + 1)
-            test_act = Activity(self.name, id, self.registrations)
-            self.activities.append(test_act)
+        if lectures > 0:
+            for i in range(lectures):
+                id = "h" + str(i + 1)
+                test_act = Activity(self.name, id, self.registrations)
+                self.activities.append(test_act)
         
         seminars = self.num_wc
-        if self.max_wc != "":
-            max = int(self.max_wc)
-            test = math.ceil(self.registrations / max)
-            seminars = int(seminars) * int(test)
-            for j in range(int(seminars)):
-                id = "w" + str(j + 1)
+        if int(self.num_wc) > 0:
+            if self.max_wc != "":
+                max = int(self.max_wc)
+                test = math.ceil(self.registrations / max)
+                seminars = int(seminars) * int(test)
+            else:
+                max = self.registrations
+            for j in range(seminars):
+                id = "w" + str(j+1)
                 test_act = Activity(self.name, id, max)
                 self.activities.append(test_act)
-        else:
-            id = "w" + str(1)
-            test_act = Activity(self.name, id, self.registrations)
-            self.activities.append(test_act)
 
         practica = self.num_pr
-        if self.max_pr != "":
-            max = int(self.max_pr)
-            test = math.ceil(self.registrations / max)
-            practica = int(practica) * int(test)
-            for k in range(int(practica)):
+        if int(self.num_pr) > 0:
+            if self.max_pr != "":
+                max = int(self.max_pr)
+                test = math.ceil(self.registrations / max)
+                practica = int(practica) * int(test)
+            else:
+                max = self.registrations
+            for k in range(practica):
                 id = "p" + str(k + 1)
                 test_act = Activity(self.name, id, max)
-                self.activities.append(test_act)
-        else:
-            id = "p" + str(1) 
-            test_act = Activity(self.name, id, self.registrations)
-            self.activities.append(test_act)    
+                self.activities.append(test_act)   
 
     def register(self, studentnumber: str) -> None:
         """
