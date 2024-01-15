@@ -49,7 +49,7 @@ class Activity:
         """
         Returns the course name with activity id
         """
-        return self.course + self.id + self.group
+        return f"{self.course} {self.id}{self.group}"
     
     def set_timeslot(self, new_timeslot: str) -> None:
         """

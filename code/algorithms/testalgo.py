@@ -9,47 +9,11 @@ class Testalgo():
         self.Students = data.Students
         self.Activities = data.Activities
         
+        self.run()
     
     def run(self) -> None:
         
-        total_activities = list()
-
-        # Adds all necessary activities per course
-        for course in self.Courses:
-            lectures = int(self.Courses[course].num_hc)
-            expected = int(self.Courses[course].expected)
-            for i in range(lectures):
-                id = "h" + str(i + 1)
-                test_act = activity.Activity(course, id, expected)
-                total_activities.append(test_act)
-                self.Courses[course].activity(test_act)
-            
-            seminars = self.Courses[course].num_wc
-            if self.Courses[course].max_wc != "":
-                max = int(self.Courses[course].max_wc)
-                groups = int(math.ceil(int(self.Courses[course].expected) / max))
-
-            for j in range(int(seminars)):
-                for k in range(groups):
-                    id = "w" + str(j + 1)
-                    test_act = activity.Activity(course, id, max, k)
-                    total_activities.append(test_act)
-                    self.Courses[course].activity(test_act)
-            
-
-            practica = self.Courses[course].num_pr
-            if self.Courses[course].max_pr != "":
-                max = int(self.Courses[course].max_pr)
-                groups = int(math.ceil(int(self.Courses[course].expected) / max))
-            for k in range(int(practica)):
-                for l in range(groups):
-                    id = "p" + str(k + 1)
-                    test_act = activity.Activity(course, id, max, l)
-                    total_activities.append(test_act)
-                    self.Courses[course].activity(test_act)
-            
-        
-        assign_all(total_activities, self.Rooms)
+        assign_all(self.Activities, self.Rooms)
         assign_students(self.Courses)
 
 def assign_all(activities, rooms) -> None:
@@ -90,7 +54,7 @@ def assign_students(courses):
                             groups = 1
                             if courses[course].max_wc != "":
                                 max = int(courses[course].max_wc)
-                                groups = int(math.ceil(int(courses[course].expected) / max))
+                                groups = int(math.ceil(len(courses[course].students) / max))
                             if item.group == letters[groups - 1]:
                                 student.add_activity(item)
                                 item.add_student(student)
@@ -111,7 +75,7 @@ def assign_students(courses):
                             groups = 1
                             if courses[course].max_pr != "":
                                 max = int(courses[course].max_pr)
-                                groups = int(math.ceil(int(courses[course].expected) / max))
+                                groups = int(math.ceil(len(courses[course].students) / max))
                                 
                             if item.group == letters[groups - 1]:
                                 student.add_activity(item)

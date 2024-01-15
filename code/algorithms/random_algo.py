@@ -8,7 +8,11 @@ class Testalgo():
         self.Rooms = data.Rooms
         self.Students = data.Students
         self.Activities = data.Activities
-    
+
+        for i in range(1, 17):
+            test_act = activity.Activity('test', 'h' + str(i), 100)
+            self.Activities.append(test_act)
+        print(len(self.Activities))
         random.shuffle(self.Activities)
         assign_all(self.Activities, self.Rooms)
         assign_students(self.Courses)

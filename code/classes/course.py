@@ -31,31 +31,33 @@ class Course(object):
                 test_act = Activity(self.name, id, self.registrations)
                 self.activities.append(test_act)
         
-        seminars = self.num_wc
+        seminars = int(self.num_wc)
         if int(self.num_wc) > 0:
             if self.max_wc != "":
                 max = int(self.max_wc)
-                test = math.ceil(self.registrations / max)
-                seminars = int(seminars) * int(test)
+                groups = math.ceil(self.registrations / max)
+                #seminars = int(seminars) * int(test)
             else:
                 max = self.registrations
             for j in range(seminars):
-                id = "w" + str(j+1)
-                test_act = Activity(self.name, id, max)
-                self.activities.append(test_act)
+                for k in range(groups):
+                    id = "w" + str(j+1)
+                    test_act = Activity(self.name, id, max, k)
+                    self.activities.append(test_act)
 
-        practica = self.num_pr
+        practica = int(self.num_pr)
         if int(self.num_pr) > 0:
             if self.max_pr != "":
                 max = int(self.max_pr)
-                test = math.ceil(self.registrations / max)
-                practica = int(practica) * int(test)
+                groups = math.ceil(self.registrations / max)
+                #practica = int(practica) * int(test)
             else:
                 max = self.registrations
             for k in range(practica):
-                id = "p" + str(k + 1)
-                test_act = Activity(self.name, id, max)
-                self.activities.append(test_act)   
+                for i in range(groups):
+                    id = "p" + str(k + 1)
+                    test_act = Activity(self.name, id, max, i)
+                    self.activities.append(test_act)   
 
     def register(self, studentnumber: str) -> None:
         """

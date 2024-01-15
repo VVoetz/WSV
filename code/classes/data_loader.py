@@ -16,7 +16,7 @@ class Data_loader(object):
         self.load_courses(f"data/{courses}")
         self.load_rooms(f"data/{rooms}")
         self.load_students(f"data/{students}")
-        # self.load_activities()
+        self.load_activities()
     
 
     def load_courses(self, filename: str) -> None:

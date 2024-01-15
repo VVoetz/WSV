@@ -2,6 +2,7 @@ from code.classes import data_loader
 from code.algorithms import testalgo, random_algo, greedy_algo
 from code.visualisation import print_schedule, make_google_calendar
 import copy
+import sys
 
 
 
@@ -12,12 +13,14 @@ if __name__ == "__main__":
         
         data = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
 
-        test = testalgo.Testalgo(data)
-        test.run()
-
-        # print(test.Courses["Calculus 2"].activities[0])
-        # data.swap_activities(test.Courses["Calculus 2"].activities[0], test.Courses["Calculus 2"].activities[1])
-        # print(test.Courses["Calculus 2"].activities[0])
+        # runs chosen algorithm
+        if sys.argv[1] == 'greedy':
+            test = greedy_algo.Greedyalgo(data)
+        elif sys.argv[1] == 'test':
+            test = testalgo.Testalgo(data)
+        elif sys.argv[1] == 'random':
+            test = random_algo.Testalgo(data)
+        
 
         # print schedule in terminal
         for room in test.Rooms:
@@ -28,13 +31,15 @@ if __name__ == "__main__":
         for course in data.Courses:
             for activity in data.Courses[course].activities:
                 malus += activity.get_malus()
+                
+        
 
         #for activity in data.Courses["Calculus 2"].activities:
         #    print(activity.get_malus())
         
         for item in test.Students:
             malus += test.Students[item].get_malus()
-        # print(f"{i}: {malus}") 
+        print(f"{i}: {malus}") 
         maluslist.append(malus)
         #make_google_calendar.make_google_calendar_csv(data)
         #make_google_calendar.make_student_calendar(data)
