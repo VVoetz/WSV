@@ -1,4 +1,4 @@
-from activity import Activity
+from .activity import Activity
 import math
 
 class Course(object):
@@ -17,9 +17,9 @@ class Course(object):
         """
         Loading activities
         """
-        self.activities()
+        self.activities_loader()
     
-    def activities(self):
+    def activities_loader(self):
         lectures = int(self.num_hc)
         expected = int(self.expected)
         for i in range(lectures):

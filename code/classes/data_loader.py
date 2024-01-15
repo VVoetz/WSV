@@ -9,7 +9,7 @@ class Data_loader(object):
         self.Courses = {}
         self.Rooms = {}
         self.Students = {}
-        self.Activities = {}
+        self.Activities = []
 
         
         # call functions to load data
