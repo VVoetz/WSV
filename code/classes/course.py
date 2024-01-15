@@ -1,6 +1,9 @@
 class Course(object):
 
-    def __init__(self, name, num_hc, num_wc, max_wc, num_pr, max_pr, expected):
+    def __init__(self, name: str, num_hc :str, num_wc: str, max_wc: str, num_pr: str, max_pr: str, expected: str) -> None:
+        """
+        Constructor for Course data-object
+        """
         self.name = name
         self.num_hc = num_hc
         self.num_wc = num_wc
@@ -11,8 +14,22 @@ class Course(object):
         self.students = []
         self.activities = []
     
-    def register(self, studentnumber):
+    def register(self, studentnumber: str) -> None:
+        """
+        Adds given student number to this course
+
+        pre:    student number is a string
+        """
+
         self.students.append(studentnumber)
+        pass
     
-    def activity(self, activiteit):
-        self.activities.append(activiteit)
+    def activity(self, activity) -> None:
+        """
+        Adds given activity to this course
+
+        pre:    activity is an activity object
+        """
+
+        self.activities.append(activity)
+        pass
