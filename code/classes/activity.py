@@ -1,5 +1,5 @@
 class Activity:
-    def __init__(self, course: str, id: str, capacity: int) -> None:
+    def __init__(self, course: str, id: str, capacity: int, group=None) -> None:
         """
         Class constructer
         """
@@ -9,6 +9,11 @@ class Activity:
         self.timeslot = ""
         self.room = ""
         self.students = list()
+        self.group = ""
+        letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+        if group != None:
+            self.group = letters[group]
+        
     
     def get_course(self) -> str:
         """
@@ -21,6 +26,12 @@ class Activity:
         Returns id name as string
         """
         return self.id
+    
+    def get_activity_name(self) -> str:
+        """
+        Returns the course name + activity type
+        """
+        return self.course + self.id
     
     def get_room(self) -> str:
         """
@@ -38,7 +49,7 @@ class Activity:
         """
         Returns the course name with activity id
         """
-        return self.course + self.id
+        return self.course + self.id + self.group
     
     def set_timeslot(self, new_timeslot: str) -> None:
         """

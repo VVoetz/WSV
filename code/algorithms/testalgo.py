@@ -27,25 +27,26 @@ class Testalgo():
             seminars = self.Courses[course].num_wc
             if self.Courses[course].max_wc != "":
                 max = int(self.Courses[course].max_wc)
-                test = math.ceil(int(self.Courses[course].expected) / max)
-                seminars = int(seminars) * int(test)
+                groups = int(math.ceil(int(self.Courses[course].expected) / max))
+
             for j in range(int(seminars)):
-                id = "w" + str(j + 1)
-                test_act = activity.Activity(course, id, max)
-                total_activities.append(test_act)
-                self.Courses[course].activity(test_act)
+                for k in range(groups):
+                    id = "w" + str(j + 1)
+                    test_act = activity.Activity(course, id, max, k)
+                    total_activities.append(test_act)
+                    self.Courses[course].activity(test_act)
             
 
             practica = self.Courses[course].num_pr
             if self.Courses[course].max_pr != "":
                 max = int(self.Courses[course].max_pr)
-                test = math.ceil(int(self.Courses[course].expected) / max)
-                practica = int(practica) * int(test)
+                groups = int(math.ceil(int(self.Courses[course].expected) / max))
             for k in range(int(practica)):
-                id = "p" + str(k + 1)
-                test_act = activity.Activity(course, id, max)
-                total_activities.append(test_act)
-                self.Courses[course].activity(test_act)
+                for l in range(groups):
+                    id = "p" + str(k + 1)
+                    test_act = activity.Activity(course, id, max, l)
+                    total_activities.append(test_act)
+                    self.Courses[course].activity(test_act)
             
         
         assign_all(total_activities, self.Rooms)
@@ -74,11 +75,44 @@ def assign_students(courses):
                     item.add_student(student)
             if str(item.id[0]) == 'w':
                 for student in courses[course].students:
-                    student.add_activity(item)
-                    item.add_student(student)
+                    student_acts = list()
+                    for activity in student.activities:
+                        student_acts.append(activity.get_activity_name())
+                    if item.get_activity_name() in student_acts:
+                        pass
+                    else:
+                        if len(item.students) < item.capacity:
+                            student.add_activity(item)
+                            item.add_student(student)
+                        else:
+                            #print('test')
+                            letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+                            groups = 1
+                            if courses[course].max_wc != "":
+                                max = int(courses[course].max_wc)
+                                groups = int(math.ceil(int(courses[course].expected) / max))
+                            if item.group == letters[groups - 1]:
+                                student.add_activity(item)
+                                item.add_student(student)
             if str(item.id[0]) == 'p':
                 for student in courses[course].students:
-                    student.add_activity(item)
-                    item.add_student(student)
-            
-    
+                    student_acts = list()
+                    for activity in student.activities:
+                        student_acts.append(activity.get_activity_name())
+                    if item.get_activity_name() in student_acts:
+                        pass
+                    else:
+                        if len(item.students) < item.capacity:
+                            student.add_activity(item)
+                            item.add_student(student)
+                        else:
+                            #print('test')
+                            letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+                            groups = 1
+                            if courses[course].max_pr != "":
+                                max = int(courses[course].max_pr)
+                                groups = int(math.ceil(int(courses[course].expected) / max))
+                                
+                            if item.group == letters[groups - 1]:
+                                student.add_activity(item)
+                                item.add_student(student)
