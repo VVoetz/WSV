@@ -63,10 +63,10 @@ class Activity:
 
     def set_room(self, new_room) -> None:
         """
-        Sets class room to the give room
+        Sets class room to the given room
 
-        pre: new_room is a string
-        post: room is a changed string
+        pre:    new_room is a string
+        post:   room is a changed string
         """
         self.room = new_room
         pass
@@ -91,7 +91,7 @@ class Activity:
         post:   returns minus point that the specic activity room combination causes
         """
 
-        # return 0 if room or timeslot is not assigned
+        # return 0 if room or timeslot is not assigned or if there are no students in a course
         if self.room == "" or self.timeslot == "" or len(self.students) == 0:
             return 0
         
