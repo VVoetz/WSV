@@ -16,6 +16,7 @@ class Data_loader(object):
         self.load_courses(f"data/{courses}")
         self.load_rooms(f"data/{rooms}")
         self.load_students(f"data/{students}")
+        # self.load_activities()
     
 
     def load_courses(self, filename: str) -> None:
@@ -102,8 +103,20 @@ class Data_loader(object):
             course.activities_loader()
             for activity in course.activities:
                 self.Activities.append(activity)
-            
+    
+    # POTENTIAL SWAP FUNCTION
+    # NOT BEEN ABLE TO TEST YET!!
+    def swap_activities(self, activity1, activity2) -> None:
+        """
+        Function swaps two activity roomslots
 
+        pre:    activity1 and activity2 are activity objects
+        post:   the roomslots of both activities are swapped
+        """
+        
+        # swap timeslots
+        activity1.timeslot, activity2.timeslot = activity2.timeslot, activity1.timeslot
 
-
-
+        # swap rooms
+        activity1.room, activity2.room = activity2.room, activity1.room
+        pass

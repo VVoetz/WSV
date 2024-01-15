@@ -6,18 +6,22 @@ import copy
 
 
 if __name__ == "__main__":
-
     
     maluslist = list()
     for i in range(1):
         
         data = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
-        
-        test = greedy_algo.Greedyalgo(data)
+
+        test = testalgo.Testalgo(data)
+        test.run()
+
+        # print(test.Courses["Calculus 2"].activities[0])
+        # data.swap_activities(test.Courses["Calculus 2"].activities[0], test.Courses["Calculus 2"].activities[1])
+        # print(test.Courses["Calculus 2"].activities[0])
 
         # print schedule in terminal
-        #for room in test.Rooms:
-        #    print_schedule.visualize_room_schedule(test.Rooms[room])    
+        for room in test.Rooms:
+           print_schedule.visualize_room_schedule(test.Rooms[room])    
         
         # print the malus points of a course's activities
         malus = 0
@@ -30,8 +34,8 @@ if __name__ == "__main__":
         
         for item in test.Students:
             malus += test.Students[item].get_malus()
-        print(f"{i}: {malus}") 
+        # print(f"{i}: {malus}") 
         maluslist.append(malus)
         #make_google_calendar.make_google_calendar_csv(data)
         #make_google_calendar.make_student_calendar(data)
-    print(sorted(maluslist))
+    # print(sorted(maluslist))
