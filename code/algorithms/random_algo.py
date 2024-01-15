@@ -8,51 +8,9 @@ class Testalgo():
         self.Rooms = data.Rooms
         self.Students = data.Students
         self.Activities = data.Activities
-        
     
-    def run(self) -> None:
-        
-        total_activities = list()
-
-        for i in range(1, 17):
-            test_act = activity.Activity('test', 'h' + str(i), 100)
-            total_activities.append(test_act)
-
-        # Adds all necessary activities per course
-        for course in self.Courses:
-            lectures = int(self.Courses[course].num_hc)
-            expected = int(self.Courses[course].expected)
-            for i in range(lectures):
-                id = "h" + str(i + 1)
-                test_act = activity.Activity(course, id, expected)
-                total_activities.append(test_act)
-                self.Courses[course].activity(test_act)
-            
-            seminars = self.Courses[course].num_wc
-            if self.Courses[course].max_wc != "":
-                max = int(self.Courses[course].max_wc)
-                test = math.ceil(int(self.Courses[course].expected) / max)
-                seminars = int(seminars) * int(test)
-            for j in range(int(seminars)):
-                id = "w" + str(j + 1)
-                test_act = activity.Activity(course, id, max)
-                total_activities.append(test_act)
-                self.Courses[course].activity(test_act)
-            
-
-            practica = self.Courses[course].num_pr
-            if self.Courses[course].max_pr != "":
-                max = int(self.Courses[course].max_pr)
-                test = math.ceil(int(self.Courses[course].expected) / max)
-                practica = int(practica) * int(test)
-            for k in range(int(practica)):
-                id = "p" + str(k + 1)
-                test_act = activity.Activity(course, id, max)
-                total_activities.append(test_act)
-                self.Courses[course].activity(test_act)
-            
-        random.shuffle(total_activities)
-        assign_all(total_activities, self.Rooms)
+        random.shuffle(self.Activities)
+        assign_all(self.Activities, self.Rooms)
         assign_students(self.Courses)
 
 def assign_all(activities, rooms) -> None:
