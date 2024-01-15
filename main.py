@@ -16,7 +16,7 @@ if __name__ == "__main__":
         test.run()
 
         # print(test.Courses["Calculus 2"].activities[0])
-        # data.swap_activities(test.Courses["Calculus 2"].activities[0], test.Courses["Calculus 2"].activities[1])
+        data.swap_activities(test.Courses["Calculus 2"].activities[0], test.Courses["Calculus 2"].activities[1])
         # print(test.Courses["Calculus 2"].activities[0])
 
         # print schedule in terminal

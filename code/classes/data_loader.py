@@ -104,19 +104,22 @@ class Data_loader(object):
             for activity in course.activities:
                 self.Activities.append(activity)
     
-    # POTENTIAL SWAP FUNCTION
-    # NOT BEEN ABLE TO TEST YET!!
     def swap_activities(self, activity1, activity2) -> None:
         """
-        Function swaps two activity roomslots
+        Function swaps two activity roomslots in the activity and room classes
 
         pre:    activity1 and activity2 are activity objects
         post:   the roomslots of both activities are swapped
         """
-        
+
         # swap timeslots
         activity1.timeslot, activity2.timeslot = activity2.timeslot, activity1.timeslot
 
         # swap rooms
         activity1.room, activity2.room = activity2.room, activity1.room
+
+        # swap the activities in the room objects
+        self.Rooms[str(activity1.room)].activity_dict[activity1.timeslot], self.Rooms[str(activity2.room)].activity_dict[activity2.timeslot] = \
+            self.Rooms[str(activity2.room)].activity_dict[activity2.timeslot], self.Rooms[str(activity1.room)].activity_dict[activity1.timeslot]
+
         pass
