@@ -13,8 +13,8 @@ class Greedyalgo(object):
         rooms = list()
         for room in self.Rooms:
             rooms.append(self.Rooms[room])
-        self.assign_all(self.Activities, rooms)
-        self.assign_students(self.Courses)
+        assign_all(self.Activities, rooms)
+        assign_students(self.Courses)
 
 def assign_all(activities, rooms: list) -> None:
     for activity in sorted(activities, key=lambda room: room.capacity):
