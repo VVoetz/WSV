@@ -42,6 +42,7 @@ class Course(object):
             for j in range(seminars):
                 id = "w" + str(j+1)
                 test_act = Activity(self.name, id, max)
+                self.activities.append(test_act)
 
         practica = self.num_pr
         if int(self.num_pr) > 0:
