@@ -48,7 +48,9 @@ class Student():
         # loop over activities of this student then add its timeslot 
         # to the activity dictionary with the day as key
         for activity in self.activities:
+            print(activity)
             day = activity.timeslot[0:2]
+            print(day)
             activity_dict[day].append(int(activity.timeslot[2]))
         
         # loop over all days
