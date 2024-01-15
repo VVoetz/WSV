@@ -40,7 +40,7 @@ class Data_loader(object):
                 line = line.split(",")
                 if line[0] == "":
                     break
-                self.Rooms[f"{line[0]}"] =room.Room(line[0], line[1])
+                self.Rooms[f"{line[0]}"] = room.Room(line[0], line[1])
 
     def load_students(self, filename):
         with open(filename) as f:
