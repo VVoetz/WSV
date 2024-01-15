@@ -13,7 +13,6 @@ if __name__ == "__main__":
         
         data = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
         test = greedy_algo.Greedyalgo(data)
-        test.run()
 
         # print schedule in terminal
         #for room in test.Rooms:
