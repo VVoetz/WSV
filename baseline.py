@@ -46,4 +46,3 @@ if __name__ == "__main__":
                 print(f"simulation {i} completed")
     plot_list.plot_malus(maluslist)
     print(maluslist)
-        

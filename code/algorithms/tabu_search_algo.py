@@ -10,8 +10,11 @@ class Tabu_search():
         self.Activities = data.Activities
     
         # TODO
-        # create_initial_solution()
+        self.create_initial_solution()
         # run()
     
     def create_initial_solution(self) -> None:
+        print(self.Students["84449005"].courses)
+
+    def run(self) -> None:
         pass

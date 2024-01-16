@@ -8,6 +8,11 @@ def plot_malus(malus_list: list[int], color="r", size=100) -> None:
     """
 
     # create scatter plot with run on x and value on y with given color and size
+    upper = max(malus_list)
+    lower = min(malus_list)
+    difference = upper - lower
+
     plt.scatter(range(0,len(malus_list)), malus_list, color=color, s=size)
     plt.xlim(0, len(malus_list) - 1)
+    plt.ylim(lower - difference, upper + difference)
     plt.savefig("code/visualisation/malus_point_plot.png")
