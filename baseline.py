@@ -9,7 +9,7 @@ import sys
 if __name__ == "__main__":
     
     maluslist = list()
-    for i in range(10000):
+    for i in range(100):
         # paramater to make sure simulations only give valid schedules
         sim = True
         while sim:
@@ -33,12 +33,13 @@ if __name__ == "__main__":
             # calculating malus points for the students
             for item in test.Students:
                 malus_add = test.Students[item].get_malus()
-                if not malus_add >= 1000000:
-                    malus += malus_add
-                    sim = False
+                if malus_add >= 1000000:
+                    sim = True
+                    break
                 # breaks out for loop when a student gets too much maluspoints
                 else:
-                    break
+                    sim = False
+                    malus += malus_add
 
             # script only resumed when all students have a valid schedule       
             if not sim:

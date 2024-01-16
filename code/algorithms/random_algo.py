@@ -52,8 +52,25 @@ def assign_students(courses):
         for i in range(len(seminarset)):
             for student in courses[course].students:
                 random.shuffle(seminarlist)
-                student.add_activity(seminarlist[0])
+                i = 0
+                while True:
+                    if student.test_malus(seminarlist[i]) < 100000:
+                        student.add_activity(seminarlist[i])
+                        break
+                    i += 1
+                    if i == len(seminarlist):
+                        student.add_activity(seminarlist[0])
+                        break
+                    
         for i in range(len(practicaset)):
             for student in courses[course].students:
                 random.shuffle(practicalist)
-                student.add_activity(practicalist[0])
+                i = 0
+                while True:
+                    if student.test_malus(practicalist[i]) < 100000:
+                        student.add_activity(practicalist[i])
+                        break
+                    i += 1
+                    if i == len(practicalist):
+                        student.add_activity(practicalist[0])
+                        break
