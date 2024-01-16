@@ -9,9 +9,10 @@ import sys
 if __name__ == "__main__":
     
     maluslist = list()
+    base = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
     for i in range(1):
         
-        data = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
+        data = copy.deepcopy(base)
 
         # runs chosen algorithm
         if sys.argv[1] == 'greedy':

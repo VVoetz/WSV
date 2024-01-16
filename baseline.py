@@ -4,18 +4,17 @@ from code.visualisation import print_schedule, make_google_calendar
 import copy
 import sys
 
-
-
 if __name__ == "__main__":
     
     maluslist = list()
+    base = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
+
     for i in range(100):
         # paramater to make sure simulations only give valid schedules
         sim = True
         while sim:
-        
-            data = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
 
+            data = copy.deepcopy(base)
             # runs chosen algorithm
             if sys.argv[1] == 'greedy':
                 test = greedy_algo.Greedyalgo(data)
