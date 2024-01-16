@@ -33,6 +33,12 @@ class Student():
         """
         return self.activities
     
+    def test_malus(self, activity) -> int:
+        self.activities.append(activity)
+        malus = self.get_malus()
+        self.activities.remove(activity)
+        return malus
+
     def get_malus(self) -> int:
         """
         Calculates and returns malus points of student
