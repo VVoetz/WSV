@@ -12,7 +12,6 @@ class Testalgo():
         for i in range(1, 17):
             test_act = activity.Activity('test', 'h' + str(i), 100)
             self.Activities.append(test_act)
-        print(len(self.Activities))
         random.shuffle(self.Activities)
         assign_all(self.Activities, self.Rooms)
         assign_students(self.Courses)
@@ -33,18 +32,28 @@ def fill_first_room(rooms, activity) -> None:
 
 def assign_students(courses):
     for course in courses:
+        seminarlist = list() 
+        practicalist = list()
+        seminarset = set()
+        practicaset = set()
         for item in courses[course].activities:
             if str(item.id)[0] == 'h':
                 for student in courses[course].students:
                     student.add_activity(item)
                     item.add_student(student)
             if str(item.id[0]) == 'w':
-                for student in courses[course].students:
-                    student.add_activity(item)
-                    item.add_student(student)
+                seminarlist.append(item)
+                seminarset.add(int(item.id[1]))
+                
             if str(item.id[0]) == 'p':
-                for student in courses[course].students:
-                    student.add_activity(item)
-                    item.add_student(student)
-            
-    
+                practicalist.append(item)
+                practicaset.add(int(item.id[1]))
+
+        for i in range(len(seminarset)):
+            for student in courses[course].students:
+                random.shuffle(seminarlist)
+                student.add_activity(seminarlist[0])
+        for i in range(len(practicaset)):
+            for student in courses[course].students:
+                random.shuffle(practicalist)
+                student.add_activity(practicalist[0])
