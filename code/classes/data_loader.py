@@ -123,3 +123,15 @@ class Data_loader(object):
             self.Rooms[str(activity2.room)].activity_dict[activity2.timeslot], self.Rooms[str(activity1.room)].activity_dict[activity1.timeslot]
 
         pass
+
+    # NOT IMPLEMENTING UNTIL WE ARE SURE HOW IT'S SUPPOSED TO WORK
+    def swap_students(self, student1, student2) -> None:
+        """
+        Function swaps two students from activity
+        """
+
+        # student information in course --> dont change
+        # student information in activity --> swap
+        # student activity list --> swap
+
+        pass
