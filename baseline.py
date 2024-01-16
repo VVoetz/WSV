@@ -1,6 +1,6 @@
 from code.classes import data_loader
 from code.algorithms import testalgo, random_algo, greedy_algo
-from code.visualisation import print_schedule, make_google_calendar
+from code.visualisation import print_schedule, make_google_calendar, plot_list
 import copy
 import sys
 
@@ -44,6 +44,6 @@ if __name__ == "__main__":
             if not sim:
                 maluslist.append(malus)
                 print(f"simulation {i} completed")
-
+    plot_list.plot_malus(maluslist)
     print(maluslist)
         
