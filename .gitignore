@@ -154,6 +154,7 @@ cython_debug/
 
 code/visualisation/calendar_csv/calendar.csv
 code/visualisation/calendar_csv/test.csv
+code/visualisation/malus_point_plot.png
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
