@@ -76,6 +76,14 @@ class Activity:
         Adds student to list
         """
         self.students.append(student)
+    
+    def remove_student(self, student) -> None:
+        """
+        Removes student from list
+
+        pre:    student object has to be in list
+        """
+        self.students.remove(student)
 
     def student_list(self):
         """

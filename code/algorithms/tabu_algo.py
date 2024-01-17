@@ -4,19 +4,27 @@ import math, random
 
 class Tabu_search():
     def __init__(self, data) -> None:
+        """
+        Tabu search algorithm constructor
+        """
         self.Courses = data.Courses
         self.Rooms = data.Rooms
         self.Students = data.Students
         self.Activities = data.Activities
-    
-        # TODO
-        self.create_initial_solution()
 
-        # run()
+        self.Course_list = list(self.Courses.values())
+    
+        self.create_initial_solution()
+        self.run(5, 100000)
+
+        # temporary debugging lines
+
+        # for activity in self.Activities:
+        #     print(f"Activity: {str(activity)}   Students: {len(activity.students)}  Capacity: {activity.capacity}")
     
     def create_initial_solution(self) -> None:
         """
-        Function creates a valid initial solution to our problem
+        Function creates a "valid" initial solution to our problem
         """
 
         self.plan_random_schedule()
@@ -36,7 +44,6 @@ class Tabu_search():
             while not assigned:
                 room = random.choice(list(self.Rooms.values()))
                 assigned = self.plan_random_timeslot(room, activity)
-
 
     def plan_random_timeslot(self, room, activity) -> bool:
         """
@@ -64,27 +71,234 @@ class Tabu_search():
         Register all students to all the lectures
         """
 
-        # loop over all courses and all activities
+        # loop over all courses and all students
         for course in self.Courses.values():
-            for activity in course.activities:
+            for student in course.students:
 
-                if activity.id[0] == "h":
-                    self.register_lectures(course, activity)
-                else:
-                    self.register_seminars()
-
-    def register_lectures(self, course, activity) -> None:
+                self.register_student(course, student)
+            
+    def register_student(self, course, student) -> None:
         """
-        Register all the students for an activity
+        Function randomly registers students into needed activities
+
+        pre:    course and student are adequate classes
+        post:   students have a valid schedule (not taking 3 in between hours into account)
+        """
+        
+        # makes student assignment random
+        random.shuffle(course.activities)
+
+        registered_activities = set()
+
+        for activity in course.activities:
+
+            # register lectures
+            if activity.id[0] == "h":
+                activity.add_student(student)
+                student.add_activity(activity)
+            
+            # register seminars
+            else:
+                seminar_id = activity.id[0:2]
+
+                if seminar_id not in registered_activities:
+                    registered_activities.add(seminar_id)
+                    activity.add_student(student)
+                    student.add_activity(activity)
+
+    def run(self, tabu_tenure: int, iterations: int) -> None:
+        """
+        Function runs tabu algorithm for set ammmount of iterations with a given tabu_tenure
+        (the ammount of iterations it takes for a tabu move to be allowed again)
         """
 
-        # loop over all students of this lecture
-        for student in course.students:
-            activity.add_student(student)
-            student.add_activity(activity)
+        malus_before = self.calculate_malus()
+        no_change = 0
 
-    def register_seminars(self) -> None:
+        # change 2 random activities for iteration ammount of times
+        for iteration in range(0, iterations):
+            
+            malus_after = self.random_swap_activity(malus_before)
+            malus_change = self.swap_student_in_course()
+
+            # update malus points
+            malus_after += malus_change
+
+            if malus_before == malus_after:
+                no_change += 1
+                if no_change % 100 == 0:
+                    print(no_change)
+            else:
+                no_change = 0
+            
+            if no_change > 1000:
+                break
+
+            malus_before = malus_after
+
+    
+    def swap_activities(self, activity1, activity2) -> None:
+
+        """
+        Function swaps two activity roomslots in the activity and room classes
+
+        pre:    activity1 and activity2 are activity objects
+        post:   the roomslots of both activities are swapped
+        """
+
+        # swap timeslots
+        activity1.timeslot, activity2.timeslot = activity2.timeslot, activity1.timeslot
+
+        # swap rooms
+        activity1.room, activity2.room = activity2.room, activity1.room
+
+        # swap the activities in the room objects
+        self.Rooms[str(activity1.room)].activity_dict[activity1.timeslot], self.Rooms[str(activity2.room)].activity_dict[activity2.timeslot] = \
+            self.Rooms[str(activity2.room)].activity_dict[activity2.timeslot], self.Rooms[str(activity1.room)].activity_dict[activity1.timeslot]
+
         pass
 
-    def run(self) -> None:
-        pass
+    def calculate_malus(self) -> int:
+        """
+        Function calculates total malus point of current solution
+
+        post:   returns malus points as an int
+        """
+        malus = 0
+
+        for student in self.Students.values():
+            malus += student.get_malus()
+        
+        for activity in self.Activities:
+            malus += activity.get_malus()
+        
+        return malus
+    
+    def random_swap_activity(self, malus_before: int) -> int:
+        """
+        Randomly swaps 2 activities
+        Keeps good changes and reverts bad changes
+        """
+
+        # swap activities
+        activity1 = random.choice(self.Activities)
+        activity2 = random.choice(self.Activities)
+        self.swap_activities(activity1, activity2)
+
+        # calculate malus points
+        malus_after = self.calculate_malus()
+
+        # revert bad change or return good change
+        if malus_after > malus_before:
+            self.swap_activities(activity1, activity2)
+            return malus_before
+        else:
+            return malus_after
+    
+    def swap_student_in_course(self) -> int:
+        """
+        Randomly swaps 2 students in a course
+        Keeps good changes and reverts bad changes
+
+        post:   returns change in malus points as int
+        """
+        course = random.choice(self.Course_list)
+
+        activity_id = self.swappable_workgroup(course)
+
+        if activity_id != "":
+            malus_change = self.swap_student_activity(course, activity_id)
+            return malus_change
+
+        else:
+            return 0
+    
+    def swappable_workgroup(self, course) -> str:
+        """
+        Function determines if a course has enough workgroups for students to swap
+        """
+
+        id_set = set()
+
+        # loop over all activities in a course
+        for activity in course.activities:
+
+            activity_id = activity.id
+
+            # if activity has seperate work groups return true
+            if activity_id in id_set:
+                return activity_id
+
+            id_set.add(activity_id)
+        
+        # return false if no seperate work groups have been found
+        return ""
+        
+    def swap_student_activity(self, course, activity_id) -> int:
+        """
+        Function swaps 2 random students from workgroup of the given activity_id
+
+        pre:    course is a course object
+        post:   returns change in malus points as int
+        """
+
+        swappable_activities = list()
+
+        # loop over all activities of a course
+        for activity in course.activities:
+            if activity.id == activity_id:
+                swappable_activities.append(activity)
+
+        # choose random activities
+        activity1 = random.choice(swappable_activities)
+        activity2 = random.choice(swappable_activities)
+
+        # repeat while the 2 random activities are the same
+        while activity1 == activity2:
+            activity2 = random.choice(swappable_activities)
+
+        # choose 2 random students and calculate their malus points
+        student1 = random.choice(activity1.students)
+        student2 = random.choice(activity2.students)
+
+        # swap students and calculate scores
+        malus_before = student1.get_malus() + student2.get_malus()
+        self.swap_students(student1, student2, activity1, activity2)
+        malus_after = student1.get_malus() + student2.get_malus()
+
+        # revert bad changes and return 0
+        if malus_after > malus_before:
+            self.swap_students(student1, student2, activity2, activity1)
+            return 0
+
+        # return malus change
+        else:
+            return malus_after - malus_before  
+    
+    def swap_students(self, student1, student2, activity1, activity2) -> None:
+        """
+        Function swappes student 1 to activity 2
+        and swappes student 2 to activity 1
+
+        pre:    students have to be registered in according activities
+        post:   students will have swapped activities
+        """
+
+        student1.remove_activity(activity1)
+        activity1.remove_student(student1)
+
+        student2.remove_activity(activity2)
+        activity2.remove_student(student2)
+
+        student1.add_activity(activity2)
+        activity1.add_student(student2)
+
+        student2.add_activity(activity1)
+        activity2.add_student(student1)
+
+
+
+
+
+        
+
