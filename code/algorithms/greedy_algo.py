@@ -33,7 +33,6 @@ def fill_smallest_room(activity, rooms: list) -> None:
     #  if no room available that fits capacity, take largest available room to minimise 'maluspunten'   
     for room in sorted(rooms, key=lambda room: room.capacity, reverse=True):
         slots = room.return_availability()
-        print(room.capacity)
         if len(slots) > 0:
             chosen_slot = slots[0]
             room.add_activity(activity, chosen_slot)
@@ -66,7 +65,7 @@ def assign_students(courses):
                 best = 999999999
                 chosen_seminar = None
                 for activity in seminarlist:
-                    if student.test_malus(activity) + activity.test_malus(student) < best:
+                    if student.test_malus(activity) + activity.test_malus(student) < best and activity.capacity > len(activity.students):
                         best = student.test_malus(activity) + activity.test_malus(student)
                         chosen_seminar = activity     
                 student.add_activity(chosen_seminar)
@@ -79,7 +78,7 @@ def assign_students(courses):
             for student in sorted(courses[course].students, key=lambda student: len(student.activities), reverse=True):
                 best = 999999999
                 for activity in practicalist:
-                    if student.test_malus(activity) + activity.test_malus(student) < best:
+                    if student.test_malus(activity) + activity.test_malus(student) < best and activity.capacity > len(activity.students):
                         best = student.test_malus(activity) + activity.test_malus(student)
                         chosen_seminar = activity
                 student.add_activity(chosen_seminar)
