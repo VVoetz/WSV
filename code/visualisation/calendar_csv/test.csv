@@ -1,17 +1,11 @@
 ,Subject,Start Date,Start Time,End Time,Description
-0,Analysemethoden en -techniekenh1,23-01-2024,1:00 PM,3:00 PM,A1.08
-1,Data Miningh1,26-01-2024,5:00 PM,7:00 PM,C0.110
-2,Data Miningh2,23-01-2024,1:00 PM,3:00 PM,C0.110
-3,Data Miningw1,24-01-2024,11:00 AM,1:00 PM,C0.110
-4,Data Miningw2,25-01-2024,3:00 PM,5:00 PM,A1.10
-5,Data Miningw3,26-01-2024,11:00 AM,1:00 PM,A1.08
-6,Data Miningp1,24-01-2024,9:00 AM,11:00 AM,A1.06
-7,Data Miningp2,24-01-2024,3:00 PM,5:00 PM,C0.110
-8,Data Miningp3,24-01-2024,1:00 PM,3:00 PM,C1.112
-9,Lineaire Algebrah1,26-01-2024,11:00 AM,1:00 PM,A1.10
-10,Lineaire Algebrah2,22-01-2024,9:00 AM,11:00 AM,A1.08
-11,Software engineeringh1,23-01-2024,3:00 PM,5:00 PM,C0.110
-12,Software engineeringw1,26-01-2024,3:00 PM,5:00 PM,C1.112
-13,Software engineeringw2,23-01-2024,5:00 PM,7:00 PM,C0.110
-14,Software engineeringp1,26-01-2024,11:00 AM,1:00 PM,A1.04
-15,Software engineeringp2,23-01-2024,3:00 PM,5:00 PM,A1.08
+0,Analysemethoden en -technieken h1,25-01-2024,11:00 AM,1:00 PM,C1.112
+1,Data Mining h1,24-01-2024,9:00 AM,11:00 AM,A1.10
+2,Data Mining h2,24-01-2024,11:00 AM,1:00 PM,A1.10
+3,Data Mining w1c,24-01-2024,1:00 PM,3:00 PM,A1.08
+4,Data Mining p1a,24-01-2024,3:00 PM,5:00 PM,A1.08
+5,Lineaire Algebra h1,26-01-2024,9:00 AM,11:00 AM,C1.112
+6,Lineaire Algebra h2,26-01-2024,11:00 AM,1:00 PM,C1.112
+7,Software engineering h1,23-01-2024,1:00 PM,3:00 PM,C0.110
+8,Software engineering w1b,23-01-2024,11:00 AM,1:00 PM,C1.112
+9,Software engineering p1b,23-01-2024,3:00 PM,5:00 PM,C1.112

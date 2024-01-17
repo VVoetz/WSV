@@ -64,11 +64,13 @@ def assign_students(courses):
         for i in range(len(seminarset)):
             for student in sorted(courses[course].students, key=lambda student: len(student.activities), reverse=True):
                 best = 999999999
+                chosen_seminar = None
                 for activity in seminarlist:
-                    if student.test_malus(activity) < best:
-                        best = student.test_malus(activity)
-                        chosen_seminar = activity
+                    if student.test_malus(activity) + activity.test_malus(student) < best:
+                        best = student.test_malus(activity) + activity.test_malus(student)
+                        chosen_seminar = activity     
                 student.add_activity(chosen_seminar)
+                chosen_seminar.add_student(student)
 
         
         #sorted(rooms, key=lambda room: room.capacity, reverse=True)       
@@ -77,9 +79,10 @@ def assign_students(courses):
             for student in sorted(courses[course].students, key=lambda student: len(student.activities), reverse=True):
                 best = 999999999
                 for activity in practicalist:
-                    if student.test_malus(activity) < best:
-                        best = student.test_malus(activity)
+                    if student.test_malus(activity) + activity.test_malus(student) < best:
+                        best = student.test_malus(activity) + activity.test_malus(student)
                         chosen_seminar = activity
                 student.add_activity(chosen_seminar)
+                chosen_seminar.add_student(student)
 
 

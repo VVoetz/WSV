@@ -34,8 +34,9 @@ class Student():
         return self.activities
     
     def test_malus(self, activity) -> int:
+        malus = -1 * self.get_malus()
         self.activities.append(activity)
-        malus = self.get_malus()
+        malus += self.get_malus()
         self.activities.remove(activity)
         return malus
 

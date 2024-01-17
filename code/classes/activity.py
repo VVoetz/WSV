@@ -83,6 +83,13 @@ class Activity:
         """
         return self.students
     
+    def test_malus(self, student) -> int:
+        malus = -1 * self.get_malus()
+        self.students.append(student)
+        malus += self.get_malus()
+        self.students.remove(student)
+        return malus
+
     def get_malus(self) -> int:
         """
         Returns ammount of minus point that this activity causes
