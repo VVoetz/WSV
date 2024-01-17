@@ -3,14 +3,18 @@ from code.algorithms import testalgo, random_algo, greedy_algo, tabu_algo
 from code.visualisation import print_schedule, make_google_calendar
 import copy
 import sys
+import time
 
 
 
 if __name__ == "__main__":
     
+    start = time.time()
+
     maluslist = list()
     base = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
-    for i in range(1):
+
+    for i in range(5):
         
         data = copy.deepcopy(base)
 
@@ -25,8 +29,8 @@ if __name__ == "__main__":
             test = tabu_algo.Tabu_search(data)
 
         # print schedule in terminal
-        for room in test.Rooms:
-           print_schedule.visualize_room_schedule(test.Rooms[room])    
+        # for room in test.Rooms:
+        #    print_schedule.visualize_room_schedule(test.Rooms[room])    
         
         # print the malus points of a course's activities
 
@@ -37,9 +41,13 @@ if __name__ == "__main__":
         
         for item in test.Students:
             malus += test.Students[item].get_malus()
-        print(f"{i}: {malus}") 
-        # maluslist.append(malus)
+        print(f"{i}: {malus}")
+
+        maluslist.append(malus)
         
         #make_google_calendar.make_google_calendar_csv(data)
-        #make_google_calendar.make_student_calendar(data)
-    # print(sorted(maluslist))
+        make_google_calendar.make_student_calendar(data)
+    print(sorted(maluslist))
+
+    end = time.time()
+    print(f"time taken: {end - start}")

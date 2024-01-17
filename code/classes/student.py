@@ -27,6 +27,13 @@ class Student():
         """
         self.activities.append(activity)
     
+    def remove_activity(self, activity) -> None:
+        """
+        Removes activity from list of activities
+        """
+        
+        self.activities.remove(activity)
+    
     def show_activities(self):
         """
         Returns list of activities
