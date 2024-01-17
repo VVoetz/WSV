@@ -1,5 +1,5 @@
 from code.classes import data_loader
-from code.algorithms import testalgo, random_algo, greedy_algo
+from code.algorithms import testalgo, random_algo, greedy_algo, tabu_algo
 from code.visualisation import print_schedule, make_google_calendar
 import copy
 import sys
@@ -21,27 +21,25 @@ if __name__ == "__main__":
             test = testalgo.Testalgo(data)
         elif sys.argv[1] == 'random':
             test = random_algo.Testalgo(data)
-        
+        elif sys.argv[1] == 'tabu':
+            test = tabu_algo.Tabu_search(data)
 
         # print schedule in terminal
         for room in test.Rooms:
            print_schedule.visualize_room_schedule(test.Rooms[room])    
         
         # print the malus points of a course's activities
+
         malus = 0
         for course in data.Courses:
             for activity in data.Courses[course].activities:
                 malus += activity.get_malus()
-                
-        
-
-        #for activity in data.Courses["Calculus 2"].activities:
-        #    print(activity.get_malus())
         
         for item in test.Students:
             malus += test.Students[item].get_malus()
         print(f"{i}: {malus}") 
-        maluslist.append(malus)
+        # maluslist.append(malus)
+        
         #make_google_calendar.make_google_calendar_csv(data)
         #make_google_calendar.make_student_calendar(data)
     # print(sorted(maluslist))

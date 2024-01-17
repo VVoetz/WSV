@@ -7,7 +7,10 @@ def visualize_room_schedule(room) -> None:
     pre:    room is a Room object
     post:   pretty prints the given room its schedule
     """
-    
+
+    print(room.name)
+    print()
+
     # initialize matrix format
     day_to_index = {"mo": 0, "tu": 1, "wo": 2, "th": 3, "fr": 4}
     schedule_matrix = create_empty_schedule(5, 5)
@@ -21,8 +24,10 @@ def visualize_room_schedule(room) -> None:
         if room.activity_dict[key] != None:
             schedule_matrix[timeslot][day_to_index[day]] = room.activity_dict[key]
     
-    width = 37
+    width = 35
     print_schedule_matrix(schedule_matrix, width)
+
+    print()
 
 def create_empty_schedule(x: int, y: int) -> list[list[str]]:
     """

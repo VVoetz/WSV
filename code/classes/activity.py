@@ -7,7 +7,7 @@ class Activity:
         self.id = id
         self.capacity = capacity
         self.timeslot = ""
-        self.room = ""
+        self.room = None
         self.students = list()
         self.group = ""
         letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
