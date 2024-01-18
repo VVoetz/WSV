@@ -1,5 +1,5 @@
 from code.classes import data_loader
-from code.algorithms import testalgo, random_algo, greedy_algo, tabu_algo
+from code.algorithms import testalgo, random_algo, greedy_algo, tabu_algo, annealing
 from code.visualisation import print_schedule, make_google_calendar
 import copy
 import sys
@@ -27,6 +27,8 @@ if __name__ == "__main__":
             test = random_algo.Testalgo(data)
         elif sys.argv[1] == 'tabu':
             test = tabu_algo.Tabu_search(data)
+        elif sys.argv[1] == 'anneal':
+            test = annealing.Tabu_search(data)
 
         # print schedule in terminal
         # for room in test.Rooms:
