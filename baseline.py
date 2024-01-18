@@ -3,6 +3,7 @@ from code.algorithms import testalgo, random_algo, greedy_algo
 from code.visualisation import print_schedule, make_google_calendar, plot_list
 import copy
 import sys
+import csv
 
 if __name__ == "__main__":
     
@@ -42,7 +43,12 @@ if __name__ == "__main__":
 
             # script only resumed when all students have a valid schedule       
             if not sim:
-                maluslist.append(malus)
+                maluslist.append([malus])
                 print(f"simulation {i} completed")
-    plot_list.plot_malus(maluslist)
-    print(maluslist)
+    #plot_list.plot_malus(maluslist)
+    fields = ['maluspunten']
+
+    with open('baseline_data.csv', 'w') as f:
+        write = csv.writer(f)
+        write.writerow(fields)
+        write.writerows(maluslist)
