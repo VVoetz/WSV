@@ -123,3 +123,31 @@ class Activity:
             malus_points += 5
 
         return malus_points
+    
+    def get_detailed_malus(self) -> tuple[int]:
+        """
+        Returns detailed ammount of minus point that this activity causes
+
+        pre:    activity has a room
+        post:   returns tuple of different types of minus points
+        """
+
+        # return 0 if room or timeslot is not assigned or if there are no students in a course
+        if self.room == "" or self.timeslot == "" or len(self.students) == 0:
+            return 0, 0
+        
+        room_capacity = self.room.capacity
+        students = len(self.students)
+
+        room_capacity_malus_points = students - room_capacity
+        fifth_timeslot_malus_points = 0
+
+        # if students fit in the room give no malus points
+        if room_capacity_malus_points < 0:
+            room_capacity_malus_points = 0
+
+        # if timeslot is from 5 till 7 add 5 malus points
+        if self.timeslot[2] == "5":
+            fifth_timeslot_malus_points += 5
+
+        return room_capacity_malus_points, fifth_timeslot_malus_points

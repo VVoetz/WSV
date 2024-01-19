@@ -1,8 +1,8 @@
 from code.classes import room, course, student
 from code.classes import activity
-import math, random, copy
+import math, random
 
-class Tabu_search():
+class Hillclimber():
     def __init__(self, data) -> None:
         """
         Tabu search algorithm constructor
@@ -11,13 +11,19 @@ class Tabu_search():
         self.Rooms = data.Rooms
         self.Students = data.Students
         self.Activities = data.Activities
-        self.best_data = copy.deepcopy(data)
 
         self.Course_list = list(self.Courses.values())
     
         self.create_initial_solution()
 
-        self.run(100)
+        self.run(10000)
+        
+        
+
+        # temporary debugging lines
+
+        # for activity in self.Activities:
+        #     print(f"Activity: {str(activity)}   Students: {len(activity.students)}  Capacity: {activity.capacity}")
     
     def create_initial_solution(self) -> None:
         """
@@ -105,62 +111,34 @@ class Tabu_search():
 
     def run(self, iterations: int) -> None:
         """
-        Function runs tabu algorithm for set ammmount of iterations
+        Function runs tabu algorithm for set ammmount of iterations with a given tabu_tenure
+        (the ammount of iterations it takes for a tabu move to be allowed again)
         """
 
-        tabu_list = []
-        tabu_length = 200
-        simulation_best = 2000
+        malus_before = self.calculate_malus()
+        no_change = 0
 
         # change 2 random activities and 2 random students for iteration ammount of times
         for iteration in range(0, iterations):
-
-            neighbours = self.get_neighbours(5)
             
-            best_neighbour = None
-            best_neighbour_value = 1000000000
+            malus_after = self.random_swap_activity(malus_before)
+            malus_change = self.swap_student_in_course()
 
-            # loop over found neighbours and their values
-            for neighbour, value in neighbours.items():
+            # update malus points
+            malus_after += malus_change
 
-                tabu = False
-
-                if len(neighbour) == 2:
-                    tabu = self.is_activity_swap_tabu(neighbour, tabu_list)
-                elif len(neighbour) == 4:
-                    tabu = self.is_student_swap_tabu(neighbour, tabu_list)
-
-                if not tabu:
-                    
-                    # if neighbour is better than best neighbour set best neighbour
-                    if value < best_neighbour_value:
-
-                        best_neighbour = neighbour
-                        best_neighbour_value = value
+            if malus_before == malus_after:
+                no_change += 1
+                if no_change % 100 == 0:
+                    print(no_change)
+            else:
+                no_change = 0
             
-            if best_neighbour == None:
-                best_neighbour = []
+            if no_change > 1000:
+                break
 
-            # if activities have been swapped, swap best activities
-            elif len(best_neighbour) == 2:
-                activity1, activity2 = best_neighbour
-                self.swap_activities(activity1, activity2)
-                tabu_list.append(best_neighbour)
-
-            # if students have been swapped, swap best students
-            elif len(best_neighbour) == 4:
-                student1, student2, activity1, activity2 = best_neighbour
-                self.swap_students(student1, student2, activity1, activity2)
-                tabu_list.append(best_neighbour)
-            
-            if len(tabu_list) > tabu_length:
-                tabu_list.pop()
-
-            if best_neighbour_value < simulation_best:
-                simulation_best = best_neighbour_value
-
-            print(f"iteration: {iteration}  tabu len: {len(tabu_list)}  current value: {best_neighbour_value}   sim best: {simulation_best}")
-
+            malus_before = malus_after
+  
     def swap_activities(self, activity1, activity2) -> None:
 
         """
@@ -188,7 +166,6 @@ class Tabu_search():
 
         post:   returns malus points as an int
         """
-
         malus = 0
 
         for student in self.Students.values():
@@ -199,7 +176,7 @@ class Tabu_search():
         
         return malus
     
-    def random_swap_activity(self) -> dict:
+    def random_swap_activity(self, malus_before: int) -> int:
         """
         Randomly swaps 2 activities
         Keeps good changes and reverts bad changes
@@ -211,11 +188,20 @@ class Tabu_search():
 
         self.swap_activities(activity1, activity2)
 
-        return activity1, activity2
+        # calculate malus points
+        malus_after = self.calculate_malus()
+
+        # revert bad change or return good change
+        if malus_after > malus_before:
+            self.swap_activities(activity1, activity2)
+            return malus_before
+        else:
+            return malus_after
     
-    def swap_student_in_course(self) -> tuple:
+    def swap_student_in_course(self) -> int:
         """
         Randomly swaps 2 students in a course
+        Keeps good changes and reverts bad changes
 
         post:   returns change in malus points as int
         """
@@ -224,9 +210,11 @@ class Tabu_search():
         activity_id = self.swappable_workgroup(course)
 
         if activity_id != "":
-            return self.swap_student_activity(course, activity_id)
+            malus_change = self.swap_student_activity(course, activity_id)
+            return malus_change
+
         else:
-            return None, None, None, None
+            return 0
     
     def swappable_workgroup(self, course) -> str:
         """
@@ -249,7 +237,7 @@ class Tabu_search():
         # return false if no seperate work groups have been found
         return ""
         
-    def swap_student_activity(self, course, activity_id) -> tuple:
+    def swap_student_activity(self, course, activity_id) -> int:
         """
         Function swaps 2 random students from workgroup of the given activity_id
 
@@ -276,10 +264,19 @@ class Tabu_search():
         student1 = random.choice(activity1.students)
         student2 = random.choice(activity2.students)
 
-        # swap students
+        # swap students and calculate scores
+        malus_before = student1.get_malus() + student2.get_malus()
         self.swap_students(student1, student2, activity1, activity2)
+        malus_after = student1.get_malus() + student2.get_malus()
 
-        return student1, student2, activity1, activity2
+        # revert bad changes and return 0
+        if malus_after > malus_before:
+            self.swap_students(student1, student2, activity2, activity1)
+            return 0
+
+        # return malus change
+        else:
+            return malus_after - malus_before  
     
     def swap_students(self, student1, student2, activity1, activity2) -> None:
         """
@@ -302,70 +299,3 @@ class Tabu_search():
         student2.add_activity(activity1)
         activity2.add_student(student1)
 
-    def get_neighbours(self, neighbour_count: int) -> dict:
-        """
-        Function changes the schedule and calculates the change in malus points
-        then function reverts the change and saves the change and its score in a dict
-
-        post:   returns a dict with changes and their according scores
-        """
-        neighbour_dict = dict()
-
-        for neighbour in range(0, neighbour_count):
-            
-            weight = random.random()
-            if weight > 0.25:
-                
-                # swap 2 random activities, calculate score and revert change
-                activity1, activity2 = self.random_swap_activity()
-                score = self.calculate_malus()
-                self.swap_activities(activity1, activity2)
-
-                neighbour_dict[(activity1, activity2)] = score
-
-            else:
-
-                # swap 2 random students, calculate score and revert change
-                student1, student2, activity1, activity2 = self.swap_student_in_course()
-                if student1 != None:
-                    score = self.calculate_malus()
-                    self.swap_students(student1, student2, activity2, activity1)
-                    neighbour_dict[(student1, student2, activity1, activity2)] = score
-            
-
-        return neighbour_dict
-
-    def is_activity_swap_tabu(self, neighbour: tuple, tabu_list: list[tuple]) -> bool:
-        """
-        Function checks if activity combination is in the tabu list and returns corresponding bool
-        """
-        activity1, activity2 = neighbour
-        neighbour_combo1 = (activity1, activity2)
-        neighobur_combo2 = (activity2, activity1)
-
-        if neighbour_combo1 in tabu_list or neighobur_combo2 in tabu_list:
-            return True
-        else:
-            return False
-    
-    def is_student_swap_tabu(self, neighbour: tuple, tabu_list: list[tuple]) -> bool:
-        """
-        Function checks if student and activity combination 
-        is in the tabu list and returns corresponding bool
-        """
-        student1, student2, activity1, activity2 = neighbour
-
-        # configure different combinations
-        student_activity_combo1 = (student1, student2, activity1, activity2)
-        student_activity_combo2 = (student1, student2, activity2, activity1)
-        student_activity_combo3 = (student2, student1, activity1, activity2)
-        student_activity_combo4 = (student2, student1, activity2, activity1)
-
-        combo_list = [student_activity_combo1, student_activity_combo2, student_activity_combo3, student_activity_combo4]
-
-        # loop over all combo's and return true if combo is in tabu list
-        for combo in combo_list:
-            if combo in tabu_list:
-                return True
-        
-        return False
