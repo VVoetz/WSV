@@ -40,21 +40,33 @@ if __name__ == "__main__":
 
         room_capacity_points = 0
         fifth_slot_points = 0
+        double_acts = 0
+        singlegaps = 0
+        doublegaps = 0
+        triplegaps = 0
 
         for course in data.Courses:
             for activity in data.Courses[course].activities:
                 room_capacity, fifth_slot = activity.get_detailed_malus()
                 room_capacity_points += room_capacity
-
+                fifth_slot_points += fifth_slot
         
         for item in test.Students:
-            malus += test.Students[item].get_detailed_malus()
+            double_act_points, single_points, double_points, triple_points = test.Students[item].get_detailed_malus()
+            double_acts += double_act_points
+            singlegaps += single_points
+            doublegaps += double_points
+            triplegaps += triple_points
+        
+        malus = room_capacity_points + fifth_slot_points + double_acts + singlegaps + doublegaps + triplegaps
+        
         print(f"{i}: {malus}")
 
         maluslist.append(malus)
         
         #make_google_calendar.make_google_calendar_csv(data)
         make_google_calendar.make_student_calendar(data)
+    print(f"room capacity: {room_capacity_points}   fifth: {fifth_slot_points}  courseconflict: {double_acts}   single: {singlegaps}    double: {doublegaps}")
     print(sorted(maluslist))
 
     end = time.time()

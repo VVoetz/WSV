@@ -1,5 +1,6 @@
 from code.classes import room, course, student
 from code.classes import activity
+from code.visualisation import print_schedule
 import math, random, copy
 
 class Tabu_search():
@@ -17,7 +18,7 @@ class Tabu_search():
     
         self.create_initial_solution()
 
-        self.run(100)
+        self.run(1000)
     
     def create_initial_solution(self) -> None:
         """
@@ -98,7 +99,7 @@ class Tabu_search():
             else:
                 seminar_id = activity.id[0:2]
 
-                if seminar_id not in registered_activities:
+                if seminar_id not in registered_activities and len(activity.students) < activity.capacity:
                     registered_activities.add(seminar_id)
                     activity.add_student(student)
                     student.add_activity(activity)
@@ -109,13 +110,14 @@ class Tabu_search():
         """
 
         tabu_list = []
-        tabu_length = 200
+        tabu_length = 500
         simulation_best = 2000
 
         # change 2 random activities and 2 random students for iteration ammount of times
         for iteration in range(0, iterations):
 
-            neighbours = self.get_neighbours(5)
+            neighbour_ammount = 100
+            neighbours = self.get_neighbours(neighbour_ammount)
             
             best_neighbour = None
             best_neighbour_value = 1000000000
@@ -127,6 +129,8 @@ class Tabu_search():
 
                 if len(neighbour) == 2:
                     tabu = self.is_activity_swap_tabu(neighbour, tabu_list)
+                elif len(neighbour) == 3:
+                    tabu = self.is_activity_move_tabu(neighbour, tabu_list)
                 elif len(neighbour) == 4:
                     tabu = self.is_student_swap_tabu(neighbour, tabu_list)
 
@@ -137,6 +141,8 @@ class Tabu_search():
 
                         best_neighbour = neighbour
                         best_neighbour_value = value
+                else:
+                    print("Tabu")
             
             if best_neighbour == None:
                 best_neighbour = []
@@ -145,6 +151,13 @@ class Tabu_search():
             elif len(best_neighbour) == 2:
                 activity1, activity2 = best_neighbour
                 self.swap_activities(activity1, activity2)
+                tabu_list.append(best_neighbour)
+            
+            # if activities have been moved, move best activity
+            elif len(best_neighbour) == 3:
+                activity1, old_roomslot, new_roomslot = best_neighbour
+                new_room, new_timeslot = new_roomslot
+                self.move_activity(activity1, new_room, new_timeslot)
                 tabu_list.append(best_neighbour)
 
             # if students have been swapped, swap best students
@@ -199,7 +212,7 @@ class Tabu_search():
         
         return malus
     
-    def random_swap_activity(self) -> dict:
+    def random_swap_activity(self) -> tuple:
         """
         Randomly swaps 2 activities
         Keeps good changes and reverts bad changes
@@ -314,7 +327,9 @@ class Tabu_search():
         for neighbour in range(0, neighbour_count):
             
             weight = random.random()
-            if weight > 0.25:
+
+            # swap random activity
+            if weight < 0.2:
                 
                 # swap 2 random activities, calculate score and revert change
                 activity1, activity2 = self.random_swap_activity()
@@ -323,14 +338,32 @@ class Tabu_search():
 
                 neighbour_dict[(activity1, activity2)] = score
 
-            else:
+            # swap random student
+            elif weight < 0.7:
 
                 # swap 2 random students, calculate score and revert change
                 student1, student2, activity1, activity2 = self.swap_student_in_course()
                 if student1 != None:
                     score = self.calculate_malus()
                     self.swap_students(student1, student2, activity2, activity1)
+
                     neighbour_dict[(student1, student2, activity1, activity2)] = score
+            
+            # move random activity
+            elif weight < 1:
+                
+                # move 1 random activity, calculate score and revert change
+                activity1, old_roomslot, new_roomslot = self.random_move_activity()
+                score = self.calculate_malus()
+                old_room, old_timeslot = old_roomslot
+                self.move_activity(activity1, old_room, old_timeslot)
+
+                neighbour_dict[(activity1, old_roomslot, new_roomslot)] = score
+            
+            else:
+
+                # swap student with empty
+                pass
             
 
         return neighbour_dict
@@ -349,6 +382,7 @@ class Tabu_search():
             return False
     
     def is_student_swap_tabu(self, neighbour: tuple, tabu_list: list[tuple]) -> bool:
+    
         """
         Function checks if student and activity combination 
         is in the tabu list and returns corresponding bool
@@ -369,3 +403,64 @@ class Tabu_search():
                 return True
         
         return False
+
+    def is_activity_move_tabu(self, neighbour: tuple, tabu_list: list[tuple]) -> bool:
+        """
+        Function checks if move is in the tabu list
+        and returns corresponding bool
+        """
+        activity1, old_roomslot, new_roomslot = neighbour
+
+        if (activity1, new_roomslot, old_roomslot) in tabu_list:
+            return True
+        else:
+            return False
+
+    def random_move_activity(self) -> tuple:
+        """
+        Randomly swaps 2 activities
+        Keeps good changes and reverts bad changes
+        """
+
+        # get random activity and save its roomslot
+        activity1 = random.choice(self.Activities)
+        old_roomslot = (activity1.room, activity1.timeslot)
+
+        # loop until empty roomslot has been found
+
+        found_timeslot = False
+
+        while found_timeslot == False:
+            
+            # find random room and random available timeslot
+            new_room = random.choice(list(self.Rooms.values()))
+            available = new_room.return_availability()
+
+            if len(available) > 0:
+                new_timeslot = random.choice(available)
+                found_timeslot = True
+        
+        self.move_activity(activity1, new_room, new_timeslot)
+
+        new_roomslot = (new_room, new_timeslot)
+
+        return activity1, old_roomslot, new_roomslot
+    
+    def move_activity(self, activity1, new_room, new_timeslot) -> None:
+
+        """
+        Changes timeslot and room of given activity
+        Also change the needed room classes
+        """
+
+        # remove activity from old room
+        activity1.room.remove_activity(activity1)
+
+        # change activity values
+        activity1.room = new_room
+        activity1.timeslot = new_timeslot
+
+        # add activity to new room
+        new_room.add_activity(activity1, new_timeslot)
+
+        pass
