@@ -48,11 +48,20 @@ class Student():
         return malus
 
     def get_malus(self) -> int:
+        total = 0
+        for item in self.get_detailed_malus():
+            total += item
+        return total
+
+    def get_detailed_malus(self) -> tuple:
         """
         Calculates and returns malus points of student
         """
         activity_dict = {}
-        maluspoint = 0
+        double_acts = 0
+        singlegaps = 0
+        doublegaps = 0
+        triplegaps = 0
         days = ["mo", "tu", "wo", "th", "fr"]
         
         # add empty lists with days as keys to activity dictionary
@@ -82,15 +91,17 @@ class Student():
 
                     # compare current to next timeslot and calculate difference
                     class_break += (copy[time + 1] - copy[time] - 1) 
-                    maluspoint += class_break
+                    singlegaps += class_break
 
                     # add extra minus point for 2 class breaks (tussenuren)
                     if class_break == 2:
-                        maluspoint += 1
+                        singlegaps -= 2
+                        doublegaps += 3
                     
                     # temporary solution for 3 class_breaks
                     elif class_break == 3:
-                        maluspoint += 1000000
+                        triplegaps += 1000000
+                        singlegaps -= 3
                 
                 # loop over all timeslots and check for duplicates
                 for timeslot in range(1, 6):
@@ -103,6 +114,6 @@ class Student():
                     
                     # update malus
                     if counter > 1:
-                        maluspoint += counter
+                        double_acts += counter
 
-        return maluspoint
+        return (double_acts, singlegaps, doublegaps, triplegaps)
