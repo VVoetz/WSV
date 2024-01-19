@@ -14,7 +14,7 @@ if __name__ == "__main__":
     maluslist = list()
     base = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
 
-    for i in range(5):
+    for i in range(1):
         
         data = copy.deepcopy(base)
 
@@ -40,7 +40,7 @@ if __name__ == "__main__":
         for course in data.Courses:
             for activity in data.Courses[course].activities:
                 malus += activity.get_malus()
-        
+
         for item in test.Students:
             malus += test.Students[item].get_malus()
         print(f"{i}: {malus}")
@@ -50,6 +50,13 @@ if __name__ == "__main__":
         #make_google_calendar.make_google_calendar_csv(data)
         make_google_calendar.make_student_calendar(data)
     print(sorted(maluslist))
+    total = 0
+    for item in maluslist:
+        while item > 1000000:
+            item -= 1000000
+        total += item
+    print(f"average: {total / len(maluslist)}")
+        
 
     end = time.time()
     print(f"time taken: {end - start}")
