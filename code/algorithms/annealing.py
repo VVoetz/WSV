@@ -16,7 +16,7 @@ class Tabu_search():
         self.Course_list = list(self.Courses.values())
     
         self.create_initial_solution()
-        self.run(5, 100000)
+        self.run(5, 1000000)
         
         # temporary debugging lines
 
@@ -102,7 +102,7 @@ class Tabu_search():
             else:
                 seminar_id = activity.id[0:2]
 
-                if seminar_id not in registered_activities:
+                if seminar_id not in registered_activities and len(activity.students) < activity.capacity:
                     registered_activities.add(seminar_id)
                     activity.add_student(student)
                     student.add_activity(activity)
@@ -120,7 +120,7 @@ class Tabu_search():
         # change 2 random activities for iteration ammount of times
         for iteration in range(0, iterations):
             
-            self.T = 0.9999 * self.T
+            self.T = 0.999 * self.T
             malus_after = self.random_swap_activity(malus_before)
             malus_change = self.swap_student_in_course()
             #print(f"{malus_before} {self.T}")
@@ -132,6 +132,8 @@ class Tabu_search():
                 no_change += 1
                 if no_change % 100 == 0:
                     print(f"{no_change}")
+                if no_change % 25 == 0:
+                    print(f"{malus_after} {iteration} {self.T}")
                                    
             else:
                 no_change = 0
@@ -207,7 +209,7 @@ class Tabu_search():
         if malus_after <= malus_before:
             return malus_after
         
-        prob = math.exp((-malus_diff / self.T) / 40)
+        prob = math.exp((-malus_diff / self.T) / 90)
         #print(f"{prob} {self.T} {malus_diff} {malus_before}")
         yesno = random.random() - prob
         #print(yesno)
@@ -285,12 +287,22 @@ class Tabu_search():
 
         # choose 2 random students and calculate their malus points
         student1 = random.choice(activity1.students)
-        student2 = random.choice(activity2.students)
+        student1malus = student1.get_malus()
+        if random.random() < len(activity2.students) / activity2.capacity:
+            student2 = random.choice(activity2.students)
+            student2malus = student2.get_malus()
+        else:
+            student2 = None
+            student2malus = 0
 
         # swap students and calculate scores
-        malus_before = student1.get_malus() + student2.get_malus()
-        self.swap_students(student1, student2, activity1, activity2)
-        malus_after = student1.get_malus() + student2.get_malus()
+        malus_before = student1malus + student2malus
+
+        self.swap_students(activity1, activity2, student1, student2)
+
+        malus_after = student1.get_malus()
+        if student2:
+            malus_after += student2.get_malus()
         
 
         malus_diff = (malus_after - malus_before)
@@ -298,22 +310,22 @@ class Tabu_search():
         if malus_after <= malus_before:
             return malus_after - malus_before
         
-        prob = math.exp((-malus_diff / self.T) / 15)
+        prob = math.exp((-malus_diff / self.T) / 25)
         #print(f"{prob} {self.T} {malus_diff} {malus_before}")
         yesno = random.random() - prob
         #print(yesno)
         
         if malus_after - malus_before > 10000:
-            self.swap_students(student1, student2, activity2, activity1)
+            self.swap_students(activity2, activity1, student1, student2)
             return 0      
         if yesno > 0:
-            self.swap_students(student1, student2, activity2, activity1)
+            self.swap_students(activity2, activity1, student1, student2)
             return 0
         else:
             return malus_after - malus_before
 
     
-    def swap_students(self, student1, student2, activity1, activity2) -> None:
+    def swap_students(self, activity1, activity2, student1, student2=None) -> None:
         """
         Function swappes student 1 to activity 2
         and swappes student 2 to activity 1
@@ -324,15 +336,16 @@ class Tabu_search():
 
         student1.remove_activity(activity1)
         activity1.remove_student(student1)
-
-        student2.remove_activity(activity2)
-        activity2.remove_student(student2)
-
         student1.add_activity(activity2)
-        activity1.add_student(student2)
-
-        student2.add_activity(activity1)
         activity2.add_student(student1)
+
+        if student2:
+            student2.remove_activity(activity2)
+            activity2.remove_student(student2)
+            activity1.add_student(student2)
+            student2.add_activity(activity1)
+        
+        
 
 
 
