@@ -98,12 +98,19 @@ class Activity:
         self.students.remove(student)
         return malus
 
-    def get_heuristics(self) -> int:
+    def get_heuristics(self, courses) -> int:
         total = 0
         if self.id[0] == "h":
-            if self.timeslot != 2 and self.timeslot != 3:
-                total += 0
-        return self.get_malus() + total
+            if self.timeslot[2] != 2 and self.timeslot[2] != 3:
+                total += 100
+        if self.id[0] == "w" or self.id[0] == "p":
+            for activity in courses[self.course].activities:
+                total -= 100
+                if activity.id[0] == self.id[0] and activity.timeslot == self.timeslot:
+                    total += 100
+                    
+
+        return total + self.get_total_malus()
 
     def get_total_malus(self) -> int:
         total = 0
@@ -111,7 +118,7 @@ class Activity:
         for student in self.students:
             total += student.get_malus()
         return total
-
+    
     def get_malus(self) -> int:
         """
         Returns ammount of minus point that this activity causes

@@ -16,7 +16,7 @@ class Tabu_search():
         self.Course_list = list(self.Courses.values())
     
         self.create_initial_solution()
-        self.run(5, 1000000)
+        self.run(5, 100000)
         
         # temporary debugging lines
 
@@ -134,8 +134,8 @@ class Tabu_search():
                 no_change += 1
                 if no_change % 100 == 0:
                     print(f"{no_change}")
-                if no_change % 25 == 0:
-                    print(f"{self.calculate_malus()} {no_change} {self.T}")
+                # if no_change % 25 == 0:
+                #     print(f"{self.calculate_malus()} {no_change} {self.T}")
                                    
             else:
                 no_change = 0
@@ -184,24 +184,73 @@ class Tabu_search():
             malus += student.get_malus()
         
         for activity in self.Activities:
-            malus += activity.get_heuristics()
+            malus += activity.get_malus()
         
         return malus
     
+    def random_move_activity(self) -> int:
+        """
+        Randomly moves 1 activity
+        Keeps good changes and reverts bad changes
+        """
+        activity1 = random.choice(self.Activities)
+        old_roomslot = (activity1.room, activity1.timeslot)
+        old_room = activity1.room
+        old_timeslot = activity1.timeslot
+
+        # loop until empty roomslot has been found
+
+        found_timeslot = False
+
+        while found_timeslot == False:
+            
+            # find random room and random available timeslot
+            new_room = random.choice(list(self.Rooms.values()))
+            available = new_room.return_availability()
+
+            if len(available) > 0:
+                new_timeslot = random.choice(available)
+                found_timeslot = True
+        malus_before = activity1.get_heuristics(self.Courses)
+        self.move_activity(activity1, new_room, new_timeslot)
+        malus_after = activity1.get_heuristics(self.Courses)
+        
+        malus_diff = (malus_after - malus_before)
+        if malus_after <= malus_before:
+            return malus_diff
+        
+        prob = math.exp((-malus_diff / self.T) / 90)
+        #print(f"{prob} {self.T} {malus_diff} {malus_before}")
+        yesno = random.random() - prob
+        #print(yesno)
+        
+        if malus_after - malus_before > 10000:
+            self.move_activity(activity1, old_room, old_timeslot)
+            return 0    
+        if yesno > 0:
+            self.move_activity(activity1, old_room, old_timeslot)
+            return 0
+        else:
+            return malus_diff
+
+        
+
     def random_swap_activity(self) -> int:
         """
         Randomly swaps 2 activities
         Keeps good changes and reverts bad changes
         """
+        if random.random() > 128/144:
+            return self.random_move_activity()
         
         # swap activities
         activity1 = random.choice(self.Activities)
         activity2 = random.choice(self.Activities)
-        malus_before = activity1.get_total_malus() + activity2.get_total_malus()
+        malus_before = activity1.get_heuristics(self.Courses) + activity2.get_heuristics(self.Courses)
         self.swap_activities(activity1, activity2)
 
         # calculate malus points
-        malus_after = activity1.get_total_malus() + activity2.get_total_malus()
+        malus_after = activity1.get_heuristics(self.Courses) + activity2.get_heuristics(self.Courses)
         
         # revert bad change or return good change
 
@@ -346,7 +395,26 @@ class Tabu_search():
             activity2.remove_student(student2)
             activity1.add_student(student2)
             student2.add_activity(activity1)
-        
+
+    def move_activity(self, activity1, new_room, new_timeslot) -> None:
+
+        """
+        Changes timeslot and room of given activity
+        Also change the needed room classes
+        """
+
+        # remove activity from old room
+        activity1.room.remove_activity(activity1)
+
+        # change activity values
+        activity1.room = new_room
+        activity1.timeslot = new_timeslot
+
+        # add activity to new room
+        new_room.add_activity(activity1, new_timeslot)
+
+        pass
+
         
 
 
