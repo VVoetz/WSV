@@ -1,6 +1,6 @@
 from code.classes import data_loader
 from code.algorithms import testalgo, random_algo, greedy_algo
-from code.visualisation import print_schedule, make_google_calendar, plot_list
+from code.visualisation import print_schedule, make_google_calendar, malus_hist
 import copy
 import sys
 import csv
@@ -10,7 +10,7 @@ if __name__ == "__main__":
     maluslist = list()
     base = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
 
-    for i in range(100):
+    for i in range(10000):
         # paramater to make sure simulations only give valid schedules
         sim = True
         while sim:
@@ -45,10 +45,12 @@ if __name__ == "__main__":
             if not sim:
                 maluslist.append([malus])
                 print(f"simulation {i} completed")
-    #plot_list.plot_malus(maluslist)
+    #malus_hist.plot_hist(maluslist)
     fields = ['maluspunten']
 
-    with open('baseline_data.csv', 'w') as f:
+    with open('data/baseline_data.csv', 'w') as f:
         write = csv.writer(f)
         write.writerow(fields)
         write.writerows(maluslist)
+    
+    malus_hist.plot_hist('data/baseline_data')

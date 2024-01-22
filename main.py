@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
     maluslist = list()
     base = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
-    
+
     for i in range(1):
         
         data = copy.deepcopy(base)
@@ -47,7 +47,9 @@ if __name__ == "__main__":
 
         for course in data.Courses:
             for activity in data.Courses[course].activities:
-                malus += activity.get_malus()
+                room_capacity, fifth_slot = activity.get_detailed_malus()
+                room_capacity_points += room_capacity
+                fifth_slot_points += fifth_slot
 
         for item in test.Students:
             double_act_points, single_points, double_points, triple_points = test.Students[item].get_detailed_malus()
@@ -64,6 +66,7 @@ if __name__ == "__main__":
         
         #make_google_calendar.make_google_calendar_csv(data)
         make_google_calendar.make_student_calendar(data)
+
     print(f"room capacity: {room_capacity_points}   fifth: {fifth_slot_points}  courseconflict: {double_acts}   single: {singlegaps}    double: {doublegaps}")
     print(sorted(maluslist))
     total = 0
