@@ -98,6 +98,20 @@ class Activity:
         self.students.remove(student)
         return malus
 
+    def get_heuristics(self) -> int:
+        total = 0
+        if self.id[0] == "h":
+            if self.timeslot != 2 and self.timeslot != 3:
+                total += 0
+        return self.get_malus() + total
+
+    def get_total_malus(self) -> int:
+        total = 0
+        total += self.get_malus()
+        for student in self.students:
+            total += student.get_malus()
+        return total
+
     def get_malus(self) -> int:
         """
         Returns ammount of minus point that this activity causes
