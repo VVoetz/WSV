@@ -16,13 +16,14 @@ if __name__ == "__main__":
 
     number_of_simulations = 10
 
-    maluslist = list()
     malus_room_capacity = list()
     malus_fifth_slot = list()
     malus_double_acts = list()
     malus_single_gaps = list()
     malus_double_gaps = list()
     malus_triple_gaps = list()
+    maluslist = list()
+
 
     base = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
 
