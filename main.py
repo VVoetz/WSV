@@ -16,7 +16,7 @@ if __name__ == "__main__":
     maluslist = list()
     base = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
 
-    for i in range(10):
+    for i in range(1):
         
         data = copy.deepcopy(base)
 
