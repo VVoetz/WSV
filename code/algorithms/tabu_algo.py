@@ -3,7 +3,7 @@ from code.visualisation import print_schedule
 import math, random, copy
 
 class Tabu_search():
-    def __init__(self, data) -> None:
+    def __init__(self, data, iterations=10000, tabu_length=250, neighbour_ammount=25) -> None:
         """
         Tabu search algorithm constructor
         """
@@ -17,7 +17,7 @@ class Tabu_search():
     
         self.create_initial_solution()
 
-        self.run(1000)
+        self.run(iterations, tabu_length, neighbour_ammount)
     
     def create_initial_solution(self) -> None:
         """
@@ -103,14 +103,13 @@ class Tabu_search():
                     activity.add_student(student)
                     student.add_activity(activity)
 
-    def run(self, iterations: int) -> None:
+    def run(self, iterations: int, tabu_length: int, neighbour_ammount: int) -> None:
         """
         Function runs tabu algorithm for set ammmount of iterations
         """
 
         tabu_list = []
-        tabu_length = 250
-        neighbour_ammount = 5
+        no_change = 0
 
         current_score = self.calculate_malus()
         simulation_best = current_score
@@ -143,11 +142,9 @@ class Tabu_search():
 
                         best_neighbour = neighbour
                         best_neighbour_value = value
-                        print(value, best_neighbour)
-                else:
-                    print("Tabu")
             
             if best_neighbour == None:
+                best_neighbour_value = 0
                 best_neighbour = []
 
             # if activities have been swapped, swap best activities
@@ -175,12 +172,24 @@ class Tabu_search():
                 self.swap_students(activity1, activity2, student1, student2)
                 tabu_list.append(best_neighbour)
             
-            print(self.calculate_malus())
+            if best_neighbour_value == 0:
+                no_change += 1
+            else:
+                no_change = 0
+            
+            if no_change > 5000:
+                break
+
+            # update simulation score
+            current_score += best_neighbour_value
+            if current_score < simulation_best:
+                simulation_best = current_score
             
             if len(tabu_list) > tabu_length:
                 tabu_list.pop()
 
-            print(f"iteration: {iteration}  tabu len: {len(tabu_list)}  sim best: {simulation_best} current value: {current_score}")
+            if iteration % 100 == 0:
+                print(f"iteration: {iteration}  tabu len: {len(tabu_list)}  sim best: {simulation_best} current value: {current_score}")
 
     def swap_activities(self, activity1, activity2) -> None:
 
@@ -378,11 +387,12 @@ class Tabu_search():
                 neighbour_dict[(activity1, old_roomslot, new_roomslot)] = score_change
             
             else:
-
+                
                 # move 1 random student, calculate score and revert change
                 student, activity1, activity2, score_before = self.random_move_student()
                 if student != None:
                     score_after = activity1.get_total_malus() + activity2.get_total_malus()
+
                     self.move_student(student, activity2, activity1)
 
                     score_change = score_after - score_before
@@ -513,11 +523,11 @@ class Tabu_search():
         activity1 = random.choice(swappable_activities)
         activity2 = random.choice(swappable_activities)
 
-        # calculate score before
-        score = activity1.get_total_malus() + activity2.get_total_malus()
-
         while activity1 == activity2:
             activity2 = random.choice(swappable_activities)
+        
+        # calculate score before
+        score = activity1.get_total_malus() + activity2.get_total_malus()
         
         student = random.choice(activity1.students)
         
