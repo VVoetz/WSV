@@ -6,6 +6,7 @@ from code.visualisation import print_schedule, make_google_calendar
 import copy
 import sys
 import time
+import csv
 
 
 
@@ -13,10 +14,19 @@ if __name__ == "__main__":
     
     start = time.time()
 
+    number_of_simulations = 10
+
     maluslist = list()
+    malus_room_capacity = list()
+    malus_fifth_slot = list()
+    malus_double_acts = list()
+    malus_single_gaps = list()
+    malus_double_gaps = list()
+    malus_triple_gaps = list()
+
     base = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
 
-    for i in range(10):
+    for i in range(number_of_simulations):
         
         data = copy.deepcopy(base)
 
@@ -60,12 +70,32 @@ if __name__ == "__main__":
         
         malus = room_capacity_points + fifth_slot_points + double_acts + singlegaps + doublegaps + triplegaps
         
+        # saving malus scores total & categories in lists
+        malus_room_capacity.append(room_capacity_points)
+        malus_fifth_slot.append(fifth_slot_points)
+        malus_double_acts.append(double_act_points)
+        malus_single_gaps.append(singlegaps)
+        malus_double_gaps.append(doublegaps)
+        malus_triple_gaps.append(triplegaps)
+        maluslist.append(malus)
+
         print(f"{i}: {malus}")
 
-        maluslist.append(malus)
         
         #make_google_calendar.make_google_calendar_csv(data)
         make_google_calendar.make_student_calendar(data)
+
+    # writing csv file with malus lists
+    fields = ['Room Capacity', 'Fifth Slot Usage','Double Acts', 'Single Gaps', 'Double Gaps', 'Triple Gaps', 'Total']
+    rows = []
+    for i in range(number_of_simulations):
+        row = [malus_room_capacity[i], malus_fifth_slot[i], malus_double_acts[i], malus_single_gaps[i], malus_double_gaps[i], malus_triple_gaps[i], maluslist[i]]
+        rows.append(row)
+    with open(f'data/{sys.argv[1]}_algo_simulation_data.csv', mode='w') as csvfile:
+        write = csv.writer(csvfile)
+        write.writerow(fields)
+        write.writerows(rows)
+
 
     print(f"room capacity: {room_capacity_points}   fifth: {fifth_slot_points}  courseconflict: {double_acts}   single: {singlegaps}    double: {doublegaps}")
     print(sorted(maluslist))
