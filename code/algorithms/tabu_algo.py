@@ -110,13 +110,15 @@ class Tabu_search():
         """
 
         tabu_list = []
-        tabu_length = 500
+        tabu_length = 50
+        neighbour_ammount = 5
+
         simulation_best = 2000
 
         # change 2 random activities and 2 random students for iteration ammount of times
         for iteration in range(0, iterations):
 
-            neighbour_ammount = 100
+            
             neighbours = self.get_neighbours(neighbour_ammount)
             
             best_neighbour = None
@@ -163,7 +165,7 @@ class Tabu_search():
             # if students have been swapped, swap best students
             elif len(best_neighbour) == 4:
                 student1, student2, activity1, activity2 = best_neighbour
-                self.swap_students(student1, student2, activity1, activity2)
+                self.swap_students(activity1, activity2, student1, student2)
                 tabu_list.append(best_neighbour)
             
             if len(tabu_list) > tabu_length:
@@ -232,13 +234,18 @@ class Tabu_search():
 
         post:   returns change in malus points as int
         """
-        course = random.choice(self.Course_list)
-
-        activity_id = self.swappable_workgroup(course)
+        
+        activity_id = ""
+        
+        while activity_id == "":
+            course = random.choice(self.Course_list)
+            activity_id = self.swappable_workgroup(course)
+        
 
         if activity_id != "":
             return self.swap_student_activity(course, activity_id)
         else:
+            print("No workgroup found")
             return None, None, None, None
     
     def swappable_workgroup(self, course) -> str:
@@ -285,16 +292,17 @@ class Tabu_search():
         while activity1 == activity2:
             activity2 = random.choice(swappable_activities)
 
-        # choose 2 random students and calculate their malus points
+        # choose 2 students to swap or choose 1 student to move
         student1 = random.choice(activity1.students)
         student2 = random.choice(activity2.students)
-
-        # swap students
-        self.swap_students(student1, student2, activity1, activity2)
+        
+        if student2 != None:
+            # swap students
+            self.swap_students(activity1, activity2, student1, student2)
 
         return student1, student2, activity1, activity2
     
-    def swap_students(self, student1, student2, activity1, activity2) -> None:
+    def swap_students(self, activity1, activity2,  student1, student2) -> None:
         """
         Function swappes student 1 to activity 2
         and swappes student 2 to activity 1
@@ -305,15 +313,13 @@ class Tabu_search():
 
         student1.remove_activity(activity1)
         activity1.remove_student(student1)
+        student1.add_activity(activity2)
+        activity2.add_student(student1)
 
         student2.remove_activity(activity2)
         activity2.remove_student(student2)
-
-        student1.add_activity(activity2)
         activity1.add_student(student2)
-
         student2.add_activity(activity1)
-        activity2.add_student(student1)
 
     def get_neighbours(self, neighbour_count: int) -> dict:
         """
@@ -329,7 +335,7 @@ class Tabu_search():
             weight = random.random()
 
             # swap random activity
-            if weight < 0.2:
+            if weight < 0.25:
                 
                 # swap 2 random activities, calculate score and revert change
                 activity1, activity2 = self.random_swap_activity()
@@ -339,13 +345,15 @@ class Tabu_search():
                 neighbour_dict[(activity1, activity2)] = score
 
             # swap random student
-            elif weight < 0.7:
+            elif weight < 0.75:
 
                 # swap 2 random students, calculate score and revert change
                 student1, student2, activity1, activity2 = self.swap_student_in_course()
+                
                 if student1 != None:
+
                     score = self.calculate_malus()
-                    self.swap_students(student1, student2, activity2, activity1)
+                    self.swap_students(activity2, activity1, student1, student2)
 
                     neighbour_dict[(student1, student2, activity1, activity2)] = score
             
@@ -362,7 +370,7 @@ class Tabu_search():
             
             else:
 
-                # swap student with empty
+                # move student
                 pass
             
 
@@ -463,4 +471,7 @@ class Tabu_search():
         # add activity to new room
         new_room.add_activity(activity1, new_timeslot)
 
+        pass
+
+    def random_move_student(self) -> tuple:
         pass
