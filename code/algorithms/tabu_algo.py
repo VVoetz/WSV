@@ -1,5 +1,4 @@
-from code.classes import room, course, student
-from code.classes import activity
+from code.classes import room, course, student, activity
 from code.visualisation import print_schedule
 import math, random, copy
 
@@ -132,7 +131,7 @@ class Tabu_search():
                 if len(neighbour) == 2:
                     tabu = self.is_activity_swap_tabu(neighbour, tabu_list)
                 elif len(neighbour) == 3:
-                    tabu = self.is_activity_move_tabu(neighbour, tabu_list)
+                    tabu = self.is_move_tabu(neighbour, tabu_list)
                 elif len(neighbour) == 4:
                     tabu = self.is_student_swap_tabu(neighbour, tabu_list)
 
@@ -155,7 +154,13 @@ class Tabu_search():
                 self.swap_activities(activity1, activity2)
                 tabu_list.append(best_neighbour)
             
-            # if activities have been moved, move best activity
+            # if student has been moved, move best student
+            elif len(best_neighbour) == 3 and isinstance(best_neighbour[0], student.Student):
+                student1, old_activity, new_activity = best_neighbour
+                self.move_student(student1, old_activity, new_activity)
+                tabu_list.append(best_neighbour)
+            
+            # if activity has been moved, move best activity
             elif len(best_neighbour) == 3:
                 activity1, old_roomslot, new_roomslot = best_neighbour
                 new_room, new_timeslot = new_roomslot
@@ -236,18 +241,14 @@ class Tabu_search():
         """
         
         activity_id = ""
-        
+
         while activity_id == "":
             course = random.choice(self.Course_list)
             activity_id = self.swappable_workgroup(course)
         
 
-        if activity_id != "":
-            return self.swap_student_activity(course, activity_id)
-        else:
-            print("No workgroup found")
-            return None, None, None, None
-    
+        return self.swap_student_activity(course, activity_id)
+        
     def swappable_workgroup(self, course) -> str:
         """
         Function determines if a course has enough workgroups for students to swap
@@ -345,7 +346,7 @@ class Tabu_search():
                 neighbour_dict[(activity1, activity2)] = score
 
             # swap random student
-            elif weight < 0.75:
+            elif weight < 0.5:
 
                 # swap 2 random students, calculate score and revert change
                 student1, student2, activity1, activity2 = self.swap_student_in_course()
@@ -358,7 +359,7 @@ class Tabu_search():
                     neighbour_dict[(student1, student2, activity1, activity2)] = score
             
             # move random activity
-            elif weight < 1:
+            elif weight < 0.75:
                 
                 # move 1 random activity, calculate score and revert change
                 activity1, old_roomslot, new_roomslot = self.random_move_activity()
@@ -370,9 +371,15 @@ class Tabu_search():
             
             else:
 
-                # move student
-                pass
-            
+                # move 1 random student, calculate score and revert change
+                student, activity1, activity2 = self.random_move_student()
+                if student != None:
+                    score = self.calculate_malus()
+                    self.move_student(student, activity2, activity1)
+
+                    neighbour_dict[(student, activity1, activity2)] = score
+
+                    
 
         return neighbour_dict
 
@@ -412,7 +419,7 @@ class Tabu_search():
         
         return False
 
-    def is_activity_move_tabu(self, neighbour: tuple, tabu_list: list[tuple]) -> bool:
+    def is_move_tabu(self, neighbour: tuple, tabu_list: list[tuple]) -> bool:
         """
         Function checks if move is in the tabu list
         and returns corresponding bool
@@ -474,4 +481,48 @@ class Tabu_search():
         pass
 
     def random_move_student(self) -> tuple:
-        pass
+        """
+        Function find a random course in which a student can be swapped
+        then selects a random student from that course to be swapped
+        """
+
+        # choose a random course with swappable courses
+        activity_id = ""
+        while activity_id == "":
+            course = random.choice(self.Course_list)
+            activity_id = self.swappable_workgroup(course)
+
+        # find the activities in which a student can swap
+        swappable_activities = list()
+
+        for activity in course.activities:
+            if activity.id == activity_id:
+                swappable_activities.append(activity)
+
+        # choose 2 different activities
+        activity1 = random.choice(swappable_activities)
+        activity2 = random.choice(swappable_activities)
+        while activity1 == activity2:
+            activity2 = random.choice(swappable_activities)
+        
+        student = random.choice(activity1.students)
+        
+        # actually move the students
+        if self.move_student(student, activity1, activity2):
+            return student, activity1, activity2
+        else:
+            return None, None, None
+    
+    def move_student(self, student, old_activity, new_activity) -> bool:
+        
+        # if the new activity has room, move the student
+        if new_activity.capacity > len(new_activity.students):
+            student.remove_activity(old_activity)
+            student.add_activity(new_activity)
+
+            old_activity.remove_student(student)
+            new_activity.add_student(student)
+            return True
+
+        else:
+            return False
