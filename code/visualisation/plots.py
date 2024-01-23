@@ -207,24 +207,17 @@ def stacked_hist(filename: str, algo: str):
 def three_dimensional_plot(filename: str):
     # loading correct data
     data = open_malus_csv(filename, method=2)
-    x_data = data[0]
-    y_data = data[1]
-    z_data = data[2]
-    # duplicate values
-    X, Y = np.meshgrid(x_data, y_data)
-    # correct Z value
-    Z = np.sin(X) * np.sin(Y)
-
-    # surface plots
+    x = data[0]
+    y = data[1]
+    z = d
+    
+    # creating axes
     fig, ax = plt.subplots(subplot_kw={'projection': '3d'})
-    # using new clear figure
-    plt.figure()
-    plot = ax.plot_surface(X, Y, Z, cmap='plasma')
-    # viewing plot from different perspective
-    # ax.view_init(azim=0, elev=90)
+
+    plot = ax.plot_surface(x, y, z, cmap='plasma')
+
 
     # adding a color bar which maps values to colors
-    fig.colorbar(plot, shrink=0.5, aspect=5)
     ax.set_title('3d plot for Algorithm')
     ax.set_xlabel('X values')
     ax.set_ylabel('Y Values')
