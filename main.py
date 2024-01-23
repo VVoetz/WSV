@@ -74,7 +74,7 @@ if __name__ == "__main__":
         # saving malus scores total & categories in lists
         malus_room_capacity.append(room_capacity_points)
         malus_fifth_slot.append(fifth_slot_points)
-        malus_double_acts.append(double_act_points)
+        malus_double_acts.append(double_acts)
         malus_single_gaps.append(singlegaps)
         malus_double_gaps.append(doublegaps)
         malus_triple_gaps.append(triplegaps)

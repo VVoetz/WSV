@@ -3,7 +3,7 @@ import seaborn as sns
 import csv
 
 
-def open_malus_csv(filename: str):
+def open_malus_csv(filename: str, trans=False):
     """
     Writes csv files for malus points data
     """
@@ -15,37 +15,66 @@ def open_malus_csv(filename: str):
     malus_triple_gaps = list()
     maluslist = list()
 
+    observations = list()
 
-    with open(f'data/{filename}', mode='r') as file:
-        next(file)
-        csvFile = csv.reader(file)
-        for line in csvFile:
-            malus_room_capacity.append(line[0])
-            malus_fifth_slot.append(line[1])
-            malus_double_acts.append(line[2])
-            malus_single_gaps.append(line[3])
-            malus_double_gaps.append(line[4])
-            malus_triple_gaps.append(line[5])
-            maluslist.append(line[6])
+    if not trans:
+        with open(f'data/{filename}', mode='r') as file:
+            next(file)
+            csvFile = csv.reader(file)
+            for line in csvFile:
+                malus_room_capacity.append(float(line[0]))
+                malus_fifth_slot.append(float(line[1]))
+                malus_double_acts.append(float(line[2]))
+                malus_single_gaps.append(float(line[3]))
+                malus_double_gaps.append(float(line[4]))
+                malus_triple_gaps.append(float(line[5]))
+                maluslist.append(float(line[6]))
+        return [malus_room_capacity, malus_fifth_slot, malus_double_acts, malus_single_gaps, malus_double_gaps, malus_triple_gaps, maluslist]
+
+    else:
+        with open(f'data/{filename}', mode='r') as file:
+            next(file)
+            csvFile = csv.reader(file)
+            for line in csvFile:
+                observations.append(line)
+        return observations
     
-    return [malus_room_capacity, malus_fifth_slot, malus_double_acts, malus_single_gaps, malus_double_gaps, malus_triple_gaps, maluslist]
             
 
 
-def stacked_plot(categories: list, data):
+def stacked_plot(filename: str, algo: str):
     """
     Function plots stacked percentage of maluspoints per category
     """
-    the_colors = sns.cubehelix_palette(4, start=0.5, rot=-.75)
 
-    y1 = data[0]
-    y2 = data[1]
-    y3 = data[2]
-    y4 = data[3]
-    y5 = data[4]
-    y6 = data[5]
+    # loading data
+    data = open_malus_csv(filename)
+    y1 = []
+    y2 = []
+    y3 = []
+    y4 = []
+    y5 = []
+    y6 = []
 
+    # saving fractional data
+    for i in range(len(data[0])):
+        y1.append(data[0][i]/data[6][i])
+        y2.append(data[1][i]/data[6][i])
+        y3.append(data[2][i]/data[6][i])
+        y4.append(data[3][i]/data[6][i])
+        y5.append(data[4][i]/data[6][i])
+        y6.append(data[5][i]/data[6][i])
     simulations = range(1, (len(y1)+1))
+
+    # colors
+    the_colors = sns.cubehelix_palette(6, start=0.5, rot=-.75)
+
+    # categories
+    categories = ['Room Capacity', 'Fifth Slot Usage','Double Acts', 'Single Gaps', 'Double Gaps', 'Triple Gaps']
+
+    # using new clear figure
+    plt.figure()
+    fig, ax = plt.subplots()
 
 
     # basic stacked area chart
@@ -55,7 +84,15 @@ def stacked_plot(categories: list, data):
     plt.xlim([1, len(y1)])
     plt.ylim([0, 1])
 
-    # define axes labels
+    # shrink axis's height by 20 %
+    box = ax.get_position()
+    ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+
+    # put a to the right of current axis
+    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+
+    # define axes labels and title
+    plt.title(f'Percentages Maluspoints per Category for the {algo} Algorithm')
     plt.ylabel('Percentage maluspunten per categorie %')
     plt.xlabel('Simulaties')
 
@@ -64,23 +101,25 @@ def stacked_plot(categories: list, data):
     # plt.text(x-coordinate, y-coordinate, 'text')
 
     # reverse legend color
-    current_handles, current_labels = plt.gca().get_legend_handles_labels()
-    plt.legend(list(reversed(current_handles)), list(reversed(current_labels)),  fontsize=9)
-    plt.savefig('stacked_plot.png')
+    plt.savefig('code/visualisation/stacked_plot.png')
 
-def plot_hist(filename: str):
+def plot_hist(filename: str, algo: str):
     """
     Function plots histogram
     """
-    data = []
-    with open(f'{filename}.csv', mode='r') as file:
-        next(file)
-        csvFile = csv.reader(file)
-        for lines in csvFile:
-            data.append(int(lines[0]))
+    
+    # loading data
+    data = open_malus_csv(filename)
 
+    # only secting total for histogram
+    data = data[6]
+
+    # using new clear figure
+    plt.figure()
     fig = sns.histplot(data, kde=True)
     fig.set(xlabel='Maluspunten', ylabel='Frequentie')
+    #plt.title(f'Histogram of Maluspoints for the {algo} Algorithm')
+
     plt.savefig("code/visualisation/malus_point_plot.png")
 
     # plt.hist(x, bins=50, color="pink", ec="red")
@@ -88,25 +127,78 @@ def plot_hist(filename: str):
     # plt.ylabel("Frequentie")
     # plt.savefig("code/visualisation/malus_point_plot.png")
 
-def pie_chart(filename):
+def pie_chart(filename: str, algo: str):
     """
     Prints circle diagram with average percentage of maluspoints per categorie
     """
-    categories = {}
-    for i in range(1,5):
-        categories[f'category{i}']=[]
+    # loading data
+    data = open_malus_csv(filename)
+    Percentages = {}
+    for i in range(6):
+        Percentages[f'y{i+1}'] = []
+ 
 
-    with open(f'data/{filename}', mode='r') as file:
-        next(file)
-        csvFile = csv.reader(file)
-        for line in csvFile:
-            for i in range(1,5):
-                categories[f'category{i}'].append(line[i-1])
-    
-    percentages = []
+    # saving fractional data
+    for i in range(len(data[0])):
+        for j in range(6):
+            Percentages[f'y{j+1}'].append(data[j][i]/data[6][i])    
+        
+    average = []
+    for i in range(6):
+        average.append(sum(Percentages[f'y{i+1}'])/len(Percentages[f'y{i+1}']))
 
-    for i in range(1,5):
-        percentages.append(sum(categories[f'category{i}']))
+    # categories
+    categories = ['Room Capacity', 'Fifth Slot Usage','Double Acts', 'Single Gaps', 'Double Gaps', 'Triple Gaps']
 
-    plt.pie(percentages)
+
+    # colors
+    the_colors = sns.cubehelix_palette(6, start=0.5, rot=-.75)
+
+
+    # using new clear figure
+    plt.figure()
+    plt.pie(average, colors=the_colors, labels=categories, autopct='%1.1f%%')
+    plt.title(f'Average Percentages per Category Maluspoints for the {algo} Algorithm')
     plt.savefig("code/visualisation/piechart.png")
+
+def stacked_hist(filename: str, algo: str):
+
+    data = open_malus_csv(filename)
+    y1= data[0]
+    y2= data[1]
+    y3= data[2]
+    y4= data[3]
+    y5= data[4]
+    y6= data[5]
+    data = [y1, y2, y3, y4, y5, y6]
+
+
+    # # colors
+    # the_colors = sns.cubehelix_palette(6, start=0.5, rot=-.75)
+
+    # categories
+    categories = ['Room Capacity', 'Fifth Slot Usage','Double Acts', 'Single Gaps', 'Double Gaps', 'Triple Gaps']
+
+    # using new clear figure
+    plt.figure()
+    fig, ax = plt.subplots()
+    the_colors = sns.cubehelix_palette(6, start=0.5, rot=-.75)
+    plt.hist(data, histtype='barstacked', color=the_colors, bins=3, label=categories)
+
+    # shrink axis's height by 20 %
+    box = ax.get_position()
+    ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+
+    # put a to the right of current axis
+    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+
+    # define axes labels and title
+    plt.title(f'Percentages Maluspoints per Category for the {algo} Algorithm')
+    plt.ylabel('Frequentie')
+    plt.xlabel('Maluspunten')
+
+    plt.savefig(f"code/visualisation/stacked_hist_{algo}_algo")
+
+
+
+
