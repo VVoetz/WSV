@@ -3,6 +3,9 @@ from code.classes import data_loader
 from code.algorithms import testalgo, random_algo, greedy_algo, tabu_algo, annealing
 
 from code.visualisation import print_schedule, make_google_calendar
+
+from code.experiments import grid_search_tabu
+
 import copy
 import sys
 import time
@@ -14,7 +17,7 @@ if __name__ == "__main__":
     
     start = time.time()
 
-    number_of_simulations = 10
+    number_of_simulations = 1
 
     malus_room_capacity = list()
     malus_fifth_slot = list()
@@ -39,7 +42,8 @@ if __name__ == "__main__":
         elif sys.argv[1] == 'random':
             test = random_algo.Testalgo(data)
         elif sys.argv[1] == 'tabu':
-            test = tabu_algo.Tabu_search(data)
+            test = tabu_algo.Tabu_search(data, iterations=0)
+            grid_search_tabu.run_grid_search()
         elif sys.argv[1] == 'anneal':
             test = annealing.Tabu_search(data)
 
