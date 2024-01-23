@@ -1,23 +1,21 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import csv
+import numpy as np
 
 
-def open_malus_csv(filename: str, trans=False):
+def open_malus_csv(filename: str, method=1):
     """
     Writes csv files for malus points data
     """
-    malus_room_capacity = list()
-    malus_fifth_slot = list()
-    malus_double_acts = list()
-    malus_single_gaps = list()
-    malus_double_gaps = list()
-    malus_triple_gaps = list()
-    maluslist = list()
-
-    observations = list()
-
-    if not trans:
+    if method==1:
+        malus_room_capacity = list()
+        malus_fifth_slot = list()
+        malus_double_acts = list()
+        malus_single_gaps = list()
+        malus_double_gaps = list()
+        malus_triple_gaps = list()
+        maluslist = list()
         with open(f'data/{filename}', mode='r') as file:
             next(file)
             csvFile = csv.reader(file)
@@ -31,13 +29,21 @@ def open_malus_csv(filename: str, trans=False):
                 maluslist.append(float(line[6]))
         return [malus_room_capacity, malus_fifth_slot, malus_double_acts, malus_single_gaps, malus_double_gaps, malus_triple_gaps, maluslist]
 
-    else:
+    elif method==2:
+        x_data = list()
+        y_data = list()
+        maluslist = list()
         with open(f'data/{filename}', mode='r') as file:
             next(file)
             csvFile = csv.reader(file)
             for line in csvFile:
-                observations.append(line)
-        return observations
+                x_data.append(float(line[0]))
+                y_data.append(float(line[1]))
+                maluslist.append(float(line[2]))
+        return [x_data, y_data, maluslist]
+    else:
+        print('Not a valid method')
+        return 0
     
             
 
@@ -173,8 +179,6 @@ def stacked_hist(filename: str, algo: str):
     data = [y1, y2, y3, y4, y5, y6]
 
 
-    # # colors
-    # the_colors = sns.cubehelix_palette(6, start=0.5, rot=-.75)
 
     # categories
     categories = ['Room Capacity', 'Fifth Slot Usage','Double Acts', 'Single Gaps', 'Double Gaps', 'Triple Gaps']
@@ -198,6 +202,36 @@ def stacked_hist(filename: str, algo: str):
     plt.xlabel('Maluspunten')
 
     plt.savefig(f"code/visualisation/stacked_hist_{algo}_algo")
+
+
+def three_dimensional_plot(filename: str):
+    # loading correct data
+    data = open_malus_csv(filename, method=2)
+    x_data = data[0]
+    y_data = data[1]
+    z_data = data[2]
+    # duplicate values
+    X, Y = np.meshgrid(x_data, y_data)
+    # correct Z value
+    Z = np.sin(X) * np.sin(Y)
+
+    # surface plots
+    fig, ax = plt.subplots(subplot_kw={'projection': '3d'})
+    # using new clear figure
+    plt.figure()
+    plot = ax.plot_surface(X, Y, Z, cmap='plasma')
+    # viewing plot from different perspective
+    # ax.view_init(azim=0, elev=90)
+
+    # adding a color bar which maps values to colors
+    fig.colorbar(plot, shrink=0.5, aspect=5)
+    ax.set_title('3d plot for Algorithm')
+    ax.set_xlabel('X values')
+    ax.set_ylabel('Y Values')
+    ax.set_zlabel('Maluspunten')
+
+    # saving figure
+    plt.savefig('3dplot.png')
 
 
 
