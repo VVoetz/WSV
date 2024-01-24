@@ -43,7 +43,6 @@ if __name__ == "__main__":
             test = random_algo.Testalgo(data)
         elif sys.argv[1] == 'tabu':
             test = tabu_algo.Tabu_search(data, iterations=0)
-            grid_search_tabu.run_grid_search()
         elif sys.argv[1] == 'anneal':
             test = annealing.Tabu_search(data)
         elif sys.argv[1] == 'anneal_grid':
@@ -70,29 +69,29 @@ if __name__ == "__main__":
                 room_capacity_points += room_capacity
                 fifth_slot_points += fifth_slot
 
-        for item in test.Students:
-            double_act_points, single_points, double_points, triple_points = test.Students[item].get_detailed_malus()
-            double_acts += double_act_points
-            singlegaps += single_points
-            doublegaps += double_points
-            triplegaps += triple_points
+        # for item in test.Students:
+        #     double_act_points, single_points, double_points, triple_points = test.Students[item].get_detailed_malus()
+        #     double_acts += double_act_points
+        #     singlegaps += single_points
+        #     doublegaps += double_points
+        #     triplegaps += triple_points
         
         malus = room_capacity_points + fifth_slot_points + double_acts + singlegaps + doublegaps + triplegaps
         
         # saving malus scores total & categories in lists
         malus_room_capacity.append(room_capacity_points)
         malus_fifth_slot.append(fifth_slot_points)
-        malus_double_acts.append(double_act_points)
+        malus_double_acts.append(double_acts)
         malus_single_gaps.append(singlegaps)
         malus_double_gaps.append(doublegaps)
         malus_triple_gaps.append(triplegaps)
         maluslist.append(malus)
 
-        print(f"{i}: {malus}")
+        # print(f"{i}: {malus}")
 
         
         #make_google_calendar.make_google_calendar_csv(data)
-        make_google_calendar.make_student_calendar(data)
+        # make_google_calendar.make_student_calendar(data)
 
     # writing csv file with malus lists
     fields = ['Room Capacity', 'Fifth Slot Usage','Double Acts', 'Single Gaps', 'Double Gaps', 'Triple Gaps', 'Total']
@@ -106,15 +105,17 @@ if __name__ == "__main__":
         write.writerows(rows)
 
 
-    print(f"room capacity: {room_capacity_points}   fifth: {fifth_slot_points}  courseconflict: {double_acts}   single: {singlegaps}    double: {doublegaps}")
-    print(sorted(maluslist))
+    # print(f"room capacity: {room_capacity_points}   fifth: {fifth_slot_points}  courseconflict: {double_acts}   single: {singlegaps}    double: {doublegaps}")
+    # print(sorted(maluslist))
     total = 0
     for item in maluslist:
         while item > 1000000:
             item -= 1000000
         total += item
-    print(f"average: {total / len(maluslist)}")
+    # print(f"average: {total / len(maluslist)}")
         
 
     end = time.time()
-    print(f"time taken: {end - start}")
+    # print(f"time taken: {end - start}")
+
+
