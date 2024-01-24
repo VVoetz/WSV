@@ -4,7 +4,7 @@ from code.algorithms import testalgo, random_algo, greedy_algo, tabu_algo, annea
 
 from code.visualisation import print_schedule, make_google_calendar
 
-from code.experiments import grid_search_tabu
+from code.experiments import grid_search_tabu, anneal_grid_search
 
 import copy
 import sys
@@ -46,6 +46,10 @@ if __name__ == "__main__":
             grid_search_tabu.run_grid_search()
         elif sys.argv[1] == 'anneal':
             test = annealing.Tabu_search(data)
+        elif sys.argv[1] == 'anneal_grid':
+            anneal_grid_search.run_grid_search(int(sys.argv[2]), int(sys.argv[3]))
+            exit()
+            
 
         # print schedule in terminal
         # for room in test.Rooms:
