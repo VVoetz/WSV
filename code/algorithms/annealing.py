@@ -4,7 +4,7 @@ import math, random
 
 
 class Tabu_search():
-    def __init__(self, data) -> None:
+    def __init__(self, data, input1=5, input2=5) -> None:
         """
         Tabu search algorithm constructor
         """
@@ -12,11 +12,12 @@ class Tabu_search():
         self.Rooms = data.Rooms
         self.Students = data.Students
         self.Activities = data.Activities
-
+        self.input1 = input1
+        self.input2 = input2
         self.Course_list = list(self.Courses.values())
     
         self.create_initial_solution()
-        self.run(5, 100000)
+        self.run(500000)
         
         # temporary debugging lines
 
@@ -107,7 +108,7 @@ class Tabu_search():
                     activity.add_student(student)
                     student.add_activity(activity)
 
-    def run(self, tabu_tenure: int, iterations: int) -> None:
+    def run(self, iterations: int) -> int:
         """
         Function runs tabu algorithm for set ammmount of iterations with a given tabu_tenure
         (the ammount of iterations it takes for a tabu move to be allowed again)
@@ -121,7 +122,7 @@ class Tabu_search():
         for iteration in range(0, iterations):
             
             
-            self.T = 0.999 * self.T
+            self.T = 0.99999 * self.T
             change = 0
             change1 = self.random_swap_activity()
             change2 = self.swap_student_in_course()
@@ -132,8 +133,8 @@ class Tabu_search():
             #print(f"{self.T} {malus_after}")
             if change == 0:
                 no_change += 1
-                if no_change % 100 == 0:
-                    print(f"{no_change}")
+                # if no_change % 100 == 0:
+                #     print(f"{no_change}")
                 # if no_change % 25 == 0:
                 #     print(f"{self.calculate_malus()} {no_change} {self.T}")
                                    
@@ -141,14 +142,14 @@ class Tabu_search():
                 no_change = 0
             
             if no_change > 1000:
-                malussen = (0, 0, 0, 0)
-                for student in self.Students:
-                    malussen =  tuple(x + y for x, y in zip(self.Students[student].get_detailed_malus(), malussen))
-                tot = 0
-                for activity in self.Activities:
-                    tot += activity.get_malus()
-                print(f"{malussen} {tot}")
-                break
+                # malussen = (0, 0, 0, 0)
+                # for student in self.Students:
+                #     malussen =  tuple(x + y for x, y in zip(self.Students[student].get_detailed_malus(), malussen))
+                # tot = 0
+                # for activity in self.Activities:
+                #     tot += activity.get_malus()
+                # print(f"{malussen} {tot}")
+                return self.calculate_malus()
 
     
     def swap_activities(self, activity1, activity2) -> None:
@@ -219,7 +220,7 @@ class Tabu_search():
         if malus_after <= malus_before:
             return malus_diff
         
-        prob = math.exp((-malus_diff / self.T) / 90)
+        prob = math.exp((-malus_diff / self.T) / (20 * self.input2))
         #print(f"{prob} {self.T} {malus_diff} {malus_before}")
         yesno = random.random() - prob
         #print(yesno)
@@ -258,7 +259,7 @@ class Tabu_search():
         if malus_after <= malus_before:
             return malus_diff
         
-        prob = math.exp((-malus_diff / self.T) / 90)
+        prob = math.exp((-malus_diff / self.T) / (20 * self.input2))
         #print(f"{prob} {self.T} {malus_diff} {malus_before}")
         yesno = random.random() - prob
         #print(yesno)
@@ -361,7 +362,7 @@ class Tabu_search():
         if malus_after <= malus_before:
             return malus_after - malus_before
         
-        prob = math.exp((-malus_diff / self.T) / 25)
+        prob = math.exp((-malus_diff / self.T) / (5 * self.input1))
         #print(f"{prob} {self.T} {malus_diff} {malus_before}")
         yesno = random.random() - prob
         
