@@ -1,6 +1,6 @@
 from code.classes import data_loader
 
-from code.algorithms import testalgo, random_algo, greedy_algo, tabu_algo, annealing
+from code.algorithms import testalgo, random_algo, greedy_algo, tabu_algo, annealing, hillclimber
 
 from code.visualisation import print_schedule, make_google_calendar
 

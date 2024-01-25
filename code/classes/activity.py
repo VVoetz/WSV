@@ -76,6 +76,8 @@ class Activity:
         Adds student to list
         """
         self.students.append(student)
+        if len(self.students) > self.capacity:
+            return ValueError
     
     def remove_student(self, student) -> None:
         """
@@ -92,27 +94,34 @@ class Activity:
         return self.students
     
     def test_malus(self, student) -> int:
-        malus = -1 * self.get_malus()
-        self.students.append(student)
-        malus += self.get_malus()
-        self.students.remove(student)
-        return malus
+        """
+        returns difference in maluspoints for activity if student is added
+        """
+        if len(self.students) >= self.capacity:
+            return 1
+        return 0
 
     def get_heuristics(self, courses) -> int:
+        """
+        calculates heuristic points and maluspoints and returns both combined
+        """
         total = 0
-        if self.id[0] == "h":
-            if self.timeslot[2] != 2 and self.timeslot[2] != 3:
-                total += 100
-        if self.id[0] == "w" or self.id[0] == "p":
-            for activity in courses[self.course].activities:
-                total -= 100
-                if activity.id[0] == self.id[0] and activity.timeslot == self.timeslot:
-                    total += 100
-                    
+        # if self.id[0] == "h":
+        #     if self.timeslot[2] != 2 and self.timeslot[2] != 3:
+        #         total += 100
+        # if self.id[0] == "w" or self.id[0] == "p":
+        #     for activity in courses[self.course].activities:
+        #         total -= 100
+        #         if activity.id[0] == self.id[0] and activity.timeslot == self.timeslot:
+        #             total += 100
 
         return total + self.get_total_malus()
 
     def get_total_malus(self) -> int:
+        """
+        calculates the maluspoints for each student in said activity
+        returns all malus points of students + activity
+        """
         total = 0
         total += self.get_malus()
         for student in self.students:
