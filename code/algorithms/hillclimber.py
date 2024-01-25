@@ -1,29 +1,27 @@
 from code.classes import room, course, student
 from code.classes import activity
 import math, random
+import scipy.stats
 
 class Hillclimber():
-    def __init__(self, data) -> None:
+    def __init__(self, data, iterations=10000, no_change_stop = 1000) -> None:
         """
-        Tabu search algorithm constructor
+        Hillclimb search algorithm constructor
         """
         self.Courses = data.Courses
         self.Rooms = data.Rooms
         self.Students = data.Students
         self.Activities = data.Activities
 
+        self.iterations = iterations
+        self.no_change_stop = no_change_stop
+
         self.Course_list = list(self.Courses.values())
     
         self.create_initial_solution()
 
-        self.run(10000)
+        self.run(self.iterations, self.no_change_stop)
         
-        
-
-        # temporary debugging lines
-
-        # for activity in self.Activities:
-        #     print(f"Activity: {str(activity)}   Students: {len(activity.students)}  Capacity: {activity.capacity}")
     
     def create_initial_solution(self) -> None:
         """
@@ -109,35 +107,34 @@ class Hillclimber():
                     activity.add_student(student)
                     student.add_activity(activity)
 
-    def run(self, iterations: int) -> None:
+    def run(self, iterations: int, no_change_stop = 1000) -> None:
         """
-        Function runs tabu algorithm for set ammmount of iterations with a given tabu_tenure
+        Function runs hillclimb algorithm for set ammmount of iterations with a given tabu_tenure
         (the ammount of iterations it takes for a tabu move to be allowed again)
         """
 
-        malus_before = self.calculate_malus()
+        # malus_before = self.calculate_malus()
         no_change = 0
 
         # change 2 random activities and 2 random students for iteration ammount of times
         for iteration in range(0, iterations):
             
-            malus_after = self.random_swap_activity(malus_before)
-            malus_change = self.swap_student_in_course()
+            malus_change1 = self.random_swap_activity()
+            malus_change2 = self.swap_student_in_course()
 
             # update malus points
-            malus_after += malus_change
+            malus_change = malus_change2
 
-            if malus_before == malus_after:
+
+            if malus_change == 0:
                 no_change += 1
                 if no_change % 100 == 0:
-                    print(no_change)
+                    print(f"iterations without change: {no_change}")
             else:
                 no_change = 0
             
-            if no_change > 1000:
+            if no_change > no_change_stop:
                 break
-
-            malus_before = malus_after
   
     def swap_activities(self, activity1, activity2) -> None:
 
@@ -176,7 +173,7 @@ class Hillclimber():
         
         return malus
     
-    def random_swap_activity(self, malus_before: int) -> int:
+    def random_swap_activity(self) -> int:
         """
         Randomly swaps 2 activities
         Keeps good changes and reverts bad changes
@@ -186,17 +183,19 @@ class Hillclimber():
         activity1 = random.choice(self.Activities)
         activity2 = random.choice(self.Activities)
 
+        # calculate relevant malus before and after
+        malus_before = activity1.get_total_malus() + activity2.get_total_malus()
         self.swap_activities(activity1, activity2)
+        malus_after = activity1.get_total_malus() + activity2.get_total_malus()
 
-        # calculate malus points
-        malus_after = self.calculate_malus()
+        malus_change = malus_after - malus_before
 
         # revert bad change or return good change
-        if malus_after > malus_before:
+        if malus_change > 0:
             self.swap_activities(activity1, activity2)
-            return malus_before
+            return 0
         else:
-            return malus_after
+            return malus_change
     
     def swap_student_in_course(self) -> int:
         """

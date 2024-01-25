@@ -4,7 +4,7 @@ import math, random
 
 
 class Tabu_search():
-    def __init__(self, data, input1=5, input2=5) -> None:
+    def __init__(self, data, input1=7, input2=1) -> None:
         """
         Tabu search algorithm constructor
         """
@@ -15,9 +15,10 @@ class Tabu_search():
         self.input1 = input1
         self.input2 = input2
         self.Course_list = list(self.Courses.values())
-    
-        self.create_initial_solution()
-        self.run(500000)
+        
+        if self.Activities[0].room == None:
+            self.create_initial_solution()
+        self.run(1000000)
         
         # temporary debugging lines
 
@@ -135,13 +136,13 @@ class Tabu_search():
                 no_change += 1
                 # if no_change % 100 == 0:
                 #     print(f"{no_change}")
-                # if no_change % 25 == 0:
+                # if no_change % 100 == 0:
                 #     print(f"{self.calculate_malus()} {no_change} {self.T}")
                                    
             else:
                 no_change = 0
             
-            if no_change > 1000:
+            if no_change > 5000:
                 # malussen = (0, 0, 0, 0)
                 # for student in self.Students:
                 #     malussen =  tuple(x + y for x, y in zip(self.Students[student].get_detailed_malus(), malussen))
@@ -241,7 +242,7 @@ class Tabu_search():
         Randomly swaps 2 activities
         Keeps good changes and reverts bad changes
         """
-        if random.random() > 128/144:
+        if random.random() < (16 / 144):
             return self.random_move_activity()
         
         # swap activities
@@ -340,7 +341,7 @@ class Tabu_search():
         student1malus = student1.get_malus()
         activity1malus = activity1.get_malus()
         activity2malus = activity2.get_malus()
-        if random.random() < len(activity2.students) / activity2.capacity:
+        if random.random() < (len(activity2.students) / activity2.capacity):
             student2 = random.choice(activity2.students)
             student2malus = student2.get_malus()
         else:
