@@ -6,7 +6,7 @@ import scipy.stats
 class Hillclimber():
     def __init__(self, data, iterations=10000, no_change_stop = 1000) -> None:
         """
-        Tabu search algorithm constructor
+        Hillclimb search algorithm constructor
         """
         self.Courses = data.Courses
         self.Rooms = data.Rooms
