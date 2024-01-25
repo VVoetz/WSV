@@ -44,6 +44,7 @@ if __name__ == "__main__":
         elif sys.argv[1] == 'tabu':
             test = tabu_algo.Tabu_search(data, iterations=0)
         elif sys.argv[1] == 'anneal':
+            test = greedy_algo.Greedyalgo(data)
             test = annealing.Tabu_search(data)
         elif sys.argv[1] == 'anneal_grid':
             anneal_grid_search.run_grid_search(int(sys.argv[2]), int(sys.argv[3]))
@@ -69,12 +70,12 @@ if __name__ == "__main__":
                 room_capacity_points += room_capacity
                 fifth_slot_points += fifth_slot
 
-        # for item in test.Students:
-        #     double_act_points, single_points, double_points, triple_points = test.Students[item].get_detailed_malus()
-        #     double_acts += double_act_points
-        #     singlegaps += single_points
-        #     doublegaps += double_points
-        #     triplegaps += triple_points
+        for item in test.Students:
+            double_act_points, single_points, double_points, triple_points = test.Students[item].get_detailed_malus()
+            double_acts += double_act_points
+            singlegaps += single_points
+            doublegaps += double_points
+            triplegaps += triple_points
         
         malus = room_capacity_points + fifth_slot_points + double_acts + singlegaps + doublegaps + triplegaps
         
@@ -105,7 +106,7 @@ if __name__ == "__main__":
         write.writerows(rows)
 
 
-    # print(f"room capacity: {room_capacity_points}   fifth: {fifth_slot_points}  courseconflict: {double_acts}   single: {singlegaps}    double: {doublegaps}")
+    print(f"room capacity: {room_capacity_points}   fifth: {fifth_slot_points}  courseconflict: {double_acts}   single: {singlegaps}    double: {doublegaps}")
     # print(sorted(maluslist))
     total = 0
     for item in maluslist:
