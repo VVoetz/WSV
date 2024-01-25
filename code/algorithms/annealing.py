@@ -17,7 +17,7 @@ class Tabu_search():
         self.Course_list = list(self.Courses.values())
     
         self.create_initial_solution()
-        self.run(100000)
+        self.run(500000)
         
         # temporary debugging lines
 
@@ -122,7 +122,7 @@ class Tabu_search():
         for iteration in range(0, iterations):
             
             
-            self.T = 0.999 * self.T
+            self.T = 0.99999 * self.T
             change = 0
             change1 = self.random_swap_activity()
             change2 = self.swap_student_in_course()
@@ -141,7 +141,7 @@ class Tabu_search():
             else:
                 no_change = 0
             
-            if no_change > 10:
+            if no_change > 1000:
                 # malussen = (0, 0, 0, 0)
                 # for student in self.Students:
                 #     malussen =  tuple(x + y for x, y in zip(self.Students[student].get_detailed_malus(), malussen))
