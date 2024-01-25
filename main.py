@@ -1,10 +1,10 @@
 from code.classes import data_loader
 
-from code.algorithms import testalgo, random_algo, greedy_algo, tabu_algo, annealing, hillclimber
+from code.algorithms import testalgo, random_algo, greedy_algo, tabu_algo, annealing
 
 from code.visualisation import print_schedule, make_google_calendar
 
-from code.experiments import anneal_grid_search
+from code.experiments import grid_search_tabu, anneal_grid_search
 
 import copy
 import sys
@@ -44,7 +44,12 @@ if __name__ == "__main__":
         elif sys.argv[1] == 'tabu':
             test = tabu_algo.Tabu_search(data, iterations=1000, neighbour_ammount=25, tabu_length=200)
         elif sys.argv[1] == 'anneal':
+            test = greedy_algo.Greedyalgo(data)
             test = annealing.Tabu_search(data)
+        elif sys.argv[1] == 'anneal_grid':
+            anneal_grid_search.run_grid_search(int(sys.argv[2]), int(sys.argv[3]))
+            exit()
+            
         elif sys.argv[1] == "hillclimber":
             test = hillclimber.Hillclimber(data, iterations=100000, no_change_stop=1000)
 
@@ -85,7 +90,7 @@ if __name__ == "__main__":
         malus_triple_gaps.append(triplegaps)
         maluslist.append(malus)
 
-        print(f"{i}: {malus}")
+        # print(f"{i}: {malus}")
 
         
         #make_google_calendar.make_google_calendar_csv(data)
@@ -103,8 +108,8 @@ if __name__ == "__main__":
         write.writerows(rows)
 
 
-    # print(f"room capacity: {room_capacity_points}   fifth: {fifth_slot_points}  courseconflict: {double_acts}   single: {singlegaps}    double: {doublegaps}")
-    print(sorted(maluslist))
+    print(f"room capacity: {room_capacity_points}   fifth: {fifth_slot_points}  courseconflict: {double_acts}   single: {singlegaps}    double: {doublegaps}")
+    # print(sorted(maluslist))
     total = 0
     for item in maluslist:
         while item > 1000000:

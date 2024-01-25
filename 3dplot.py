@@ -104,54 +104,54 @@ if __name__ == "__main__":
 
     # number_of_simulations = 15
 
-    # if sys.argv[1]=='tabu':
-    #     tabu_length = range(200,205)
+    if sys.argv[1]=='tabu':
+        tabu_length = range(200,205)
 
-    #     neighbour_ammount = range(10, 15)
+        neighbour_ammount = range(10, 15)
 
-    #     X = []
-    #     Y = []
-    #     Z = []
-    #     for l in tabu_length:
-    #         for n in neighbour_ammount:
-    #             X.append(int(l))
-    #             Y.append(int(n))
-    #             Z.append(malus_score_3d_plot(tabu_length=tabu_length, neighbour_ammount=neighbour_ammount, number_of_simulations=number_of_simulations))
+        X = []
+        Y = []
+        Z = []
+        for l in tabu_length:
+            for n in neighbour_ammount:
+                X.append(int(l))
+                Y.append(int(n))
+                Z.append(malus_score_3d_plot(tabu_length=tabu_length, neighbour_ammount=neighbour_ammount, number_of_simulations=number_of_simulations))
 
-    #     fields = ['tabu length', 'neighbours', 'malus_avg']
-    #     rows = []
-    #     for i in range(len(X)):
-    #         row = [X[i], Y[i], Z[i]]
-    #         rows.append(row)
-    #     with open(f'data/{sys.argv[1]}_algo_3d_data.csv', mode='w') as csvfile:
-    #         write = csv.writer(csvfile)
-    #         write.writerow(fields)
-    #         write.writerows(rows)
+        fields = ['tabu length', 'neighbours', 'malus_avg']
+        rows = []
+        for i in range(len(X)):
+            row = [X[i], Y[i], Z[i]]
+            rows.append(row)
+        with open(f'data/{sys.argv[1]}_algo_3d_data.csv', mode='w') as csvfile:
+            write = csv.writer(csvfile)
+            write.writerow(fields)
+            write.writerows(rows)
 
-    #     plt.figure()
-    #     # Creating figure
-    #     fig = plt.figure(figsize =(16, 9))  
-    #     ax = plt.axes(projection ='3d')
+        plt.figure()
+        # Creating figure
+        fig = plt.figure(figsize =(16, 9))  
+        ax = plt.axes(projection ='3d')
 
-    #     # Creating color map
-    #     my_cmap = plt.get_cmap('hot')
+        # Creating color map
+        my_cmap = plt.get_cmap('hot')
 
-    #     # Creating plot
-    #     trisurf = ax.plot_trisurf(X, Y, Z,
-    #                             cmap = 'plasma',
-    #                             linewidth = 0.2, 
-    #                             antialiased = True,
-    #                             edgecolor = 'grey')  
-    #     fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5)
+        # Creating plot
+        trisurf = ax.plot_trisurf(X, Y, Z,
+                                cmap = 'plasma',
+                                linewidth = 0.2, 
+                                antialiased = True,
+                                edgecolor = 'grey')  
+        fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5)
 
         
-    #     ax.set_title(f'3d plot voor {sys.argv[1]} algoritme met {number_of_simulations} simulaties')
-    #     ax.set_xlabel('Tabu lengte')
-    #     ax.set_ylabel('Neighbours')
-    #     ax.set_zlabel('Maluspunten')
+        ax.set_title(f'3d plot voor {sys.argv[1]} algoritme met {number_of_simulations} simulaties')
+        ax.set_xlabel('Tabu lengte')
+        ax.set_ylabel('Neighbours')
+        ax.set_zlabel('Maluspunten')
 
-    #     # saving figure
-    #     plt.savefig('3dplot.png')
+        # saving figure
+        plt.savefig('3dplot.png')
 
 
 
