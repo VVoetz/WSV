@@ -1,5 +1,7 @@
+Runs per combination: 10
 Max iterations: 500000
 Temp coefficient: 0.99999
 Max no_change: 1000
 Student coefficient stepsize: 5
 Activity coefficient stepsize: 20
+seq 10 | parallel -j 10 python3 main.py anneal_grid 10 {}
