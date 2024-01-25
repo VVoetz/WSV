@@ -48,9 +48,10 @@ def open_malus_csv(filename: str, method=1):
         with open(f'data/{filename}', mode='r') as file:
             next(file)
             csvFile = csv.reader(file)
-            x_data.append(int(line[0]))
-            y_data.append(int(line[1]))
-            z_data.append(int(line[2]))
+            for line in csvFile:
+                x_data.append(int(line[0]))
+                y_data.append(int(line[1]))
+                z_data.append(int(line[2]))
         return [x_data, y_data, z_data]
     else:
         print('Not a valid method')
