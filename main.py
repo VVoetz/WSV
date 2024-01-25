@@ -17,7 +17,7 @@ if __name__ == "__main__":
     
     start = time.time()
 
-    number_of_simulations = 1
+    number_of_simulations = 50
 
     malus_room_capacity = list()
     malus_fifth_slot = list()
@@ -42,9 +42,11 @@ if __name__ == "__main__":
         elif sys.argv[1] == 'random':
             test = random_algo.Testalgo(data)
         elif sys.argv[1] == 'tabu':
-            test = tabu_algo.Tabu_search(data, iterations=500, neighbour_ammount=25, tabu_length=50)
+            test = tabu_algo.Tabu_search(data, iterations=1000, neighbour_ammount=25, tabu_length=200)
         elif sys.argv[1] == 'anneal':
             test = annealing.Tabu_search(data)
+        elif sys.argv[1] == "hillclimber":
+            test = hillclimber.Hillclimber(data, iterations=100000, no_change_stop=1000)
 
         # print schedule in terminal
         # for room in test.Rooms:
@@ -112,6 +114,6 @@ if __name__ == "__main__":
         
 
     end = time.time()
-    # print(f"time taken: {end - start}")
+    print(f"time taken: {end - start}")
 
 
