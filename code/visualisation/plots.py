@@ -41,6 +41,17 @@ def open_malus_csv(filename: str, method=1):
                 y_data.append(float(line[1]))
                 maluslist.append(float(line[2]))
         return [x_data, y_data, maluslist]
+    elif method==3:
+        x_data = []
+        y_data = []
+        z_data = []
+        with open(f'data/{filename}', mode='r') as file:
+            next(file)
+            csvFile = csv.reader(file)
+            x_data.append(int(line[0]))
+            y_data.append(int(line[1]))
+            z_data.append(int(line[2]))
+        return [x_data, y_data, z_data]
     else:
         print('Not a valid method')
         return 0
@@ -60,7 +71,7 @@ def stacked_plot(filename: str, algo: str):
     y3 = []
     y4 = []
     y5 = []
-    y6 = []
+    y6 = data[5]
 
     # saving fractional data
     for i in range(len(data[0])):
@@ -69,14 +80,30 @@ def stacked_plot(filename: str, algo: str):
         y3.append(data[2][i]/data[6][i])
         y4.append(data[3][i]/data[6][i])
         y5.append(data[4][i]/data[6][i])
-        y6.append(data[5][i]/data[6][i])
     simulations = range(1, (len(y1)+1))
 
+    #sorting data
+    y1_new = []
+    y2_new = []
+    y3_new = []
+    y4_new = []
+    y5_new = []
+
+    indexes = sorted(range(len(y6)), key=lambda k: y6[k])
+    for i in range(len(y6)):
+        index = indexes[i]
+        y1_new.append(y1[index])
+        y2_new.append(y2[index])
+        y3_new.append(y3[index])
+        y4_new.append(y4[index])
+        y5_new.append(y5[index])
+        
+
     # colors
-    the_colors = sns.cubehelix_palette(6, start=0.5, rot=-.75)
+    the_colors = sns.cubehelix_palette(5, start=0.5, rot=-.75)
 
     # categories
-    categories = ['Room Capacity', 'Fifth Slot Usage','Double Acts', 'Single Gaps', 'Double Gaps', 'Triple Gaps']
+    categories = ['Room Capacity', 'Fifth Slot Usage','Double Acts', 'Single Gaps', 'Double Gaps']
 
     # using new clear figure
     plt.figure()
@@ -84,7 +111,7 @@ def stacked_plot(filename: str, algo: str):
 
 
     # basic stacked area chart
-    plt.stackplot(simulations, y1, y2, y3, y4, y5, y6, labels=categories, colors=the_colors)
+    plt.stackplot(simulations, y1_new, y2_new, y3_new, y4_new, y5_new, labels=categories, colors=the_colors)
 
     # define axes limits
     plt.xlim([1, len(y1)])
@@ -107,7 +134,7 @@ def stacked_plot(filename: str, algo: str):
     # plt.text(x-coordinate, y-coordinate, 'text')
 
     # reverse legend color
-    plt.savefig('code/visualisation/stacked_plot.png')
+    plt.savefig(f'code/visualisation/stacked_plot_{algo}_algo.png')
 
 def plot_hist(filename: str, algo: str):
     """
@@ -126,7 +153,7 @@ def plot_hist(filename: str, algo: str):
     fig.set(xlabel='Maluspunten', ylabel='Frequentie')
     #plt.title(f'Histogram of Maluspoints for the {algo} Algorithm')
 
-    plt.savefig("code/visualisation/malus_point_plot.png")
+    plt.savefig(f"code/visualisation/hist_plot_{algo}_algo.png")
 
     # plt.hist(x, bins=50, color="pink", ec="red")
     # plt.xlabel("Maluspunten")
@@ -140,32 +167,32 @@ def pie_chart(filename: str, algo: str):
     # loading data
     data = open_malus_csv(filename)
     Percentages = {}
-    for i in range(6):
+    for i in range(5):
         Percentages[f'y{i+1}'] = []
  
 
     # saving fractional data
     for i in range(len(data[0])):
-        for j in range(6):
+        for j in range(5):
             Percentages[f'y{j+1}'].append(data[j][i]/data[6][i])    
         
     average = []
-    for i in range(6):
+    for i in range(5):
         average.append(sum(Percentages[f'y{i+1}'])/len(Percentages[f'y{i+1}']))
 
     # categories
-    categories = ['Room Capacity', 'Fifth Slot Usage','Double Acts', 'Single Gaps', 'Double Gaps', 'Triple Gaps']
+    categories = ['Room Capacity', 'Fifth Slot Usage','Double Acts', 'Single Gaps', 'Double Gaps']
 
 
     # colors
-    the_colors = sns.cubehelix_palette(6, start=0.5, rot=-.75)
+    the_colors = sns.cubehelix_palette(5, start=0.5, rot=-.75)
 
 
     # using new clear figure
     plt.figure()
     plt.pie(average, colors=the_colors, labels=categories, autopct='%1.1f%%')
     plt.title(f'Average Percentages per Category Maluspoints for the {algo} Algorithm')
-    plt.savefig("code/visualisation/piechart.png")
+    plt.savefig(f"code/visualisation/piechart_{algo}_algo.png")
 
 def stacked_hist(filename: str, algo: str):
 
@@ -175,19 +202,18 @@ def stacked_hist(filename: str, algo: str):
     y3= data[2]
     y4= data[3]
     y5= data[4]
-    y6= data[5]
-    data = [y1, y2, y3, y4, y5, y6]
+    data = [y1, y2, y3, y4, y5]
 
 
 
     # categories
-    categories = ['Room Capacity', 'Fifth Slot Usage','Double Acts', 'Single Gaps', 'Double Gaps', 'Triple Gaps']
+    categories = ['Room Capacity', 'Fifth Slot Usage','Double Acts', 'Single Gaps', 'Double Gaps']
 
     # using new clear figure
     plt.figure()
     fig, ax = plt.subplots()
-    the_colors = sns.cubehelix_palette(6, start=0.5, rot=-.75)
-    plt.hist(data, histtype='barstacked', color=the_colors, bins=3, label=categories)
+    the_colors = sns.cubehelix_palette(5, start=0.5, rot=-.75)
+    plt.hist(data, histtype='barstacked', color=the_colors, label=categories, bins =100)
 
     # shrink axis's height by 20 %
     box = ax.get_position()
@@ -203,28 +229,35 @@ def stacked_hist(filename: str, algo: str):
 
     plt.savefig(f"code/visualisation/stacked_hist_{algo}_algo")
 
-
-def three_dimensional_plot(filename: str):
-    # loading correct data
-    data = open_malus_csv(filename, method=2)
-    x = data[0]
-    y = data[1]
-    z = d
+def iterative_plot(filename: str, algo: str, sim: int):
+    data = open_malus_csv(filename, method=3)
+    data_lines = {}
+    for i in range(sim):
+        data_lines[f'{i}']=data[i]
     
-    # creating axes
-    fig, ax = plt.subplots(subplot_kw={'projection': '3d'})
-
-    plot = ax.plot_surface(x, y, z, cmap='plasma')
 
 
-    # adding a color bar which maps values to colors
-    ax.set_title('3d plot for Algorithm')
-    ax.set_xlabel('X values')
-    ax.set_ylabel('Y Values')
-    ax.set_zlabel('Maluspunten')
+# def three_dimensional_plot(filename: str):
+#     # loading correct data
+#     data = open_malus_csv(filename, method=2)
+#     x = data[0]
+#     y = data[1]
+#     z = d
+    
+#     # creating axes
+#     fig, ax = plt.subplots(subplot_kw={'projection': '3d'})
 
-    # saving figure
-    plt.savefig('3dplot.png')
+#     plot = ax.plot_surface(x, y, z, cmap='plasma')
+
+
+#     # adding a color bar which maps values to colors
+#     ax.set_title('3d plot for Algorithm')
+#     ax.set_xlabel('X values')
+#     ax.set_ylabel('Y Values')
+#     ax.set_zlabel('Maluspunten')
+
+#     # saving figure
+#     plt.savefig('3dplot.png')
 
 
 
