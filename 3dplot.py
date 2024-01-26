@@ -20,7 +20,7 @@ import csv
 
 
 
-def malus_score_3d_plot( temp=0, number_of_iterations=0, number_of_simulations=0, tabu_length=0, neighbour_ammount=0):
+def grid_data( temp=0, number_of_iterations=0, number_of_simulations=0, tabu_length=0, neighbour_ammount=0):
         malus_room_capacity = list()
         malus_fifth_slot = list()
         malus_double_acts = list()
