@@ -84,7 +84,13 @@ def specified_simulations(tabu_length=0, neighbour_ammount=0, input1=0, input2=0
                 malus_triple_gaps.append(triplegaps)
                 maluslist.append(malus)
 
-                print(f"{i}: {malus}")
+                if sys.argv[1]=='anneal':
+                    print(f"{i}: {malus} for simulation {i} and X value {input1} and Y value {input2}")
+                    print(f'average for {input1} and {input2}: {sum(maluslist)/len(maluslist)*-1}')
+                if sys.argv[1]=='tabu':
+                    print(f"{i}: {malus} for simulation {i} and X value {tabu_length} and Y value {neighbour_ammount}")
+                    print(f'average for {tabu_length} and {neighbour_ammount}: {sum(maluslist)/len(maluslist)*-1}')
+
     return sum(maluslist)/len(maluslist)*-1
 
 if __name__ == "__main__":
@@ -101,10 +107,10 @@ if __name__ == "__main__":
 
     # tabu variables
     tabu_length = []
-    for i in range(100, 120, 10):
+    for i in range(100, 130, 10):
         tabu_length.append(int(i))
     neighbour_ammount = []
-    for i in range(20, 35, 5):
+    for i in range(20, 30, 5):
         neighbour_ammount.append(int(i))
 
     if sys.argv[1]=='tabu':
