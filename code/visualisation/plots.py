@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import csv
 import numpy as np
+import pandas
 
 
 def open_malus_csv(filename: str, method=1):
@@ -14,7 +15,6 @@ def open_malus_csv(filename: str, method=1):
         malus_double_acts = list()
         malus_single_gaps = list()
         malus_double_gaps = list()
-        malus_triple_gaps = list()
         maluslist = list()
         with open(f'data/{filename}', mode='r') as file:
             next(file)
@@ -25,9 +25,8 @@ def open_malus_csv(filename: str, method=1):
                 malus_double_acts.append(float(line[2]))
                 malus_single_gaps.append(float(line[3]))
                 malus_double_gaps.append(float(line[4]))
-                malus_triple_gaps.append(float(line[5]))
                 maluslist.append(float(line[6]))
-        return [malus_room_capacity, malus_fifth_slot, malus_double_acts, malus_single_gaps, malus_double_gaps, malus_triple_gaps, maluslist]
+        return [malus_room_capacity, malus_fifth_slot, malus_double_acts, malus_single_gaps, malus_double_gaps, maluslist]
 
     elif method==2:
         x_data = list()
@@ -57,7 +56,22 @@ def open_malus_csv(filename: str, method=1):
         print('Not a valid method')
         return 0
     
-            
+
+def multi_hist(filenames, labels):
+    data = {}
+    for i in range(len(filenames)):
+        data_ = open_malus_csv(filenames[i])
+        data[f'{labels[i]}']=data_[5]
+        print(data_[5])
+    data = pandas.DataFrame(data)
+
+    plt.figure(figsize =(16, 9)) 
+    sns.set(rc={'figure.figsize':(10,8.27)})
+    ax = sns.displot(data, kind='kde', fill='True').set(title="Distributies Maluspunten Algoritmes")
+    ax.set(xlabel='MalusPunten')
+    plt.savefig('code/visualisation/multi_hist.png')
+
+
 
 
 def stacked_plot(filename: str, algo: str):
