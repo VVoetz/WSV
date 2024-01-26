@@ -18,6 +18,8 @@ import time
 import csv
 
 def specified_simulations(tabu_length=0, neighbour_ammount=0, input1=0, input2=0, number_of_simulations=0):
+
+    print(f"sim tabu: {tabu_length}     neighbours: {neighbour_ammount}")
     # iterating over all simulations
     for i in range(number_of_simulations):
 
@@ -36,7 +38,6 @@ def specified_simulations(tabu_length=0, neighbour_ammount=0, input1=0, input2=0
             # runs chosen algorithm
             if sys.argv[1] == 'tabu':
                 test = tabu_algo.Tabu_search(data, iterations=10, tabu_length=tabu_length, neighbour_ammount=neighbour_ammount )
-                grid_search_tabu.run_grid_search()
             elif sys.argv[1] == 'anneal':
                 test = annealing.Tabu_search(data, input1=input1, input2=input2)
 
@@ -100,10 +101,10 @@ if __name__ == "__main__":
 
     # tabu variables
     tabu_length = []
-    for i in range(250, 260):
+    for i in range(100, 120, 10):
         tabu_length.append(int(i))
     neighbour_ammount = []
-    for i in range(20, 25):
+    for i in range(20, 35, 5):
         neighbour_ammount.append(int(i))
 
     if sys.argv[1]=='tabu':
@@ -129,7 +130,7 @@ if __name__ == "__main__":
     for i in range(len(X)):
         row = [X[i], Y[i], malus_average[i]]
         rows.append(row)
-    with open(f'data/grid/{sys.argv[1]}_algo_3d_data.csv', mode='w') as csvfile:
+    with open(f'data/grid/{sys.argv[1]}_algo_3d_data.csv', mode='w', newline="") as csvfile:
         write = csv.writer(csvfile)
         write.writerow(fields)
         write.writerows(rows)
