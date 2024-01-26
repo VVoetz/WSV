@@ -17,7 +17,7 @@ if __name__ == "__main__":
     
     start = time.time()
 
-    number_of_simulations = 50
+    number_of_simulations = 1
 
     malus_room_capacity = list()
     malus_fifth_slot = list()
@@ -42,14 +42,17 @@ if __name__ == "__main__":
         elif sys.argv[1] == 'random':
             test = random_algo.Testalgo(data)
         elif sys.argv[1] == 'tabu':
-            test = tabu_algo.Tabu_search(data, iterations=1000, neighbour_ammount=25, tabu_length=200)
+            test = greedy_algo.Greedyalgo(data)
+            test = tabu_algo.Tabu_search(data, iterations=100000, neighbour_ammount=25, tabu_length=200, create_solution=False)
+        elif sys.argv[1] == 'tabu_grid':
+            grid_search_tabu.run_grid_search()
+            test = tabu_algo.Tabu_search(data, iterations=0)
         elif sys.argv[1] == 'anneal':
             test = greedy_algo.Greedyalgo(data)
             test = annealing.Tabu_search(data)
         elif sys.argv[1] == 'anneal_grid':
             anneal_grid_search.run_grid_search(int(sys.argv[2]), int(sys.argv[3]))
             exit()
-            
         elif sys.argv[1] == "hillclimber":
             test = hillclimber.Hillclimber(data, iterations=100000, no_change_stop=1000)
 

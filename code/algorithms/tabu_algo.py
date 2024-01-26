@@ -5,7 +5,7 @@ import math, random, copy, time, csv
 class Tabu_search():
 
     # found best settings: neihbours between 40-60, tabu_length = 250-1000
-    def __init__(self, data, iterations=10000, tabu_length=250, neighbour_ammount=25) -> None:
+    def __init__(self, data, iterations=10000, tabu_length=250, neighbour_ammount=25, create_solution=True) -> None:
         """
         Tabu search algorithm constructor
         """
@@ -15,8 +15,9 @@ class Tabu_search():
         self.Activities = data.Activities
 
         self.Course_list = list(self.Courses.values())
-    
-        self.create_initial_solution()
+
+        if create_solution:
+            self.create_initial_solution()
 
         self.run(iterations, tabu_length, neighbour_ammount)
     
@@ -120,7 +121,8 @@ class Tabu_search():
         # run tabu algorithm for iteration ammount of times
         for iteration in range(0, iterations):
             
-            neighbours = self.get_neighbours(neighbour_ammount, act_swap=0.1, stud_swap=0.1, act_move=0.4, stud_move=0.4)
+            neighbours = self.get_neighbours(neighbour_ammount)
+            
             
             best_neighbour = None
             best_neighbour_value = 1000000000
@@ -178,8 +180,8 @@ class Tabu_search():
                 no_change += 1
             else:
                 no_change = 0
-            
-            if no_change > 5000:
+
+            if no_change > 5000 or time.time() - start_time > 18:
                 break
 
             # update simulation score
@@ -190,8 +192,8 @@ class Tabu_search():
             if len(tabu_list) > tabu_length:
                 tabu_list.pop()
             
-            if iteration % 100 == 0 and iteration != 0:
-                print(f"iteration: {iteration}    sim_best: {simulation_best}  current_score: {current_score}")
+            # if iteration % 100 == 0 and iteration != 0:
+            #     print(f"iteration: {iteration}    sim_best: {simulation_best}  current_score: {current_score}")
 
     def swap_activities(self, activity1, activity2) -> None:
 
