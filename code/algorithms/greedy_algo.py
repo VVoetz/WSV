@@ -13,11 +13,17 @@ class Greedyalgo(object):
         rooms = list()
         for room in self.Rooms:
             rooms.append(self.Rooms[room])
+        
+        self.Rooms["C0.110"].slots = 5
+
         assign_all(self.Activities, rooms)
         assign_students(self.Courses)
 
+        self.Rooms["C0.110"].slots = 6
+
 def assign_all(activities, rooms: list) -> None:
-    for activity in sorted(activities, key=lambda room: room.capacity):
+    for activity in sorted(activities, key=lambda activity: activity.capacity):
+
         fill_smallest_room(activity, rooms)
 
 def fill_smallest_room(activity, rooms: list) -> None:
@@ -30,6 +36,7 @@ def fill_smallest_room(activity, rooms: list) -> None:
                 activity.set_timeslot(chosen_slot)
                 activity.set_room(room)
                 return 0
+
     #  if no room available that fits capacity, take largest available room to minimise 'maluspunten'   
     for room in sorted(rooms, key=lambda room: room.capacity, reverse=True):
         slots = room.return_availability()
@@ -83,5 +90,3 @@ def assign_students(courses):
                         chosen_seminar = activity
                 student.add_activity(chosen_seminar)
                 chosen_seminar.add_student(student)
-
-
