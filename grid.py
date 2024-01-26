@@ -20,6 +20,10 @@ import csv
 def specified_simulations(tabu_length=0, neighbour_ammount=0, input1=0, input2=0, number_of_simulations=0):
 
     print(f"sim tabu: {tabu_length}     neighbours: {neighbour_ammount}")
+
+    # average malus list for all combinations
+    maluslist = list()
+
     # iterating over all simulations
     for i in range(number_of_simulations):
 
@@ -30,7 +34,7 @@ def specified_simulations(tabu_length=0, neighbour_ammount=0, input1=0, input2=0
         malus_single_gaps = list()
         malus_double_gaps = list()
         malus_triple_gaps = list()
-        maluslist = list()
+
 
         while simulation_parameter:
             data = copy.deepcopy(base)
@@ -83,14 +87,15 @@ def specified_simulations(tabu_length=0, neighbour_ammount=0, input1=0, input2=0
                 malus_double_gaps.append(doublegaps)
                 malus_triple_gaps.append(triplegaps)
                 maluslist.append(malus)
-
-                if sys.argv[1]=='anneal':
-                    print(f"{i}: {malus} for simulation {i} and X value {input1} and Y value {input2}")
-                    print(f'average for {input1} and {input2}: {sum(maluslist)/len(maluslist)*-1}')
-                if sys.argv[1]=='tabu':
-                    print(f"{i}: {malus} for simulation {i} and X value {tabu_length} and Y value {neighbour_ammount}")
-                    print(f'average for {tabu_length} and {neighbour_ammount}: {sum(maluslist)/len(maluslist)*-1}')
-
+        if sys.argv[1]=='anneal':
+            print(f"{i}: {malus} for simulation {i} and X value {input1} and Y value {input2}")
+        if sys.argv[1]=='tabu':
+            print(f"{i}: {malus} for simulation {i} and X value {tabu_length} and Y value {neighbour_ammount}")
+               
+    if sys.argv[1]=='anneal':
+        print(f'negative average for {input1} and {input2}: {sum(maluslist)/len(maluslist)*-1}')
+    if sys.argv[1]=='tabu':
+        print(f'negative average for {tabu_length} and {neighbour_ammount}: {sum(maluslist)/len(maluslist)*-1}')
     return sum(maluslist)/len(maluslist)*-1
 
 if __name__ == "__main__":
