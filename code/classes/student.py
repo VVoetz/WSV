@@ -31,7 +31,6 @@ class Student():
         """
         Removes activity from list of activities
         """
-        
         self.activities.remove(activity)
     
     def show_activities(self):
@@ -41,6 +40,10 @@ class Student():
         return self.activities
     
     def test_malus(self, activity) -> int:
+        """
+        Temporarily adds activity to students schedule and returns 
+        the difference in maluspoints as a result of the addition
+        """
         malus = -1 * self.get_malus()
         self.activities.append(activity)
         malus += self.get_malus()
@@ -48,6 +51,9 @@ class Student():
         return malus
 
     def get_malus(self) -> int:
+        """
+        Returns all maluspoints for a student
+        """
         total = 0
         for item in self.get_detailed_malus():
             total += item
@@ -55,7 +61,7 @@ class Student():
 
     def get_detailed_malus(self) -> tuple:
         """
-        Calculates and returns malus points of student
+        Calculates and returns malus points of student per category
         """
         activity_dict = {}
         double_acts = 0
