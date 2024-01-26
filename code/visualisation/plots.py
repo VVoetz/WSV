@@ -45,7 +45,7 @@ def open_malus_csv(filename: str, method=1):
         x_data = []
         y_data = []
         z_data = []
-        with open(f'data/{filename}', mode='r') as file:
+        with open(f'data/grid/{filename}', mode='r') as file:
             next(file)
             csvFile = csv.reader(file)
             for line in csvFile:

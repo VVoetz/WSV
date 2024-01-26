@@ -19,145 +19,6 @@ import csv
 
 
 
-
-def grid_data( temp=0, number_of_iterations=0, number_of_simulations=0, tabu_length=0, neighbour_ammount=0):
-        malus_room_capacity = list()
-        malus_fifth_slot = list()
-        malus_double_acts = list()
-        malus_single_gaps = list()
-        malus_double_gaps = list()
-        malus_triple_gaps = list()
-        maluslist = list()
-        # iterating over all simulations
-        for i in range(number_of_simulations):
-            simulation_parameter = True
-
-            while simulation_parameter:
-                data = copy.deepcopy(base)
-
-                # runs chosen algorithm
-                if sys.argv[1] == 'tabu':
-                    test = tabu_algo.Tabu_search(data, iterations=10, tabu_length=tabu_length, neighbour_ammount=neighbour_ammount )
-                    grid_search_tabu.run_grid_search()
-                elif sys.argv[1] == 'anneal':
-                    test = annealing.Tabu_search(data, temp=temp, iterations=number_of_iterations)
-
-                # print schedule in terminal
-                # for room in test.Rooms:
-                #    print_schedule.visualize_room_schedule(test.Rooms[room])    
-                
-                # print the malus points of a course's activities
-
-                room_capacity_points = 0
-                fifth_slot_points = 0
-                double_acts = 0
-                singlegaps = 0
-                doublegaps = 0
-                triplegaps = 0
-
-                for course in data.Courses:
-                    for activity in data.Courses[course].activities:
-                        room_capacity, fifth_slot = activity.get_detailed_malus()
-                        room_capacity_points += room_capacity
-                        fifth_slot_points += fifth_slot
-
-                for item in test.Students:
-                    double_act_points, single_points, double_points, triple_points = test.Students[item].get_detailed_malus()
-                    double_acts += double_act_points
-                    singlegaps += single_points
-                    doublegaps += double_points
-                    if triple_points > 100:
-                        simulation_parameter = True
-                        break
-                    else:
-                        triplegaps += triple_points
-                        simulation_parameter = False
-                
-                if not simulation_parameter:
-                    malus = room_capacity_points + fifth_slot_points + double_acts + singlegaps + doublegaps + triplegaps
-                    
-                    # saving malus scores total & categories in lists
-                    malus_room_capacity.append(room_capacity_points)
-                    malus_fifth_slot.append(fifth_slot_points)
-                    malus_double_acts.append(double_acts)
-                    malus_single_gaps.append(singlegaps)
-                    malus_double_gaps.append(doublegaps)
-                    malus_triple_gaps.append(triplegaps)
-                    maluslist.append(malus)
-
-                    print(f"{i}: {malus}")
-        return sum(maluslist)/len(maluslist)*-1
-
-                    # #make_google_calendar.make_google_calendar_csv(data)
-                    # make_google_calendar.make_student_calendar(data)
-
-
-
-
-
-
-if __name__ == "__main__":
-    
-    # start = time.time()
-
-    # base = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
-
-    # number_of_simulations = 15
-
-    if sys.argv[1]=='tabu':
-        tabu_length = range(200,205)
-
-        neighbour_ammount = range(10, 15)
-
-        X = []
-        Y = []
-        Z = []
-        for l in tabu_length:
-            for n in neighbour_ammount:
-                X.append(int(l))
-                Y.append(int(n))
-                Z.append(malus_score_3d_plot(tabu_length=tabu_length, neighbour_ammount=neighbour_ammount, number_of_simulations=number_of_simulations))
-
-        fields = ['tabu length', 'neighbours', 'malus_avg']
-        rows = []
-        for i in range(len(X)):
-            row = [X[i], Y[i], Z[i]]
-            rows.append(row)
-        with open(f'data/{sys.argv[1]}_algo_3d_data.csv', mode='w') as csvfile:
-            write = csv.writer(csvfile)
-            write.writerow(fields)
-            write.writerows(rows)
-
-        plt.figure()
-        # Creating figure
-        fig = plt.figure(figsize =(16, 9))  
-        ax = plt.axes(projection ='3d')
-
-        # Creating color map
-        my_cmap = plt.get_cmap('hot')
-
-        # Creating plot
-        trisurf = ax.plot_trisurf(X, Y, Z,
-                                cmap = 'plasma',
-                                linewidth = 0.2, 
-                                antialiased = True,
-                                edgecolor = 'grey')  
-        fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5)
-
-        
-        ax.set_title(f'3d plot voor {sys.argv[1]} algoritme met {number_of_simulations} simulaties')
-        ax.set_xlabel('Tabu lengte')
-        ax.set_ylabel('Neighbours')
-        ax.set_zlabel('Maluspunten')
-
-        # saving figure
-        plt.savefig('3dplot.png')
-
-
-
-
-    if sys.argv[1]=='anneal':
-
         # temp = np.arange(0.1, 8, 0.2)
         # number_of_iterations = []
         # for i in range(10,40):
@@ -185,117 +46,130 @@ if __name__ == "__main__":
         #     write.writerows(rows)
 
 
-        data = plots.open_malus_csv('output.csv', method=3)
-        X = data[0]
-        Y = data[1]
-        Z = data[2]
+        # data = plots.open_malus_csv('output.csv', method=3)
+        # X = data[0]
+        # Y = data[1]
+        # Z = data[2]
 
-        plt.figure()
-        # Creating figure
-        fig = plt.figure(figsize =(16, 9))  
-        ax = plt.axes(projection ='3d')
 
-        # Creating color map
-        my_cmap = plt.get_cmap('hot')
 
-        # Creating plot
-        trisurf = ax.plot_trisurf(X, Y, Z,
-                                cmap = 'plasma',
-                                linewidth = 0.2, 
-                                antialiased = True,
-                                edgecolor = 'grey')  
-        fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5)
 
-        
-        ax.set_title(f'3d plot voor {sys.argv[1]} algoritme met {len(X)} simulaties')
+def plot_3d(filename: str, number_of_simulations, algo)
+
+    # loading data
+    data = open_malus_csv(filename, method=3)
+    X = data[0]
+    Y = data[1]
+    Z = data[2]
+
+    #normal 3d plots
+    plt.figure()
+    # Creating figure
+    fig = plt.figure(figsize =(16, 9))  
+    ax = plt.axes(projection ='3d')
+    # Creating color map
+    my_cmap = plt.get_cmap('hot')
+    # Creating plot
+    trisurf = ax.plot_trisurf(X, Y, Z,
+                            cmap = 'plasma',
+                            linewidth = 0.2, 
+                            antialiased = True,
+                            edgecolor = 'grey')  
+    fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5)
+    if algo=='anneal':
         ax.set_xlabel('Gevoeligheid voor Temperatuur van Studenten')
         ax.set_ylabel('Gevoeligheid voor Temperatuur van Activiteiten')
-        ax.set_zlabel('Maluspunten')
+        ax.set_title(f'3d plot voor Annealing algoritme met {number_of_simulations} simulaties')
+    if algo=='tabu':
+        ax.set_xlabel('Tabu Lengte')
+        ax.set_ylabel('Neighbours')
+        ax.set_title(f'3d plot voor Tabu algoritme met {number_of_simulations} simulaties')
+    ax.set_zlabel('Gemiddelde Maluspunten')
+    # saving figure
+    plt.savefig(f'code/visualisation/grid/3dplot_{sys.argv[1]}_normal.png')
 
-        # saving figure
-        plt.savefig(f'3dplot_{sys.argv[1]}_normal.png')
 
-
-
-        plt.figure()
-        # Creating figure
-        fig = plt.figure(figsize =(16, 9))  
-        ax = plt.axes(projection ='3d')
-        ax.view_init(elev=90, azim=90, roll=0)
-
-        # Creating color map
-        my_cmap = plt.get_cmap('hot')
-
-        # Creating plot
-        trisurf = ax.plot_trisurf(X, Y, Z,
-                                cmap = 'plasma',
-                                linewidth = 0.2, 
-                                antialiased = True,
-                                edgecolor = 'grey')  
-        fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5)
-
-        
-        ax.set_title(f'3d plot voor {sys.argv[1]} algoritme met {len(X)} simulaties')
+    # heatmap
+    plt.figure()
+    # Creating figure
+    fig = plt.figure(figsize =(16, 9))  
+    ax = plt.axes(projection ='3d')
+    ax.view_init(elev=90, azim=90, roll=0)
+    # Creating color map
+    my_cmap = plt.get_cmap('hot')
+    # Creating plot
+    trisurf = ax.plot_trisurf(X, Y, Z,
+                            cmap = 'plasma',
+                            linewidth = 0.2, 
+                            antialiased = True,
+                            edgecolor = 'grey')  
+    fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5) 
+    if algo=='anneal':
         ax.set_xlabel('Gevoeligheid voor Temperatuur van Studenten')
         ax.set_ylabel('Gevoeligheid voor Temperatuur van Activiteiten')
-        ax.set_zlabel('Maluspunten')
+        ax.set_title(f'3d heatmap voor Annealing algoritme met {number_of_simulations} simulaties')
+    if algo=='tabu':
+        ax.set_xlabel('Tabu Lengte')
+        ax.set_ylabel('Neighbours')
+        ax.set_title(f'3d heatmap voor Tabu algoritme met {number_of_simulations} simulaties')
+    ax.set_zlabel('Gemiddelde Maluspunten')
+    # saving figure
+    plt.savefig(f'code/visualisation/grid/3dplot_{sys.argv[1]}_heat.png')
 
-        # saving figure
-        plt.savefig(f'3dplot_{sys.argv[1]}_heat.png')
 
+    # YZ plot
+    plt.figure()
+    # Creating figure
+    fig = plt.figure(figsize =(16, 9))  
+    ax = plt.axes(projection ='3d')
+    ax.view_init(elev=0, azim=0, roll=0)
+    # Creating color map
+    my_cmap = plt.get_cmap('hot')
+    # Creating plot
+    trisurf = ax.plot_trisurf(X, Y, Z,
+                            cmap = 'plasma',
+                            linewidth = 0.2, 
+                            antialiased = True,
+                            edgecolor = 'grey')  
+    fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5)
 
-
-        plt.figure()
-        # Creating figure
-        fig = plt.figure(figsize =(16, 9))  
-        ax = plt.axes(projection ='3d')
-        ax.view_init(elev=0, azim=0, roll=0)
-
-        # Creating color map
-        my_cmap = plt.get_cmap('hot')
-
-        # Creating plot
-        trisurf = ax.plot_trisurf(X, Y, Z,
-                                cmap = 'plasma',
-                                linewidth = 0.2, 
-                                antialiased = True,
-                                edgecolor = 'grey')  
-        fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5)
-
-        
-        ax.set_title(f'3d plot voor {sys.argv[1]} algoritme met {len(X)} simulaties')
+    if algo=='anneal':
         ax.set_ylabel('Gevoeligheid voor Temperatuur van Activiteiten')
-        ax.set_zlabel('Maluspunten')
+        ax.set_title(f'3d plot voor Annealing algoritme met {number_of_simulations} simulaties')
+    if algo=='tabu':
+        ax.set_ylabel('Neighbours')
+        ax.set_title(f'3d plot voor Tabu algoritme met {number_of_simulations} simulaties')
+    ax.set_zlabel('Gemiddelde Maluspunten')
+    # saving figure
+    plt.savefig(f'code/visualisation/grid/3dplot_{sys.argv[1]}_YZ.png')
 
-        # saving figure
-        plt.savefig(f'3dplot_{sys.argv[1]}_YZ.png')
+
+    # XZ plot
+    plt.figure()
+    # Creating figure
+    fig = plt.figure(figsize =(16, 9))  
+    ax = plt.axes(projection ='3d')
+    ax.view_init(elev=0, azim=-90, roll=0)
+    # Creating color map
+    my_cmap = plt.get_cmap('hot')
+    # Creating plot
+    trisurf = ax.plot_trisurf(X, Y, Z,
+                            cmap = 'plasma',
+                            linewidth = 0.2, 
+                            antialiased = True,
+                            edgecolor = 'grey')  
+    fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5)
 
 
-
-        plt.figure()
-        # Creating figure
-        fig = plt.figure(figsize =(16, 9))  
-        ax = plt.axes(projection ='3d')
-        ax.view_init(elev=0, azim=-90, roll=0)
-
-        # Creating color map
-        my_cmap = plt.get_cmap('hot')
-
-        # Creating plot
-        trisurf = ax.plot_trisurf(X, Y, Z,
-                                cmap = 'plasma',
-                                linewidth = 0.2, 
-                                antialiased = True,
-                                edgecolor = 'grey')  
-        fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5)
-
-        
-        ax.set_title(f'3d plot voor {sys.argv[1]} algoritme met {len(X)} simulaties')
+    if algo=='anneal':
         ax.set_xlabel('Gevoeligheid voor Temperatuur van Studenten')
-        ax.set_zlabel('Maluspunten')
-
-        # saving figure
-        plt.savefig(f'3dplot_{sys.argv[1]}_XZ.png')
+        ax.set_title(f'3d plot voor Annealing algoritme met {number_of_simulations} simulaties')
+    if algo=='tabu':
+        ax.set_xlabel('Tabu Lengte')
+        ax.set_title(f'3d plot voor Tabu algoritme met {number_of_simulations} simulaties')
+    ax.set_zlabel('Gemiddelde Maluspunten')
+    # saving figure
+    plt.savefig(f'code/visualisation/grid/3dplot_{sys.argv[1]}_XZ.png')
 
 
 
