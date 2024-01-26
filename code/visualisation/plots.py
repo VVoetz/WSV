@@ -45,13 +45,13 @@ def open_malus_csv(filename: str, method=1):
         x_data = []
         y_data = []
         z_data = []
-        with open(f'data/{filename}', mode='r') as file:
+        with open(f'data/grid/{filename}', mode='r') as file:
             next(file)
             csvFile = csv.reader(file)
             for line in csvFile:
                 x_data.append(int(line[0]))
                 y_data.append(int(line[1]))
-                z_data.append(int(line[2]))
+                z_data.append(float(line[2]))
         return [x_data, y_data, z_data]
     else:
         print('Not a valid method')
@@ -230,11 +230,119 @@ def stacked_hist(filename: str, algo: str):
 
     plt.savefig(f"code/visualisation/stacked_hist_{algo}_algo")
 
-def iterative_plot(filename: str, algo: str, sim: int):
+# def iterative_plot(filename: str, algo: str, sim: int):
+#     data = open_malus_csv(filename, method=3)
+#     data_lines = {}
+#     for i in range(sim):
+#         data_lines[f'{i}']=data[i]
+
+
+def plot_3d(filename: str, number_of_simulations, algo):
+
+    # loading data
     data = open_malus_csv(filename, method=3)
-    data_lines = {}
-    for i in range(sim):
-        data_lines[f'{i}']=data[i]
+    X = data[0]
+    Y = data[1]
+    Z = data[2]
+
+    #normal 3d plots
+    plt.figure()
+    # Creating figure
+    fig = plt.figure(figsize =(16, 9))  
+    ax = plt.axes(projection ='3d')
+    # Creating plot
+    trisurf = ax.plot_trisurf(X, Y, Z,
+                            cmap = 'plasma',
+                            linewidth = 0.2, 
+                            antialiased = True,
+                            edgecolor = 'grey')  
+    fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5)
+    if algo=='anneal':
+        ax.set_xlabel('Gevoeligheid voor Temperatuur van Studenten')
+        ax.set_ylabel('Gevoeligheid voor Temperatuur van Activiteiten')
+        ax.set_title(f'3d plot voor Annealing algoritme met {number_of_simulations} simulaties')
+    if algo=='tabu':
+        ax.set_xlabel('Tabu Lengte')
+        ax.set_ylabel('Neighbours')
+        ax.set_title(f'3d plot voor Tabu algoritme met {number_of_simulations} simulaties')
+    ax.set_zlabel('Gemiddelde Maluspunten')
+    # saving figure
+    plt.savefig(f'code/visualisation/grid/3dplot_{algo}_normal.png')
+
+
+    # heatmap
+    plt.figure()
+    # Creating figure
+    fig = plt.figure(figsize =(16, 9))  
+    ax = plt.axes(projection ='3d')
+    ax.view_init(elev=90, azim=90, roll=0)
+    # Creating plot
+    trisurf = ax.plot_trisurf(X, Y, Z,
+                            cmap = 'plasma',
+                            linewidth = 0.2, 
+                            antialiased = True,
+                            edgecolor = 'grey')  
+    fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5) 
+    if algo=='anneal':
+        ax.set_xlabel('Gevoeligheid voor Temperatuur van Studenten')
+        ax.set_ylabel('Gevoeligheid voor Temperatuur van Activiteiten')
+        ax.set_title(f'3d heatmap voor Annealing algoritme met {number_of_simulations} simulaties')
+    if algo=='tabu':
+        ax.set_xlabel('Tabu Lengte')
+        ax.set_ylabel('Neighbours')
+        ax.set_title(f'3d heatmap voor Tabu algoritme met {number_of_simulations} simulaties')
+    ax.set_zlabel('Gemiddelde Maluspunten')
+    # saving figure
+    plt.savefig(f'code/visualisation/grid/3dplot_{algo}_heat.png')
+
+    # YZ plot
+    plt.figure()
+    # Creating figure
+    fig = plt.figure(figsize =(16, 9))  
+    ax = plt.axes(projection ='3d')
+    ax.view_init(elev=0, azim=0, roll=0)
+    # Creating plot
+    trisurf = ax.plot_trisurf(X, Y, Z,
+                            cmap = 'plasma',
+                            linewidth = 0.2, 
+                            antialiased = True,
+                            edgecolor = 'grey')  
+    fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5)
+    if algo=='anneal':
+        ax.set_ylabel('Gevoeligheid voor Temperatuur van Activiteiten')
+        ax.set_title(f'3d plot voor Annealing algoritme met {number_of_simulations} simulaties')
+    if algo=='tabu':
+        ax.set_ylabel('Neighbours')
+        ax.set_title(f'3d plot voor Tabu algoritme met {number_of_simulations} simulaties')
+    ax.set_zlabel('Gemiddelde Maluspunten')
+    # saving figure
+    plt.savefig(f'code/visualisation/grid/3dplot_{algo}_YZ.png')
+
+    # XZ plot
+    plt.figure()
+    # Creating figure
+    fig = plt.figure(figsize =(16, 9))  
+    ax = plt.axes(projection ='3d')
+    ax.view_init(elev=0, azim=-90, roll=0)
+    # Creating plot
+    trisurf = ax.plot_trisurf(X, Y, Z,
+                            cmap = 'plasma',
+                            linewidth = 0.2, 
+                            antialiased = True,
+                            edgecolor = 'grey')  
+    fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5)
+    if algo=='anneal':
+        ax.set_xlabel('Gevoeligheid voor Temperatuur van Studenten')
+        ax.set_title(f'3d plot voor Annealing algoritme met {number_of_simulations} simulaties')
+    if algo=='tabu':
+        ax.set_xlabel('Tabu Lengte')
+        ax.set_title(f'3d  voor Tabu algoritme met {number_of_simulations} simulaties')
+    ax.set_zlabel('Gemiddelde Maluspunten')
+    # saving figure
+    plt.savefig(f'code/visualisation/grid/3dplot_{algo}_XZ.png')
+
+
+
     
 
 
