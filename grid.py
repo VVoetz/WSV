@@ -19,8 +19,6 @@ import csv
 
 def specified_simulations(tabu_length=0, neighbour_ammount=0, input1=0, input2=0, number_of_simulations=0):
 
-    print(f"sim tabu: {tabu_length}     neighbours: {neighbour_ammount}")
-
     # average malus list for all combinations
     maluslist = list()
 
@@ -41,7 +39,7 @@ def specified_simulations(tabu_length=0, neighbour_ammount=0, input1=0, input2=0
 
             # runs chosen algorithm
             if sys.argv[1] == 'tabu':
-                test = tabu_algo.Tabu_search(data, iterations=5000, tabu_length=tabu_length, neighbour_ammount=neighbour_ammount )
+                test = tabu_algo.Tabu_search(data, iterations=1000, tabu_length=tabu_length, neighbour_ammount=neighbour_ammount )
             elif sys.argv[1] == 'anneal':
                 test = annealing.Tabu_search(data, input1=input1, input2=input2)
 
@@ -104,7 +102,7 @@ if __name__ == "__main__":
     X = []
     Y = []
     base = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
-    number_of_simulations = 10
+    number_of_simulations = 5
 
     # anneal veriables
     input1=np.arange(1, 3, 1)
@@ -112,10 +110,10 @@ if __name__ == "__main__":
 
     # tabu variables
     tabu_length = []
-    for i in range(100, 130, 10):
+    for i in range(100, 300, 100):
         tabu_length.append(int(i))
     neighbour_ammount = []
-    for i in range(20, 30, 5):
+    for i in range(5, 10, 5):
         neighbour_ammount.append(int(i))
 
     if sys.argv[1]=='tabu':
