@@ -19,9 +19,10 @@ import csv
 
 def specified_simulations(tabu_length=0, neighbour_ammount=0, input1=0, input2=0, number_of_simulations=0):
 
-    print(f"sim tabu: {tabu_length}     neighbours: {neighbour_ammount}")
+    print(f"tabu neigh: {neighbour_ammount} tabu_len: {tabu_length}")
+
     # iterating over all simulations
-    for i in range(number_of_simulations):
+    for i in range(number_of_simulations):        
 
         simulation_parameter = True
         malus_room_capacity = list()
@@ -37,7 +38,7 @@ def specified_simulations(tabu_length=0, neighbour_ammount=0, input1=0, input2=0
 
             # runs chosen algorithm
             if sys.argv[1] == 'tabu':
-                test = tabu_algo.Tabu_search(data, iterations=10, tabu_length=tabu_length, neighbour_ammount=neighbour_ammount )
+                test = tabu_algo.Tabu_search(data, iterations=5000, tabu_length=tabu_length, neighbour_ammount=neighbour_ammount )
             elif sys.argv[1] == 'anneal':
                 test = annealing.Tabu_search(data, input1=input1, input2=input2)
 
@@ -101,10 +102,10 @@ if __name__ == "__main__":
 
     # tabu variables
     tabu_length = []
-    for i in range(100, 120, 10):
+    for i in range(500, 3000, 500):
         tabu_length.append(int(i))
     neighbour_ammount = []
-    for i in range(20, 35, 5):
+    for i in range(15, 16, 1):
         neighbour_ammount.append(int(i))
 
     if sys.argv[1]=='tabu':

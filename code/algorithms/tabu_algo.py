@@ -181,7 +181,7 @@ class Tabu_search():
             else:
                 no_change = 0
 
-            if no_change > 5000 or time.time() - start_time > 18:
+            if no_change > 5000:
                 break
 
             # update simulation score
@@ -192,8 +192,8 @@ class Tabu_search():
             if len(tabu_list) > tabu_length:
                 tabu_list.pop()
             
-            # if iteration % 100 == 0 and iteration != 0:
-            #     print(f"iteration: {iteration}    sim_best: {simulation_best}  current_score: {current_score}")
+            if iteration % 100 == 0 and iteration != 0:
+                print(f"iteration: {iteration}    sim_best: {simulation_best}  current_score: {current_score}")
 
     def swap_activities(self, activity1, activity2) -> None:
 
