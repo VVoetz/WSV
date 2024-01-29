@@ -4,7 +4,7 @@ from code.algorithms import testalgo, random_algo, greedy_algo, tabu_algo, annea
 
 from code.visualisation import print_schedule, make_google_calendar, plots
 
-from code.experiments import grid_search_tabu, anneal_grid_search
+from code.experiments import grid_search_tabu, anneal_grid_search, grid, iterations
 
 import copy
 import sys
@@ -14,8 +14,57 @@ import csv
 
 
 if __name__ == "__main__":
+
+    # ----------------------------------------
+    # code to run grid searches
+    # ----------------------------------------
+    if sys.argv[1] == "grid":
+        if sys.argv[2] == "tabu":
+
+            # tabu variables
+            tabu_lengths = [100, 200, 300, 400]
+            neighbours = [10, 15, 20, 25]
+            simulations = 2
+
+            # run tabu grid search
+            grid.run_grid_search("tabu", number_of_simulations = simulations,\
+                tabu_length_list = tabu_lengths, neighbour_ammount_list = neighbours)
+            
+            if len(sys.argv) >= 4:
+                if sys.argv[3] == "plot":
+                    plots.plot_3d("tabu_algo_3d_data.csv", simulations, "tabu")
+
+        if sys.argv[2] == "anneal":
+
+            # anneal variables
+            student_acceptance = [1, 2]
+            activity_acceptance = [1, 2]
+            simulations = 1
+
+            # run anneal grid search
+
+            grid.run_grid_search("anneal", number_of_simulations = simulations,\
+                 acceptance_rate_student = student_acceptance, acceptance_rate_activity = activity_acceptance)
+                
+            if len(sys.argv) >= 3:
+                if sys.argv[3] == "plot":
+                    plots.plot_3d("anneal_algo_3d_data.csv", simulations, "anneal")
     
-    start = time.time()
+    # ----------------------------------------
+    # code to write simulations to iteration plot files
+    # ----------------------------------------
+    if sys.argv[1] == "iteration":
+        
+        if len(sys.argv) >= 3:
+            simulation_ammount = 5
+            iterations.write_iterations_to_csv(sys.argv[2], simulation_ammount)
+        else:
+            print("Usage: iteration \"algorithm to run\"")
+
+    # ----------------------------------------
+    # code to TODO
+    # ----------------------------------------
+    
 
     number_of_simulations = 1
 
@@ -44,10 +93,6 @@ if __name__ == "__main__":
         elif sys.argv[1] == 'tabu':
             test = greedy_algo.Greedyalgo(data)
             test = tabu_algo.Tabu_search(data, iterations=10000, neighbour_ammount=15, tabu_length=5000, create_solution=False, stop_time=15)
-            
-        elif sys.argv[1] == 'tabu_grid':
-            grid_search_tabu.run_grid_search()
-            test = tabu_algo.Tabu_search(data, iterations=0)
         elif sys.argv[1] == 'anneal':
             test = greedy_algo.Greedyalgo(data)
             test = annealing.Tabu_search(data)
@@ -95,10 +140,6 @@ if __name__ == "__main__":
         maluslist.append(malus)
 
         print(f"{i}: {malus}")
-
-        
-        #make_google_calendar.make_google_calendar_csv(data)
-        # make_google_calendar.make_student_calendar(data)
 
     # writing csv file with malus lists
     fields = ['Room Capacity', 'Fifth Slot Usage','Double Acts', 'Single Gaps', 'Double Gaps', 'Triple Gaps', 'Total']

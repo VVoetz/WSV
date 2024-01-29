@@ -16,6 +16,8 @@ class Hillclimber():
         self.iterations = iterations
         self.no_change_stop = no_change_stop
 
+        self.malus_per_iteration = []
+
         self.Course_list = list(self.Courses.values())
     
         self.create_initial_solution()
@@ -116,6 +118,8 @@ class Hillclimber():
         # malus_before = self.calculate_malus()
         no_change = 0
 
+        current_score = self.calculate_malus()
+
         # change 2 random activities and 2 random students for iteration ammount of times
         for iteration in range(0, iterations):
             
@@ -123,7 +127,7 @@ class Hillclimber():
             malus_change2 = self.swap_student_in_course()
 
             # update malus points
-            malus_change = malus_change2
+            malus_change = malus_change2 + malus_change1
 
 
             if malus_change == 0:
@@ -132,6 +136,11 @@ class Hillclimber():
                     print(f"iterations without change: {no_change}")
             else:
                 no_change = 0
+
+            if iteration % 100 == 0:
+                self.malus_per_iteration.append(current_score)
+            
+            current_score += malus_change
             
             if no_change > no_change_stop:
                 break
