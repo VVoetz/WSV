@@ -263,7 +263,7 @@ def iterative_plot(sim: int):
         data = open_malus_csv(f'iteration_scores_tabu_simulation_{i+1}', algo='tabu')
         if (len(data)+1)> max_iterations:
             max_iterations = len(data)+1
-        line1 = ax.plot(range(1, len(data)+1), data, linewidth=1, color='green')
+        line1 = ax.plot(range(1, len(data)*100, 100), data, linewidth=1, color='green')
         data = open_malus_csv(f'iteration_scores_anneal_simulation_{i+1}', algo='anneal')
         if (len(data)+1)> max_iterations:
             max_iterations = len(data)+1
