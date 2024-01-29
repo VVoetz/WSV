@@ -3,7 +3,7 @@ from code.classes import activity
 import math, random
 
 
-class Tabu_search():
+class Annealing():
     def __init__(self, data, input1=7, input2=1) -> None:
         """
         Tabu search algorithm constructor

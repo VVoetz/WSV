@@ -3,12 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from code.visualisation import plots
 from code.classes import data_loader
-from code.algorithms import testalgo, random_algo, greedy_algo, tabu_algo, annealing
-from code.visualisation import print_schedule, make_google_calendar, plots
-from code.experiments import grid_search_tabu
+from code.algorithms import tabu_algo, annealing, hillclimber
 import copy
-import sys
-import time
 import csv
 
 def write_iterations_to_csv(algorithm_name: str, number_of_simulations: int) -> None:
@@ -28,11 +24,18 @@ def write_iterations_to_csv(algorithm_name: str, number_of_simulations: int) -> 
         # runs chosen algorithm
         if algorithm_name == 'tabu':
             test = tabu_algo.Tabu_search(data)
+
         elif algorithm_name == 'anneal':
             test = annealing.Tabu_search(data)
 
-        maluslist = test.malus_per_iteration
+        elif algorithm_name == 'hillclimber':
+            test = hillclimber.Hillclimber(data)
+            
+        else:
+            print("invalid algorithm")
+            exit()
 
+        maluslist = test.malus_per_iteration
 
         # write results to a csv file
         fields = ['malusscore']

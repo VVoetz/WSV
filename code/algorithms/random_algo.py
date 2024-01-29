@@ -2,7 +2,7 @@ from code.classes import room, course, student
 from code.classes import activity
 import math, random
 
-class Testalgo():
+class RandomAlgo():
     def __init__(self, data) -> None:
         self.Courses = data.Courses
         self.Rooms = data.Rooms
