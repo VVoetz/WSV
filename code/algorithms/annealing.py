@@ -21,7 +21,7 @@ class Tabu_search():
         # checks if activities are already assigned by previous algorithm. if not, an initial solution is created
         if self.Activities[0].room == None:
             self.create_initial_solution()
-        self.run(1000000)
+        self.run(10000)
         
     
     def create_initial_solution(self) -> None:
