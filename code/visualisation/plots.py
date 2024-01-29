@@ -5,7 +5,7 @@ import numpy as np
 import pandas
 
 
-def open_malus_csv(filename: str, method=1):
+def open_malus_csv(filename: str, method=1, algo=''):
     """
     Writes csv files for malus points data
     """
@@ -52,6 +52,14 @@ def open_malus_csv(filename: str, method=1):
                 y_data.append(int(line[1]))
                 z_data.append(float(line[2]))
         return [x_data, y_data, z_data]
+    elif method==4:
+        x_data = []
+        with open(f'data/iterations/{algo}/{filename}', mode='r') as file:
+            next(file)
+            csvFile = csv.reader(file)
+            for line in csvFile:
+                x_data.append(float(line[0]))
+
     else:
         print('Not a valid method')
         return 0
@@ -244,11 +252,32 @@ def stacked_hist(filename: str, algo: str):
 
     plt.savefig(f"code/visualisation/stacked_hist_{algo}_algo")
 
-# def iterative_plot(filename: str, algo: str, sim: int):
-#     data = open_malus_csv(filename, method=3)
-#     data_lines = {}
-#     for i in range(sim):
-#         data_lines[f'{i}']=data[i]
+def iterative_plot(sim: int):
+
+    max_iterations = 0
+
+    plt.figure()
+    fig, ax = plt.subplots()
+
+    for i in range(sim):
+        data = open_malus_csv(f'iteration_scores_tabu_simulation_{i+1}', algo='tabu')
+        if (len(data)+1)> max_iterations:
+            max_iterations = len(data)+1
+        line1 = ax.plot(range(1, len(data)+1), data, linewidth=1, color='green')
+        data = open_malus_csv(f'iteration_scores_anneal_simulation_{i+1}', algo='anneal')
+        if (len(data)+1)> max_iterations:
+            max_iterations = len(data)+1
+        line2 = ax.plot(range(1, len(data)+1), data, linewidth=2, color='red')
+    plt.xlim(1, max_iterations)
+    plt.ylim(0, 3000)
+    plt.xlabel('Iterations')
+    plt.ylabel('Malusscore')
+    plt.title('Convergentie Maluspunten')
+    ax.legend([line1, line2], ['Tabu', 'Anneal'])
+
+
+
+
 
 
 def plot_3d(filename: str, number_of_simulations, algo):
@@ -256,8 +285,11 @@ def plot_3d(filename: str, number_of_simulations, algo):
     # loading data
     data = open_malus_csv(filename, method=3)
     X = data[0]
+    print(X)
     Y = data[1]
+    print(Y)
     Z = data[2]
+    print(Z)
 
     #normal 3d plots
     plt.figure()
