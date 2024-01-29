@@ -11,15 +11,10 @@ import sys
 import time
 import csv
 
-# tabu parameters
-tabu_length = 200
-neighbour_ammount = 5
+number_of_simulations = 2
 
-# anneal parameters
-input1 = 0
-input2 = 0
+base = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
 
-number_of_simulations
 
 
 for i in range(number_of_simulations):        
@@ -28,19 +23,20 @@ for i in range(number_of_simulations):
 
     # runs chosen algorithm
     if sys.argv[1] == 'tabu':
-        test = tabu_algo.Tabu_search(data, tabu_length=tabu_length, neighbour_ammount=neighbour_ammount )
+        test = tabu_algo.Tabu_search(data)
     elif sys.argv[1] == 'anneal':
-        test = annealing.Tabu_search(data, input1=input1, input2=input2)
+        test = annealing.Tabu_search(data)
     maluslist = test.malus_per_iteration
     fields = ['malusscore']
     rows = []
     for j in maluslist:
-        else:
-            rows.append([j])
+        rows.append([j])
     with open(f'data/iterations/{sys.argv[1]}/iteration_scores_{sys.argv[1]}_simulation_{i+1}', mode='w', newline="") as file:
         write = csv.writer(file)
         write.writerow(fields)
         write.writerows(rows)
+
+    print(f'simulation {i} done and data written to csv')
 
 
 
