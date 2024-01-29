@@ -12,8 +12,8 @@ class Tabu_search():
         self.Rooms = data.Rooms
         self.Students = data.Students
         self.Activities = data.Activities
-        self.input1 = 7
-        self.input2 = 1
+        self.input1 = input1
+        self.input2 = input2
         self.input3 = 5
         self.malus_per_iteration = list()
         self.Course_list = list(self.Courses.values())
@@ -21,7 +21,7 @@ class Tabu_search():
         # checks if activities are already assigned by previous algorithm. if not, an initial solution is created
         if self.Activities[0].room == None:
             self.create_initial_solution()
-        self.run(10000)
+        self.run(10000000)
         
     
     def create_initial_solution(self) -> None:
