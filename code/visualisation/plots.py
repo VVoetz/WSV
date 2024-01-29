@@ -321,7 +321,7 @@ def plot_3d(filename: str, number_of_simulations, algo):
     # Creating figure
     fig = plt.figure(figsize =(16, 9))  
     ax = plt.axes(projection ='3d')
-    ax.view_init(elev=90, azim=90, roll=0)
+    ax.view_init(elev=90, azim=90)
     # Creating plot
     trisurf = ax.plot_trisurf(X, Y, Z,
                             cmap = 'plasma',
@@ -346,7 +346,7 @@ def plot_3d(filename: str, number_of_simulations, algo):
     # Creating figure
     fig = plt.figure(figsize =(16, 9))  
     ax = plt.axes(projection ='3d')
-    ax.view_init(elev=0, azim=0, roll=0)
+    ax.view_init(elev=0, azim=0)
     # Creating plot
     trisurf = ax.plot_trisurf(X, Y, Z,
                             cmap = 'plasma',
@@ -369,7 +369,7 @@ def plot_3d(filename: str, number_of_simulations, algo):
     # Creating figure
     fig = plt.figure(figsize =(16, 9))  
     ax = plt.axes(projection ='3d')
-    ax.view_init(elev=0, azim=-90, roll=0)
+    ax.view_init(elev=0, azim=-90)
     # Creating plot
     trisurf = ax.plot_trisurf(X, Y, Z,
                             cmap = 'plasma',

@@ -2,7 +2,7 @@ from code.classes import data_loader
 
 from code.algorithms import testalgo, random_algo, greedy_algo, tabu_algo, annealing, hillclimber
 
-from code.visualisation import print_schedule, make_google_calendar
+from code.visualisation import print_schedule, make_google_calendar, plots
 
 from code.experiments import grid_search_tabu, anneal_grid_search
 
@@ -17,7 +17,7 @@ if __name__ == "__main__":
     
     start = time.time()
 
-    number_of_simulations = 10
+    number_of_simulations = 1
 
     malus_room_capacity = list()
     malus_fifth_slot = list()
@@ -43,7 +43,7 @@ if __name__ == "__main__":
             test = random_algo.Testalgo(data)
         elif sys.argv[1] == 'tabu':
             test = greedy_algo.Greedyalgo(data)
-            test = tabu_algo.Tabu_search(data, iterations=1000, neighbour_ammount=15, tabu_length=5000, create_solution=False)
+            test = tabu_algo.Tabu_search(data, iterations=10000, neighbour_ammount=5, tabu_length=5000, create_solution=False, stop_time=10)
             
         elif sys.argv[1] == 'tabu_grid':
             grid_search_tabu.run_grid_search()
@@ -120,6 +120,8 @@ if __name__ == "__main__":
             item -= 1000000
         total += item
     # print(f"average: {total / len(maluslist)}")
+
+    plots.plot_3d("tabu_algo_3d_data.csv", 1, "tabu")
         
 
     end = time.time()

@@ -5,7 +5,7 @@ import math, random, copy, time, csv
 class Tabu_search():
 
     # found best settings: neihbours between 40-60, tabu_length = 250-1000
-    def __init__(self, data, iterations=10000, tabu_length=250, neighbour_ammount=25, create_solution=True) -> None:
+    def __init__(self, data, iterations=10000, tabu_length=250, neighbour_ammount=25, create_solution=True, stop_time = None) -> None:
         """
         Tabu search algorithm constructor
         """
@@ -15,6 +15,7 @@ class Tabu_search():
         self.Activities = data.Activities
 
         self.malus_per_iteration = []
+        self.stop_time = stop_time
 
         self.Course_list = list(self.Courses.values())
 
@@ -124,6 +125,7 @@ class Tabu_search():
         for iteration in range(0, iterations):
             
             neighbours = self.get_neighbours(neighbour_ammount)
+
             
             
             best_neighbour = None
@@ -177,19 +179,22 @@ class Tabu_search():
                 student1, student2, activity1, activity2 = best_neighbour
                 self.swap_students(activity1, activity2, student1, student2)
                 tabu_list.append(best_neighbour)
-            
-            # exit if current score has not changed in 5000 iterations
-            if best_neighbour_value == 0:
-                no_change += 1
-            else:
-                no_change = 0
-
-            if no_change > 5000:
-                break
 
             # update simulation score
             current_score += best_neighbour_value
+
+            # exit if current score has not changed in 5000 iterations
+            no_change += 1
+
+            if no_change > 500000:
+                break
+
+            if self.stop_time != None:
+                if time.time() - start_time > self.stop_time:
+                    break
+
             if current_score < simulation_best:
+                no_change = 0
                 simulation_best = current_score
             
             # update tabu list if it gets too long
