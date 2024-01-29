@@ -18,8 +18,12 @@ import time
 import csv
 
 def specified_simulations(tabu_length=0, neighbour_ammount=0, input1=0, input2=0, number_of_simulations=0):
+
+    # average malus list for all combinations
+    maluslist = list()
+
     # iterating over all simulations
-    for i in range(number_of_simulations):
+    for i in range(number_of_simulations):        
 
         simulation_parameter = True
         malus_room_capacity = list()
@@ -28,15 +32,14 @@ def specified_simulations(tabu_length=0, neighbour_ammount=0, input1=0, input2=0
         malus_single_gaps = list()
         malus_double_gaps = list()
         malus_triple_gaps = list()
-        maluslist = list()
+
 
         while simulation_parameter:
             data = copy.deepcopy(base)
 
             # runs chosen algorithm
             if sys.argv[1] == 'tabu':
-                test = tabu_algo.Tabu_search(data, iterations=10, tabu_length=tabu_length, neighbour_ammount=neighbour_ammount )
-                grid_search_tabu.run_grid_search()
+                test = tabu_algo.Tabu_search(data, iterations=1000, tabu_length=tabu_length, neighbour_ammount=neighbour_ammount )
             elif sys.argv[1] == 'anneal':
                 test = annealing.Tabu_search(data, input1=input1, input2=input2)
 
@@ -82,8 +85,15 @@ def specified_simulations(tabu_length=0, neighbour_ammount=0, input1=0, input2=0
                 malus_double_gaps.append(doublegaps)
                 malus_triple_gaps.append(triplegaps)
                 maluslist.append(malus)
-
-                print(f"{i}: {malus}")
+        if sys.argv[1]=='anneal':
+            print(f"{i}: {malus} for simulation {i} and X value {input1} and Y value {input2}")
+        if sys.argv[1]=='tabu':
+            print(f"{i}: {malus} for simulation {i} and X value {tabu_length} and Y value {neighbour_ammount}")
+               
+    if sys.argv[1]=='anneal':
+        print(f'negative average for {input1} and {input2}: {sum(maluslist)/len(maluslist)*-1}')
+    if sys.argv[1]=='tabu':
+        print(f'negative average for {tabu_length} and {neighbour_ammount}: {sum(maluslist)/len(maluslist)*-1}')
     return sum(maluslist)/len(maluslist)*-1
 
 if __name__ == "__main__":
@@ -92,7 +102,7 @@ if __name__ == "__main__":
     X = []
     Y = []
     base = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
-    number_of_simulations = 10
+    number_of_simulations = 5
 
     # anneal veriables
     input1=np.arange(1, 3, 1)
@@ -100,10 +110,10 @@ if __name__ == "__main__":
 
     # tabu variables
     tabu_length = []
-    for i in range(250, 260):
+    for i in range(100, 300, 100):
         tabu_length.append(int(i))
     neighbour_ammount = []
-    for i in range(20, 25):
+    for i in range(5, 10, 5):
         neighbour_ammount.append(int(i))
 
     if sys.argv[1]=='tabu':
@@ -129,7 +139,7 @@ if __name__ == "__main__":
     for i in range(len(X)):
         row = [X[i], Y[i], malus_average[i]]
         rows.append(row)
-    with open(f'data/grid/{sys.argv[1]}_algo_3d_data.csv', mode='w') as csvfile:
+    with open(f'data/grid/{sys.argv[1]}_algo_3d_data.csv', mode='w', newline="") as csvfile:
         write = csv.writer(csvfile)
         write.writerow(fields)
         write.writerows(rows)
