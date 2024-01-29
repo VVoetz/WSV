@@ -3,6 +3,7 @@ import seaborn as sns
 import csv
 import numpy as np
 import pandas
+import matplotlib as mpl
 
 
 def open_malus_csv(filename: str, method=1, algo=''):
@@ -59,6 +60,7 @@ def open_malus_csv(filename: str, method=1, algo=''):
             csvFile = csv.reader(file)
             for line in csvFile:
                 x_data.append(float(line[0]))
+        return x_data
 
     else:
         print('Not a valid method')
@@ -260,20 +262,21 @@ def iterative_plot(sim: int):
     fig, ax = plt.subplots()
 
     for i in range(sim):
-        data = open_malus_csv(f'iteration_scores_tabu_simulation_{i+1}', algo='tabu')
+        data = open_malus_csv(f'iteration_scores_tabu_simulation_{i+1}.csv', algo='tabu', method=4)
         if (len(data)+1)> max_iterations:
             max_iterations = len(data)+1
-        line1 = ax.plot(range(1, len(data)*100, 100), data, linewidth=1, color='green')
-        data = open_malus_csv(f'iteration_scores_anneal_simulation_{i+1}', algo='anneal')
+        line1, = ax.plot(range(1, len(data)+1), data, linewidth=0.5, color='green', label='Tabu')
+        data = open_malus_csv(f'iteration_scores_anneal_simulation_{i+1}.csv', algo='anneal', method=4)
         if (len(data)+1)> max_iterations:
             max_iterations = len(data)+1
-        line2 = ax.plot(range(1, len(data)+1), data, linewidth=2, color='red')
+        line2, = ax.plot(range(1, len(data)*100, 100), data, linewidth=0.5, color='red', label='Anneal')
     plt.xlim(1, max_iterations)
     plt.ylim(0, 3000)
     plt.xlabel('Iterations')
     plt.ylabel('Malusscore')
     plt.title('Convergentie Maluspunten')
-    ax.legend([line1, line2], ['Tabu', 'Anneal'])
+    ax.legend(handles=[line1, line2])
+    plt.savefig('code/visualisation/plot_pictures/iterative_plot.png')
 
 
 
@@ -285,12 +288,26 @@ def plot_3d(filename: str, number_of_simulations, algo):
     # loading data
     data = open_malus_csv(filename, method=3)
     X = data[0]
-    print(X)
     Y = data[1]
-    print(Y)
     Z = data[2]
-    print(Z)
 
+    x_label = {}
+    x_label['Tabu'] = 'Tabu Length'
+    x_label['Anneal'] = 'Gevoeligheid voor Temperatuur van Studenten'
+
+    y_label = {}
+    y_label['Tabu'] = 'Neighbours'
+    y_label['Anneal'] = 'Gevoeligheid voor Temperatuur van Activiteiten'
+
+
+    plt.style.use('dark_background')
+    # COLOR = 'white'
+    # mpl.rcParams['text.color'] = COLOR
+    # mpl.rcParams['axes.labelcolor'] = COLOR
+    # mpl.rcParams['xtick.color'] = COLOR
+    # mpl.rcParams['ytick.color'] = COLOR
+    # mpl.rcParams.update({'text.color' : "white",
+    #                  'axes.labelcolor' : "white"})
     #normal 3d plots
     plt.figure()
     # Creating figure
@@ -303,14 +320,14 @@ def plot_3d(filename: str, number_of_simulations, algo):
                             antialiased = True,
                             edgecolor = 'grey')  
     fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5)
-    if algo=='anneal':
-        ax.set_xlabel('Gevoeligheid voor Temperatuur van Studenten')
-        ax.set_ylabel('Gevoeligheid voor Temperatuur van Activiteiten')
-        ax.set_title(f'3d plot voor Annealing algoritme met {number_of_simulations} simulaties')
-    if algo=='tabu':
-        ax.set_xlabel('Tabu Lengte')
-        ax.set_ylabel('Neighbours')
-        ax.set_title(f'3d plot voor Tabu algoritme met {number_of_simulations} simulaties')
+    # if algo=='anneal':
+    #     ax.set_xlabel('Gevoeligheid voor Temperatuur van Studenten')
+    #     ax.set_ylabel('Gevoeligheid voor Temperatuur van Activiteiten')
+    #     ax.set_title(f'3d plot voor Annealing algoritme met {number_of_simulations} simulaties')
+    # if algo=='tabu':
+    ax.set_xlabel(f'{x_label[algo]}')
+    ax.set_ylabel(f'{y_label[algo]}')
+    ax.set_title(f'3d plot voor {algo} algoritme met {number_of_simulations} simulaties')
     ax.set_zlabel('Gemiddelde Maluspunten')
     # saving figure
     plt.savefig(f'code/visualisation/grid/3dplot_{algo}_normal.png')
@@ -329,15 +346,10 @@ def plot_3d(filename: str, number_of_simulations, algo):
                             antialiased = True,
                             edgecolor = 'grey')  
     fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5) 
-    if algo=='anneal':
-        ax.set_xlabel('Gevoeligheid voor Temperatuur van Studenten')
-        ax.set_ylabel('Gevoeligheid voor Temperatuur van Activiteiten')
-        ax.set_title(f'3d heatmap voor Annealing algoritme met {number_of_simulations} simulaties')
-    if algo=='tabu':
-        ax.set_xlabel('Tabu Lengte')
-        ax.set_ylabel('Neighbours')
-        ax.set_title(f'3d heatmap voor Tabu algoritme met {number_of_simulations} simulaties')
-    ax.set_zlabel('Gemiddelde Maluspunten')
+    ax.set_xlabel(f'{x_label[algo]}')
+    ax.set_ylabel(f'{y_label[algo]}')
+    ax.set_title(f'3d heatmap voor {algo} algoritme met {number_of_simulations} simulaties')
+    ax.set_zticklabels([])
     # saving figure
     plt.savefig(f'code/visualisation/grid/3dplot_{algo}_heat.png')
 
@@ -354,13 +366,10 @@ def plot_3d(filename: str, number_of_simulations, algo):
                             antialiased = True,
                             edgecolor = 'grey')  
     fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5)
-    if algo=='anneal':
-        ax.set_ylabel('Gevoeligheid voor Temperatuur van Activiteiten')
-        ax.set_title(f'3d plot voor Annealing algoritme met {number_of_simulations} simulaties')
-    if algo=='tabu':
-        ax.set_ylabel('Neighbours')
-        ax.set_title(f'3d plot voor Tabu algoritme met {number_of_simulations} simulaties')
+    ax.set_ylabel(f'{y_label[algo]}')
+    ax.set_title(f'3d plot voor {algo} algoritme met {number_of_simulations} simulaties')
     ax.set_zlabel('Gemiddelde Maluspunten')
+    ax.set_xticklabels([])
     # saving figure
     plt.savefig(f'code/visualisation/grid/3dplot_{algo}_YZ.png')
 
@@ -377,13 +386,10 @@ def plot_3d(filename: str, number_of_simulations, algo):
                             antialiased = True,
                             edgecolor = 'grey')  
     fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5)
-    if algo=='anneal':
-        ax.set_xlabel('Gevoeligheid voor Temperatuur van Studenten')
-        ax.set_title(f'3d plot voor Annealing algoritme met {number_of_simulations} simulaties')
-    if algo=='tabu':
-        ax.set_xlabel('Tabu Lengte')
-        ax.set_title(f'3d  voor Tabu algoritme met {number_of_simulations} simulaties')
+    ax.set_xlabel(f'{x_label[algo]}')
+    ax.set_title(f'3d  voor {algo} algoritme met {number_of_simulations} simulaties')
     ax.set_zlabel('Gemiddelde Maluspunten')
+    ax.set_yticklabels([])
     # saving figure
     plt.savefig(f'code/visualisation/grid/3dplot_{algo}_XZ.png')
 
