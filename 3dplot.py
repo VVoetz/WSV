@@ -54,7 +54,7 @@ import csv
 
 
 
-def plot_3d(filename: str, number_of_simulations, algo)
+def plot_3d(filename: str, number_of_simulations, algo):
 
     # loading data
     data = open_malus_csv(filename, method=3)
