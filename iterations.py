@@ -27,11 +27,12 @@ for i in range(number_of_simulations):
     elif sys.argv[1] == 'anneal':
         test = annealing.Tabu_search(data)
     maluslist = test.malus_per_iteration
+    print(maluslist)
     fields = ['malusscore']
     rows = []
     for j in maluslist:
         rows.append([j])
-    with open(f'data/iterations/{sys.argv[1]}/iteration_scores_{sys.argv[1]}_simulation_{i+1}', mode='w', newline="") as file:
+    with open(f'data/iterations/{sys.argv[1]}/iteration_scores_{sys.argv[1]}_simulation_{i+1}.csv', mode='w', newline="") as file:
         write = csv.writer(file)
         write.writerow(fields)
         write.writerows(rows)

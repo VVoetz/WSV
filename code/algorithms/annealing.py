@@ -138,9 +138,9 @@ class Tabu_search():
             else:
                 no_change = 0
 
-            # if iteration % 100 == 0:
-            #     malus = self.calculate_malus()
-            #     self.malus_per_iteration.append(malus)
+            if iteration % 100 == 0:
+                malus = self.calculate_malus()
+                self.malus_per_iteration.append(malus)
 
             # if iteration % 1000 == 0:
             #     print(f"{self.calculate_malus()} {no_change} {self.T}")
