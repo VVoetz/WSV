@@ -14,6 +14,8 @@ class Tabu_search():
         self.Students = data.Students
         self.Activities = data.Activities
 
+        self.malus_per_iteration = []
+
         self.Course_list = list(self.Courses.values())
 
         if create_solution:
@@ -176,6 +178,7 @@ class Tabu_search():
                 self.swap_students(activity1, activity2, student1, student2)
                 tabu_list.append(best_neighbour)
             
+            # exit if current score has not changed in 5000 iterations
             if best_neighbour_value == 0:
                 no_change += 1
             else:
@@ -189,9 +192,11 @@ class Tabu_search():
             if current_score < simulation_best:
                 simulation_best = current_score
             
+            # update tabu list if it gets too long
             if len(tabu_list) > tabu_length:
                 tabu_list.pop()
             
+            self.malus_per_iteration.append(current_score)
             if iteration % 100 == 0 and iteration != 0:
                 print(f"iteration: {iteration}    sim_best: {simulation_best}  current_score: {current_score}")
 
