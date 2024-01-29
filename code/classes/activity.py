@@ -101,19 +101,19 @@ class Activity:
             return 1
         return 0
 
-    def get_heuristics(self, courses) -> int:
+    def get_heuristics(self, courses, input=5) -> int:
         """
         calculates heuristic points and maluspoints and returns both combined
         """
         total = 0
         # if self.id[0] == "h":
         #     if self.timeslot[2] != 2 and self.timeslot[2] != 3:
-        #         total += 100
-        # if self.id[0] == "w" or self.id[0] == "p":
-        #     for activity in courses[self.course].activities:
-        #         total -= 100
-        #         if activity.id[0] == self.id[0] and activity.timeslot == self.timeslot:
-        #             total += 100
+        #         total += 10
+        if self.id[0] == "w" or self.id[0] == "p":
+            for activity in courses[self.course].activities:
+                total -= 5 * input
+                if self.id[0] != "h" and activity.timeslot == self.timeslot:
+                    total += 5 * input
 
         return total + self.get_total_malus()
 

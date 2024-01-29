@@ -12,13 +12,14 @@ class Tabu_search():
         self.Rooms = data.Rooms
         self.Students = data.Students
         self.Activities = data.Activities
-        self.input1 = input1
-        self.input2 = input2
+        self.input1 = 7
+        self.input2 = 1
+        self.input3 = 5
         self.Course_list = list(self.Courses.values())
         
         if self.Activities[0].room == None:
             self.create_initial_solution()
-        self.run(1000000)
+        self.run(10000000)
         
         # temporary debugging lines
 
@@ -117,18 +118,21 @@ class Tabu_search():
 
         malus = self.calculate_malus()
         no_change = 0
-        self.T = 1
+        self.T = 0.2
 
         # change 2 random activities for iteration ammount of times
         for iteration in range(0, iterations):
             
             
-            self.T = 0.99999 * self.T
+            self.T = 0.999999 * self.T
             change = 0
             change1 = self.random_swap_activity()
             change2 = self.swap_student_in_course()
+            change3 = 0
+            if random.random() < 0.1:
+                change3 = self.tripleswap()
             #print(f"{malus_before} {self.T}")
-            change = change1 + change2
+            change = change1 + change2 + change3
             # update malus points
             
             #print(f"{self.T} {malus_after}")
@@ -142,7 +146,9 @@ class Tabu_search():
             else:
                 no_change = 0
             
-            if no_change > 5000:
+            # if iteration % 1000 == 0:
+            #     print(f"{self.calculate_malus()} {no_change} {self.T}")
+            if no_change > 20000:
                 # malussen = (0, 0, 0, 0)
                 # for student in self.Students:
                 #     malussen =  tuple(x + y for x, y in zip(self.Students[student].get_detailed_malus(), malussen))
@@ -152,6 +158,39 @@ class Tabu_search():
                 # print(f"{malussen} {tot}")
                 return self.calculate_malus()
 
+    def tripleswap(self) -> int:
+
+        activity1 = random.choice(self.Activities)
+        activity2 = random.choice(self.Activities)
+        activity3 = random.choice(self.Activities)
+        malus_before = activity1.get_heuristics(self.Courses, self.input3) + activity2.get_heuristics(self.Courses, self.input3) + activity3.get_heuristics(self.Courses, self.input3)
+        self.swap_activities(activity1, activity2)
+        self.swap_activities(activity2, activity3)
+
+        # calculate malus points
+        malus_after = activity1.get_heuristics(self.Courses, self.input3) + activity2.get_heuristics(self.Courses, self.input3)+ activity3.get_heuristics(self.Courses, self.input3)
+        
+        # revert bad change or return good change
+
+        malus_diff = (malus_after - malus_before)
+        if malus_after <= malus_before:
+            return malus_diff
+        
+        prob = math.exp((-malus_diff / self.T) / (2 * self.input2))
+        #print(f"{prob} {self.T} {malus_diff} {malus_before}")
+        yesno = random.random() - prob
+        #print(yesno)
+        
+        if malus_after - malus_before > 10000:
+            self.swap_activities(activity2, activity3)
+            self.swap_activities(activity1, activity2)
+            return 0    
+        if yesno > 0:
+            self.swap_activities(activity2, activity3)
+            self.swap_activities(activity1, activity2)
+            return 0
+        else:
+            return malus_diff
     
     def swap_activities(self, activity1, activity2) -> None:
 
@@ -213,9 +252,9 @@ class Tabu_search():
             if len(available) > 0:
                 new_timeslot = random.choice(available)
                 found_timeslot = True
-        malus_before = activity1.get_heuristics(self.Courses)
+        malus_before = activity1.get_heuristics(self.Courses, self.input3)
         self.move_activity(activity1, new_room, new_timeslot)
-        malus_after = activity1.get_heuristics(self.Courses)
+        malus_after = activity1.get_heuristics(self.Courses, self.input3)
         
         malus_diff = (malus_after - malus_before)
         if malus_after <= malus_before:
@@ -248,11 +287,11 @@ class Tabu_search():
         # swap activities
         activity1 = random.choice(self.Activities)
         activity2 = random.choice(self.Activities)
-        malus_before = activity1.get_heuristics(self.Courses) + activity2.get_heuristics(self.Courses)
+        malus_before = activity1.get_heuristics(self.Courses, self.input3) + activity2.get_heuristics(self.Courses, self.input3)
         self.swap_activities(activity1, activity2)
 
         # calculate malus points
-        malus_after = activity1.get_heuristics(self.Courses) + activity2.get_heuristics(self.Courses)
+        malus_after = activity1.get_heuristics(self.Courses, self.input3) + activity2.get_heuristics(self.Courses, self.input3)
         
         # revert bad change or return good change
 
@@ -260,7 +299,7 @@ class Tabu_search():
         if malus_after <= malus_before:
             return malus_diff
         
-        prob = math.exp((-malus_diff / self.T) / (20 * self.input2))
+        prob = math.exp((-malus_diff / self.T) / (2 * self.input2))
         #print(f"{prob} {self.T} {malus_diff} {malus_before}")
         yesno = random.random() - prob
         #print(yesno)
