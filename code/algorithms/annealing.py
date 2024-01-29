@@ -15,16 +15,14 @@ class Tabu_search():
         self.input1 = 7
         self.input2 = 1
         self.input3 = 5
+        self.malus_per_iteration = list()
         self.Course_list = list(self.Courses.values())
         
+        # checks if activities are already assigned by previous algorithm. if not, an initial solution is created
         if self.Activities[0].room == None:
             self.create_initial_solution()
-        self.run(10000000)
+        self.run(1000000)
         
-        # temporary debugging lines
-
-        # for activity in self.Activities:
-        #     print(f"Activity: {str(activity)}   Students: {len(activity.students)}  Capacity: {activity.capacity}")
     
     def create_initial_solution(self) -> None:
         """
@@ -110,10 +108,10 @@ class Tabu_search():
                     activity.add_student(student)
                     student.add_activity(activity)
 
-    def run(self, iterations: int) -> int:
+    def run(self, iterations: int) -> None:
         """
-        Function runs tabu algorithm for set ammmount of iterations with a given tabu_tenure
-        (the ammount of iterations it takes for a tabu move to be allowed again)
+        Function runs simulated annealing algorithm based on the amount of iterations
+        the user has given.
         """
 
         malus = self.calculate_malus()
@@ -126,40 +124,34 @@ class Tabu_search():
             
             self.T = 0.999999 * self.T
             change = 0
-            change1 = self.random_swap_activity()
-            change2 = self.swap_student_in_course()
-            change3 = 0
+            change += self.random_swap_activity()
+            change += self.swap_student_in_course()
             if random.random() < 0.1:
-                change3 = self.tripleswap()
-            #print(f"{malus_before} {self.T}")
-            change = change1 + change2 + change3
+                change += self.tripleswap_activity()
+            
             # update malus points
             
             #print(f"{self.T} {malus_after}")
             if change == 0:
                 no_change += 1
-                # if no_change % 100 == 0:
-                #     print(f"{no_change}")
-                # if no_change % 100 == 0:
-                #     print(f"{self.calculate_malus()} {no_change} {self.T}")
-                                   
+                      
             else:
                 no_change = 0
-            
+
+            # if iteration % 100 == 0:
+            #     malus = self.calculate_malus()
+            #     self.malus_per_iteration.append(malus)
+
             # if iteration % 1000 == 0:
             #     print(f"{self.calculate_malus()} {no_change} {self.T}")
+            
             if no_change > 20000:
-                # malussen = (0, 0, 0, 0)
-                # for student in self.Students:
-                #     malussen =  tuple(x + y for x, y in zip(self.Students[student].get_detailed_malus(), malussen))
-                # tot = 0
-                # for activity in self.Activities:
-                #     tot += activity.get_malus()
-                # print(f"{malussen} {tot}")
-                return self.calculate_malus()
+                return
 
-    def tripleswap(self) -> int:
-
+    def tripleswap_activity(self) -> int:
+        """
+        swaps three activities at the same time, checks for the difference in maluspoints and accepts changes 
+        """
         activity1 = random.choice(self.Activities)
         activity2 = random.choice(self.Activities)
         activity3 = random.choice(self.Activities)
@@ -377,25 +369,32 @@ class Tabu_search():
 
         # choose 2 random students and calculate their malus points
         student1 = random.choice(activity1.students)
-        student1malus = student1.get_malus()
-        activity1malus = activity1.get_malus()
-        activity2malus = activity2.get_malus()
+        
         if random.random() < (len(activity2.students) / activity2.capacity):
             student2 = random.choice(activity2.students)
             student2malus = student2.get_malus()
+            activity1malus = 0
+            activity2malus = 0
         else:
             student2 = None
             student2malus = 0
+            activity1malus = activity1.get_malus()
+            activity2malus = activity2.get_malus()
+        
+        student1malus = student1.get_malus()
+        
 
-        # swap students and calculate scores
+        before = activity1.get_malus() + activity2.get_malus()
+
+        # swap students and calculate scores before and after the swap
         malus_before = student1malus + student2malus + activity1malus + activity2malus
-
         self.swap_students(activity1, activity2, student1, student2)
-
-        malus_after = student1.get_malus() + activity1.get_malus() + activity2.get_malus()
+        malus_after = student1.get_malus()
         if student2:
             malus_after += student2.get_malus()
-        
+        else:
+            malus_after += activity1.get_malus() + activity2.get_malus()
+               
 
         malus_diff = (malus_after - malus_before)
         

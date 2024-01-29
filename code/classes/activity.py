@@ -109,9 +109,12 @@ class Activity:
         # if self.id[0] == "h":
         #     if self.timeslot[2] != 2 and self.timeslot[2] != 3:
         #         total += 10
+
+        # checks if current seminar/practica is at the same time as another activity from the same course
+        # adds "fake" maluspoints if finished
         if self.id[0] == "w" or self.id[0] == "p":
+            total -= 5 * input
             for activity in courses[self.course].activities:
-                total -= 5 * input
                 if self.id[0] != "h" and activity.timeslot == self.timeslot:
                     total += 5 * input
 
