@@ -5,7 +5,7 @@ import scipy.stats
 import time
 
 class Hillclimber():
-    def __init__(self, data, iterations=10000, no_change_stop = 1000) -> None:
+    def __init__(self, data, iterations=90000, no_change_stop = 90000) -> None:
         """
         Hillclimb search algorithm constructor
         """
@@ -129,15 +129,16 @@ class Hillclimber():
             
             malus_change1 = self.random_swap_activity()
             malus_change2 = self.swap_student_in_course()
+            malus_change3 = self.random_move_activity()
 
             # update malus points
-            malus_change = malus_change2 + malus_change1
+            malus_change = malus_change2 + malus_change1 + malus_change3
 
 
             if malus_change == 0:
                 no_change += 1
-                if no_change % 100 == 0:
-                    print(f"iterations without change: {no_change}")
+                # if no_change % 100 == 0:
+                    # print(f"iterations without change: {no_change}")
             else:
                 no_change = 0
 
@@ -291,7 +292,7 @@ class Hillclimber():
         else:
             return malus_after - malus_before  
     
-    def swap_students(self, student1, student2, activity1, activity2) -> None:
+    def swap_students(self, activity1, activity2, student1, student2=None) -> None:
         """
         Function swappes student 1 to activity 2
         and swappes student 2 to activity 1
@@ -302,13 +303,125 @@ class Hillclimber():
 
         student1.remove_activity(activity1)
         activity1.remove_student(student1)
-
-        student2.remove_activity(activity2)
-        activity2.remove_student(student2)
-
         student1.add_activity(activity2)
-        activity1.add_student(student2)
-
-        student2.add_activity(activity1)
         activity2.add_student(student1)
 
+        if student2:
+            student2.remove_activity(activity2)
+            activity2.remove_student(student2)
+            activity1.add_student(student2)
+            student2.add_activity(activity1)
+
+    def random_move_activity(self) -> int:
+        """
+        Randomly moves 1 activity
+        Keeps good changes and reverts bad changes
+        """
+        activity1 = random.choice(self.Activities)
+        old_roomslot = (activity1.room, activity1.timeslot)
+        old_room = activity1.room
+        old_timeslot = activity1.timeslot
+
+        # loop until empty roomslot has been found
+
+        found_timeslot = False
+
+        while found_timeslot == False:
+            
+            # find random room and random available timeslot
+            new_room = random.choice(list(self.Rooms.values()))
+            available = new_room.return_availability()
+
+            if len(available) > 0:
+                new_timeslot = random.choice(available)
+                found_timeslot = True
+
+        malus_before = activity1.get_total_malus()
+        self.move_activity(activity1, new_room, new_timeslot)
+        malus_after = activity1.get_total_malus()
+        
+        malus_diff = (malus_after - malus_before)
+        if malus_after <= malus_before:
+            return malus_diff
+        else:
+            self.move_activity(activity1, old_room, old_timeslot)
+            return 0
+
+    def move_activity(self, activity1, new_room, new_timeslot) -> None:
+
+        """
+        Changes timeslot and room of given activity
+        Also change the needed room classes
+        """
+
+        # remove activity from old room
+        activity1.room.remove_activity(activity1)
+
+        # change activity values
+        activity1.room = new_room
+        activity1.timeslot = new_timeslot
+
+        # add activity to new room
+        new_room.add_activity(activity1, new_timeslot)
+
+        pass
+
+    def swap_student_activity(self, course, activity_id) -> int:
+        """
+        Function swaps 2 random students from workgroup of the given activity_id
+
+        pre:    course is a course object
+        post:   returns change in malus points as int
+        """
+
+        swappable_activities = list()
+
+        # loop over all activities of a course
+        for activity in course.activities:
+            if activity.id == activity_id:
+                swappable_activities.append(activity)
+
+        # choose random activities
+        activity1 = random.choice(swappable_activities)
+        activity2 = random.choice(swappable_activities)
+
+        # repeat while the 2 random activities are the same
+        while activity1 == activity2:
+            activity2 = random.choice(swappable_activities)
+
+        # choose 2 random students and calculate their malus points
+        student1 = random.choice(activity1.students)
+        
+        if random.random() < (len(activity2.students) / activity2.capacity):
+            student2 = random.choice(activity2.students)
+            student2malus = student2.get_malus()
+            activity1malus = 0
+            activity2malus = 0
+        else:
+            student2 = None
+            student2malus = 0
+            activity1malus = activity1.get_malus()
+            activity2malus = activity2.get_malus()
+        
+        student1malus = student1.get_malus()
+        
+
+        before = activity1.get_malus() + activity2.get_malus()
+
+        # swap students and calculate scores before and after the swap
+        malus_before = student1malus + student2malus + activity1malus + activity2malus
+        self.swap_students(activity1, activity2, student1, student2)
+        malus_after = student1.get_malus()
+        if student2:
+            malus_after += student2.get_malus()
+        else:
+            malus_after += activity1.get_malus() + activity2.get_malus()
+               
+
+        malus_diff = (malus_after - malus_before)
+        
+        if malus_after <= malus_before:
+            return malus_after - malus_before
+        else:
+            self.swap_students(activity2, activity1, student1, student2)
+            return 0

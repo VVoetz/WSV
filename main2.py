@@ -171,6 +171,9 @@ if __name__ == "__main__":
     # --------------------------------------------------
 
     if sys.argv[1] == "plot":
+        if len(sys.argv) < 3:
+            print("valide plots zijn: 3d en iteration")
+            exit()
         if sys.argv[2] == "3d":
             
             input_test = True
@@ -199,9 +202,3 @@ if __name__ == "__main__":
                     print("Invalide input, probeer opnieuw.")
             
             plots.iterative_plot(int(simulation_ammount))
-
-
-            
-
-
-
