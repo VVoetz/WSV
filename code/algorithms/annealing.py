@@ -21,7 +21,7 @@ class Annealing():
         # changes settings to make algorithm run as long as wanted
         if duration == "short":
             self.iterations = 100000
-            self.max_no_change = 5000
+            self.max_no_change = 9000
             self.t_decay = 0.9999
         elif duration == "long":
             self.iterations = 10000000

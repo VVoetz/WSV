@@ -5,7 +5,7 @@ import scipy.stats
 import time
 
 class Hillclimber():
-    def __init__(self, data, iterations=90000, no_change_stop = 90000) -> None:
+    def __init__(self, data, iterations=55000, no_change_stop = 90000) -> None:
         """
         Hillclimb search algorithm constructor
         """
