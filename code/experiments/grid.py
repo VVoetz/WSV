@@ -15,7 +15,7 @@ import sys
 import time
 import csv
 
-def specified_simulations(base, algorithm_name: str, tabu_length=0, neighbour_ammount=0, input1=0, input2=0, number_of_simulations=0) -> float:
+def specified_simulations(base, algorithm_name: str, tabu_length=0, neighbour_ammount=0, input1=0, input2=0, number_of_simulations=0, algo_duration="") -> float:
     """
     Function runs the given algorithm with the given settings for a number of
     simulations ammount of times and returns the negative average of all runs
@@ -37,7 +37,8 @@ def specified_simulations(base, algorithm_name: str, tabu_length=0, neighbour_am
         if algorithm_name == 'tabu':
             test = tabu_algo.Tabu_search(data, iterations=100000, tabu_length=tabu_length, neighbour_ammount=neighbour_ammount, stop_time = 20)
         elif algorithm_name == 'anneal':
-            test = annealing.Annealing(data, input1=input1, input2=input2)
+            
+            test = annealing.Annealing(data, input1=input1, input2=input2, duration=algo_duration)
 
         # calculate malus for courses
         malus = 0
@@ -64,7 +65,7 @@ def specified_simulations(base, algorithm_name: str, tabu_length=0, neighbour_am
 
     return sum(maluslist)/len(maluslist)*-1
 
-def run_grid_search(algorithm_name: str, number_of_simulations = 5, tabu_length_list = [], neighbour_ammount_list = [], acceptance_rate_student = [], acceptance_rate_activity = []) -> None:
+def run_grid_search(algorithm_name: str, number_of_simulations = 5, tabu_length_list = [], neighbour_ammount_list = [], acceptance_rate_student = [], acceptance_rate_activity = [], algo_duration="") -> None:
     """
     Function runs multiple simulations of given algorithm with different given settings
 
@@ -101,7 +102,7 @@ def run_grid_search(algorithm_name: str, number_of_simulations = 5, tabu_length_
             for j in input2:
                 X.append(i)
                 Y.append(j)
-                malus_average.append(specified_simulations(base, algorithm_name, input1=i, input2=j, number_of_simulations=number_of_simulations))
+                malus_average.append(specified_simulations(base, algorithm_name, input1=i, input2=j, number_of_simulations=number_of_simulations, algo_duration=algo_duration))
     
     
     if algorithm_name == 'tabu': 
