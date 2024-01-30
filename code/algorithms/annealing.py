@@ -21,7 +21,7 @@ class Annealing():
         # checks if activities are already assigned by previous algorithm. if not, an initial solution is created
         if self.Activities[0].room == None:
             self.create_initial_solution()
-        self.run(10000000)
+        self.run(1000000)
         
     
     def create_initial_solution(self) -> None:
@@ -122,7 +122,7 @@ class Annealing():
         for iteration in range(0, iterations):
             
             
-            self.T = 0.999999 * self.T
+            self.T = 0.99999 * self.T
             change = 0
             change += self.random_swap_activity()
             change += self.swap_student_in_course()
@@ -145,7 +145,7 @@ class Annealing():
             # if iteration % 1000 == 0:
             #     print(f"{self.calculate_malus()} {no_change} {self.T}")
             
-            if no_change > 20000:
+            if no_change > 10000:
                 return
 
     def tripleswap_activity(self) -> int:

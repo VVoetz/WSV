@@ -53,7 +53,7 @@ if __name__ == "__main__":
         
         if len(sys.argv) >= 3:
             simulation_ammount = 2
-            iterations.write_iterations_to_csv(sys.argv[2], simulation_ammount)
+            # iterations.write_iterations_to_csv(sys.argv[2], simulation_ammount)
 
             if len(sys.argv) >= 4:
                 if sys.argv[3] == "plot":

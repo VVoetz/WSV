@@ -4,7 +4,7 @@ import math, random
 import scipy.stats
 
 class Hillclimber():
-    def __init__(self, data, iterations=10000, no_change_stop = 1000) -> None:
+    def __init__(self, data, iterations=1000000, no_change_stop = 10000) -> None:
         """
         Hillclimb search algorithm constructor
         """

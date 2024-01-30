@@ -270,15 +270,18 @@ def iterative_plot(sim: int):
         if (len(data)+1)> max_iterations:
             max_iterations = len(data)+1
         line2, = ax.plot(range(1, len(data)*100, 100), data, linewidth=0.5, color='red', label='Anneal')
+        data = open_malus_csv(f'iteration_scores_hillclimber_simulation_{i+1}.csv', algo='hillclimber', method=4)
+        if (len(data)+1)> max_iterations:
+            max_iterations = len(data)+1
+        line3, = ax.plot(range(1, len(data)*100, 100), data, linewidth=0.5, color='blue', label="Hillclimber")
+        
     plt.xlim(1, max_iterations)
     plt.ylim(0, 3000)
     plt.xlabel('Iterations')
     plt.ylabel('Malusscore')
     plt.title('Convergentie Maluspunten')
-    ax.legend(handles=[line1, line2])
+    ax.legend(handles=[line1, line2, line3])
     plt.savefig('code/visualisation/plot_pictures/iterative_plot.png')
-
-    plt.show()
 
 
 

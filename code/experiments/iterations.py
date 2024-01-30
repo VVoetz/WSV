@@ -26,11 +26,11 @@ def write_iterations_to_csv(algorithm_name: str, number_of_simulations: int) -> 
             test = tabu_algo.Tabu_search(data)
 
         elif algorithm_name == 'anneal':
-            test = annealing.Tabu_search(data)
+            test = annealing.Annealing(data)
 
         elif algorithm_name == 'hillclimber':
             test = hillclimber.Hillclimber(data)
-            
+
         else:
             print("invalid algorithm")
             exit()

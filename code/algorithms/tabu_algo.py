@@ -4,7 +4,7 @@ import math, random, copy, time, csv
 
 class Tabu_search():
 
-    def __init__(self, data, iterations=1000, tabu_length=200, neighbour_ammount=25, create_solution=True, stop_time = None) -> None:
+    def __init__(self, data, iterations=25000, tabu_length=200, neighbour_ammount=25, create_solution=True, stop_time = None) -> None:
         """
         Tabu search algorithm constructor
         """
