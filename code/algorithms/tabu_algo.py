@@ -4,7 +4,7 @@ import math, random, copy, time, csv
 
 class Tabu_search():
 
-    def __init__(self, data, iterations=25000, tabu_length=200, neighbour_ammount=25, create_solution=True, stop_time = None) -> None:
+    def __init__(self, data, iterations=1000, tabu_length=200, neighbour_ammount=25, create_solution=True, stop_time = None) -> None:
         """
         Tabu search algorithm constructor
         """
@@ -14,6 +14,8 @@ class Tabu_search():
         self.Activities = data.Activities
 
         self.malus_per_iteration = []
+        self.time_per_iteration = []
+
         self.stop_time = stop_time
 
         self.Course_list = list(self.Courses.values())
@@ -201,6 +203,8 @@ class Tabu_search():
                 tabu_list.pop()
             
             self.malus_per_iteration.append(current_score)
+            self.time_per_iteration.append(time.time() - start_time)
+
             if iteration % 100 == 0 and iteration != 0:
                 print(f"iteration: {iteration}    sim_best: {simulation_best}  current_score: {current_score}")
 

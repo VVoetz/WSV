@@ -36,12 +36,13 @@ def write_iterations_to_csv(algorithm_name: str, number_of_simulations: int) -> 
             exit()
 
         maluslist = test.malus_per_iteration
+        time_list = test.time_per_iteration
 
         # write results to a csv file
-        fields = ['malusscore']
+        fields = ['malusscore', 'time']
         rows = []
-        for j in maluslist:
-            rows.append([j])
+        for j in range(0, len(maluslist) - 1):
+            rows.append([maluslist[j], time_list[j]])
         with open(f'data/iterations/{algorithm_name}/iteration_scores_{algorithm_name}_simulation_{i+1}.csv', mode='w', newline="") as file:
             write = csv.writer(file)
             write.writerow(fields)

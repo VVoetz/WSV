@@ -55,12 +55,14 @@ def open_malus_csv(filename: str, method=1, algo=''):
         return [x_data, y_data, z_data]
     elif method==4:
         x_data = []
+        y_data = []
         with open(f'data/iterations/{algo}/{filename}', mode='r') as file:
             next(file)
             csvFile = csv.reader(file)
             for line in csvFile:
-                x_data.append(float(line[0]))
-        return x_data
+                y_data.append(float(line[0]))
+                x_data.append(float(line[1]))
+        return x_data, y_data
 
     else:
         print('Not a valid method')
@@ -263,24 +265,17 @@ def iterative_plot(sim: int):
 
     for i in range(sim):
         data = open_malus_csv(f'iteration_scores_tabu_simulation_{i+1}.csv', algo='tabu', method=4)
-        if (len(data)+1)> max_iterations:
-            max_iterations = len(data)+1
-        line1, = ax.plot(range(1, len(data)+1), data, linewidth=0.5, color='green', label='Tabu')
+        line1, = ax.plot(data[0], data[1], linewidth=0.5, color='green', label='Tabu')
         data = open_malus_csv(f'iteration_scores_anneal_simulation_{i+1}.csv', algo='anneal', method=4)
-        if (len(data)+1)> max_iterations:
-            max_iterations = len(data)+1
-        line2, = ax.plot(range(1, len(data)*100, 100), data, linewidth=0.5, color='red', label='Anneal')
+        line2, = ax.plot(data[0], data[1], linewidth=0.5, color='red', label='Anneal')
         data = open_malus_csv(f'iteration_scores_hillclimber_simulation_{i+1}.csv', algo='hillclimber', method=4)
-        if (len(data)+1)> max_iterations:
-            max_iterations = len(data)+1
-        line3, = ax.plot(range(1, len(data)*100, 100), data, linewidth=0.5, color='blue', label="Hillclimber")
+        line3, = ax.plot(data[0], data[1], linewidth=0.5, color='blue', label="Hillclimber")
         
-    plt.xlim(1, max_iterations)
     plt.ylim(0, 3000)
-    plt.xlabel('Iterations')
+    plt.xlabel('Time')
     plt.ylabel('Malusscore')
     plt.title('Convergentie Maluspunten')
-    ax.legend(handles=[line1, line2, line3])
+    ax.legend(handles=[line1, line3])
     plt.savefig('code/visualisation/plot_pictures/iterative_plot.png')
 
 

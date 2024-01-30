@@ -2,9 +2,10 @@ from code.classes import room, course, student
 from code.classes import activity
 import math, random
 import scipy.stats
+import time
 
 class Hillclimber():
-    def __init__(self, data, iterations=1000000, no_change_stop = 10000) -> None:
+    def __init__(self, data, iterations=10000, no_change_stop = 1000) -> None:
         """
         Hillclimb search algorithm constructor
         """
@@ -17,6 +18,7 @@ class Hillclimber():
         self.no_change_stop = no_change_stop
 
         self.malus_per_iteration = []
+        self.time_per_iteration = []
 
         self.Course_list = list(self.Courses.values())
     
@@ -120,6 +122,8 @@ class Hillclimber():
 
         current_score = self.calculate_malus()
 
+        start_time = time.time()
+
         # change 2 random activities and 2 random students for iteration ammount of times
         for iteration in range(0, iterations):
             
@@ -139,6 +143,7 @@ class Hillclimber():
 
             if iteration % 100 == 0:
                 self.malus_per_iteration.append(current_score)
+                self.time_per_iteration.append(time.time() - start_time)
             
             current_score += malus_change
             
