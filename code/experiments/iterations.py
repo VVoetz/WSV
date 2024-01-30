@@ -7,7 +7,7 @@ from code.algorithms import tabu_algo, annealing, hillclimber
 import copy
 import csv
 
-def write_iterations_to_csv(algorithm_name: str, number_of_simulations: int) -> None:
+def write_iterations_to_csv(algorithm_name: str, number_of_simulations: int, algo_duration="") -> None:
     """
     Function runs a few simulations of the give algorithm name
     and writes them to a formatted csv file
@@ -26,7 +26,7 @@ def write_iterations_to_csv(algorithm_name: str, number_of_simulations: int) -> 
             test = tabu_algo.Tabu_search(data)
 
         elif algorithm_name == 'anneal':
-            test = annealing.Annealing(data)
+            test = annealing.Annealing(data, duration=algo_duration)
 
         elif algorithm_name == 'hillclimber':
             test = hillclimber.Hillclimber(data)

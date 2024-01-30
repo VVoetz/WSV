@@ -35,7 +35,7 @@ if __name__ == "__main__":
             # anneal variables
             input_test = True
             while input_test:
-                input_axes = input("Hoeveel verschillende waardes wil je testen voor de gevoeligheid "
+                input_axes = input("Hoeveel verschillende X en Y waardes wil je testen voor de gevoeligheid "
                                     "van het algoritme op de temperatuur (minimaal 2)?")
                 if input_axes.isdigit():
                     if int(input_axes) > 1:
@@ -89,34 +89,64 @@ if __name__ == "__main__":
     if sys.argv[1] == "iteration":
         
         if len(sys.argv) >= 3:
-            simulation_ammount = 2
-            iterations.write_iterations_to_csv(sys.argv[2], simulation_ammount)
+            input_test = True
+            while input_test:
+                simulation_input = input('Hoeveel simulaties wil je doen? ')
+                if simulation_input.isdigit():
+                    if int(simulation_input) > 0:
+                        input_test = False
+                if input_test:
+                    print("Invalide input, probeer opnieuw.")
+            length = ""
+            if sys.argv[2] == 'anneal':
+                input_test = True
+                while input_test == True:
+                    input_duration = input("Hoe lang wil je de simulatie runnen? kort: (<1 min), medium: (~6 min), lang: (~60-80min)? ")
+                    if input_duration == "Lang" or input_duration == "lang":
+                        length = 'long'
+                        input_test = False
+                    elif input_duration == "Medium" or input_duration == "medium":
+                        length = 'medium'
+                        input_test = False
+                    elif input_duration == "Kort" or input_duration == "kort":
+                        length = 'short'
+                        input_test = False
+                    else:
+                        print("Deze input wordt niet herkend, probeer opnieuw")
+            simulation_ammount = int(simulation_input)
+            iterations.write_iterations_to_csv(sys.argv[2], simulation_ammount, length)
 
             if len(sys.argv) >= 4:
                 if sys.argv[3] == "plot":
                     plots.iterative_plot(simulation_ammount)
         else:
             print("Invalide input, probeer opnieuw.")
+            print("valide keuzes zijn: tabu, anneal en hillclimber")
 
     # --------------------------------------------------
     # code to run simulations of chosen algorithm
     # --------------------------------------------------
     if sys.argv[1] == "algorithm":
         
-        input_test = True
-        while input_test == True:
-            input_duration = input("Hoe lang wil je de simulatie runnen? kort: (<1 min), medium: (~6 min), lang: (~60-80min)? ")
-            if input_duration == "Lang" or input_duration == "lang":
-                length = 'long'
-                input_test = False
-            elif input_duration == "Medium" or input_duration == "medium":
-                length = 'medium'
-                input_test = False
-            elif input_duration == "Kort" or input_duration == "kort":
-                length = 'short'
-                input_test = False
-            else:
-                print("Deze input wordt niet herkend, probeer opnieuw")
+        length = ""
+        if len(sys.argv) == 2:
+            print("Invalide input, probeer opnieuw.")
+            exit()
+        elif sys.argv[2] == "anneal":
+            input_test = True
+            while input_test == True:
+                input_duration = input("Hoe lang wil je de simulatie runnen? kort: (<1 min), medium: (~6 min), lang: (~60-80min)? ")
+                if input_duration == "Lang" or input_duration == "lang":
+                    length = 'long'
+                    input_test = False
+                elif input_duration == "Medium" or input_duration == "medium":
+                    length = 'medium'
+                    input_test = False
+                elif input_duration == "Kort" or input_duration == "kort":
+                    length = 'short'
+                    input_test = False
+                else:
+                    print("Deze input wordt niet herkend, probeer opnieuw")
 
         # ammount of simulations
         input_test = True

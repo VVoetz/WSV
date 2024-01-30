@@ -31,7 +31,6 @@ class Annealing():
             self.max_no_change = 10000
             self.t_decay = 0.99999
         
-        print(duration)
         # checks if activities are already assigned by previous algorithm. if not, an initial solution is created
         if self.Activities[0].room == None:
             self.create_initial_solution()
