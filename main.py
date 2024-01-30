@@ -50,7 +50,7 @@ if __name__ == "__main__":
             test = tabu_algo.Tabu_search(data, iterations=0)
         elif sys.argv[1] == 'anneal':
             test = greedy_algo.Greedyalgo(data)
-            test = annealing.Tabu_search(data)
+            test = annealing.Annealing(data)
         elif sys.argv[1] == 'anneal_grid':
             anneal_grid_search.run_grid_search(int(sys.argv[2]), int(sys.argv[3]))
             exit()

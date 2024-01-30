@@ -106,9 +106,12 @@ class Activity:
         calculates heuristic points and maluspoints and returns both combined
         """
         total = 0
-        # if self.id[0] == "h":
-        #     if self.timeslot[2] != 2 and self.timeslot[2] != 3:
-        #         total += 10
+
+        # checks if lectures are given in the 'desirable' timeslots 2 and 3
+        # adds "fake" maluspoints if not
+        if self.id[0] == "h":
+            if self.timeslot[2] != 2 and self.timeslot[2] != 3:
+                total += 5
 
         # checks if current seminar/practica is at the same time as another activity from the same course
         # adds "fake" maluspoints if finished

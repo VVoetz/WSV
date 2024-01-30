@@ -4,7 +4,7 @@ from code.algorithms import greedy_algo, testalgo, random_algo, hillclimber, ann
 import copy
 import csv
 
-def run_simulation(algorithm_name: str, number_of_simulations: int, print_schedule = False) -> None:
+def run_simulation(algorithm_name: str, number_of_simulations: int, print_schedule = False, algo_duration ="") -> None:
     """
     Function runs algorithm a given ammount of times, prints relevent data to the terminal
     and saves relevant data in csv files in the data folder
@@ -44,8 +44,13 @@ def run_simulation(algorithm_name: str, number_of_simulations: int, print_schedu
             test = tabu_algo.Tabu_search(data, iterations=1000, neighbour_ammount=5, tabu_length=5000, create_solution=False, stop_time=15)
 
         elif algorithm_name == 'anneal':
+            
+            
             test = greedy_algo.Greedyalgo(data)
-            test = annealing.Annealing(data)
+            if algo_duration == "":
+                test = annealing.Annealing(data)
+            else:
+                test = annealing.Annealing(data, duration=algo_duration)
 
         # MAYBE THIS SHOULD BE REMOVED
         elif algorithm_name == 'anneal_grid':
@@ -114,8 +119,8 @@ def run_simulation(algorithm_name: str, number_of_simulations: int, print_schedu
         write.writerows(rows)
 
     # print different types of malus points
-    print(f"room capacity: {room_capacity_points}   fifth: {fifth_slot_points}  \
-        courseconflict: {double_acts}   single: {singlegaps}    double: {doublegaps}")
+    # print(f"room capacity: {room_capacity_points}   fifth: {fifth_slot_points}  \
+    #     courseconflict: {double_acts}   single: {singlegaps}    double: {doublegaps}")
     
     total = 0
     for item in maluslist:

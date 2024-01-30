@@ -4,7 +4,7 @@ import math, random
 
 
 class Annealing():
-    def __init__(self, data, input1=7, input2=1) -> None:
+    def __init__(self, data, input1=7, input2=2, duration="long") -> None:
         """
         Tabu search algorithm constructor
         """
@@ -17,11 +17,25 @@ class Annealing():
         self.input3 = 5
         self.malus_per_iteration = list()
         self.Course_list = list(self.Courses.values())
+        # changes settings to make algorithm run as long as wanted
+        if duration == "short":
+            self.iterations = 100000
+            self.max_no_change = 5000
+            self.t_decay = 0.9999
+        elif duration == "long":
+            self.iterations = 10000000
+            self.max_no_change = 20000
+            self.t_decay = 0.999999
+        else:
+            self.iterations = 1000000
+            self.max_no_change = 10000
+            self.t_decay = 0.99999
         
+        print(duration)
         # checks if activities are already assigned by previous algorithm. if not, an initial solution is created
         if self.Activities[0].room == None:
             self.create_initial_solution()
-        self.run(10)
+        self.run(self.iterations)
         
     
     def create_initial_solution(self) -> None:
@@ -122,7 +136,7 @@ class Annealing():
         for iteration in range(0, iterations):
             
             
-            self.T = 0.999999 * self.T
+            self.T = self.t_decay * self.T
             change = 0
             change += self.random_swap_activity()
             change += self.swap_student_in_course()
@@ -145,7 +159,7 @@ class Annealing():
             # if iteration % 1000 == 0:
             #     print(f"{self.calculate_malus()} {no_change} {self.T}")
             
-            if no_change > 20000:
+            if no_change > self.max_no_change:
                 return
 
     def tripleswap_activity(self) -> int:
@@ -291,7 +305,7 @@ class Annealing():
         if malus_after <= malus_before:
             return malus_diff
         
-        prob = math.exp((-malus_diff / self.T) / (2 * self.input2))
+        prob = math.exp((-malus_diff / self.T) / (self.input2))
         #print(f"{prob} {self.T} {malus_diff} {malus_before}")
         yesno = random.random() - prob
         #print(yesno)
