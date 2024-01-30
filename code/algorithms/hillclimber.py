@@ -5,7 +5,7 @@ import scipy.stats
 import time
 
 class Hillclimber():
-    def __init__(self, data, iterations=10000, no_change_stop = 1000) -> None:
+    def __init__(self, data, iterations=90000, no_change_stop = 90000) -> None:
         """
         Hillclimb search algorithm constructor
         """
@@ -148,6 +148,7 @@ class Hillclimber():
             current_score += malus_change
             
             if no_change > no_change_stop:
+                print(time.time() - start_time)
                 break
   
     def swap_activities(self, activity1, activity2) -> None:

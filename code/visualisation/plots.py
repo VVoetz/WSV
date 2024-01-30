@@ -271,7 +271,7 @@ def iterative_plot(sim: int):
         data = open_malus_csv(f'iteration_scores_hillclimber_simulation_{i+1}.csv', algo='hillclimber', method=4)
         line3, = ax.plot(data[0], data[1], linewidth=0.5, color='blue', label="Hillclimber")
         
-    plt.ylim(0, 3000)
+    plt.ylim(0, 1500)
     plt.xlabel('Time')
     plt.ylabel('Malusscore')
     plt.title('Convergentie Maluspunten')

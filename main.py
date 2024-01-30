@@ -56,7 +56,9 @@ if __name__ == "__main__":
             exit()
         elif sys.argv[1] == "hillclimber":
             test = hillclimber.Hillclimber(data, iterations=100000, no_change_stop=1000)
-
+        else:
+            print("invalide input gegeven, probeer opnieuw")
+            exit()
         # print schedule in terminal
         # for room in test.Rooms:
         #    print_schedule.visualize_room_schedule(test.Rooms[room])    
