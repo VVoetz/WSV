@@ -1,5 +1,5 @@
 from code.classes import data_loader
-
+from code.experiments import anneal_grid_search
 from code.algorithms import greedy_algo, testalgo, random_algo, hillclimber, annealing, tabu_algo
 import copy
 import csv

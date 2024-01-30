@@ -37,7 +37,7 @@ def specified_simulations(base, algorithm_name: str, tabu_length=0, neighbour_am
         if algorithm_name == 'tabu':
             test = tabu_algo.Tabu_search(data, iterations=100000, tabu_length=tabu_length, neighbour_ammount=neighbour_ammount, stop_time = 60)
         elif algorithm_name == 'anneal':
-            test = annealing.Tabu_search(data, input1=input1, input2=input2)
+            test = annealing.Annealing(data, input1=input1, input2=input2)
 
         # calculate malus for courses
         malus = 0
