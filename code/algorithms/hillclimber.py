@@ -149,6 +149,7 @@ class Hillclimber():
             current_score += malus_change
             
             if no_change > no_change_stop:
+                print(time.time() - start_time)
                 break
   
     def swap_activities(self, activity1, activity2) -> None:

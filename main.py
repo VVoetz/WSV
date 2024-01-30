@@ -55,8 +55,10 @@ if __name__ == "__main__":
             anneal_grid_search.run_grid_search(int(sys.argv[2]), int(sys.argv[3]))
             exit()
         elif sys.argv[1] == "hillclimber":
-            test = hillclimber.Hillclimber(data, iterations=100000, no_change_stop=100000)
-
+            test = hillclimber.Hillclimber(data, iterations=100000, no_change_stop=1000)
+        else:
+            print("invalide input gegeven, probeer opnieuw")
+            exit()
         # print schedule in terminal
         # for room in test.Rooms:
         #    print_schedule.visualize_room_schedule(test.Rooms[room])    

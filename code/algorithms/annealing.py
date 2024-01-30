@@ -1,7 +1,7 @@
 from code.classes import room, course, student
 from code.classes import activity
 import math, random
-
+import time
 
 class Annealing():
     def __init__(self, data, input1=7, input2=2, duration="long") -> None:
@@ -16,6 +16,7 @@ class Annealing():
         self.input2 = input2
         self.input3 = 5
         self.malus_per_iteration = list()
+        self.time_per_iteration = list()
         self.Course_list = list(self.Courses.values())
         # changes settings to make algorithm run as long as wanted
         if duration == "short":
@@ -130,7 +131,7 @@ class Annealing():
         malus = self.calculate_malus()
         no_change = 0
         self.T = 0.2
-
+        start_time = time.time()
         # change 2 random activities for iteration ammount of times
         for iteration in range(0, iterations):
             
@@ -154,6 +155,7 @@ class Annealing():
             if iteration % 100 == 0:
                 malus = self.calculate_malus()
                 self.malus_per_iteration.append(malus)
+                self.time_per_iteration.append(time.time() - start_time)
 
             # if iteration % 1000 == 0:
             #     print(f"{self.calculate_malus()} {no_change} {self.T}")
