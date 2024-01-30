@@ -28,7 +28,7 @@ if __name__ == "__main__":
             
             if len(sys.argv) >= 4:
                 if sys.argv[3] == "plot":
-                    plots.plot_3d("tabu_algo_3d_data.csv", simulations, "tabu")
+                    plots.plot_3d("tabu_algo_3d_data.csv", simulations, "Tabu")
 
         elif sys.argv[2] == "anneal":
 
@@ -44,7 +44,7 @@ if __name__ == "__main__":
                 
             if len(sys.argv) >= 4:
                 if sys.argv[3] == "plot":
-                    plots.plot_3d("anneal_algo_3d_data.csv", simulations, "anneal")
+                    plots.plot_3d("anneal_algo_3d_data.csv", simulations, "Anneal")
     
     # --------------------------------------------------
     # code to write simulations to iteration plot files
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     # code to run simulations of chosen algorithm
     # --------------------------------------------------
     if sys.argv[1] == "algorithm":
-
+        
         # ammount of simulations
         ammount_of_simulations = 5
 
