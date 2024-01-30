@@ -257,7 +257,7 @@ def stacked_hist(filename: str, algo: str):
 def iterative_plot(sim: int):
 
     max_iterations = 0
-
+    plt.style.use('dark_background')
     plt.figure()
     fig, ax = plt.subplots()
 
@@ -348,7 +348,7 @@ def plot_3d(filename: str, number_of_simulations, algo):
     fig.colorbar(trisurf, ax = ax, shrink = 0.5, aspect = 5) 
     ax.set_xlabel(f'{x_label[algo]}')
     ax.set_ylabel(f'{y_label[algo]}')
-    ax.set_title(f'3d heatmap voor {algo} algoritme met {number_of_simulations} simulaties')
+    ax.set_title(f'Maluspunten Heatmap voor {algo} algoritme met {number_of_simulations} simulaties')
     ax.set_zticklabels([])
     # saving figure
     plt.savefig(f'code/visualisation/grid/3dplot_{algo}_heat.png')
