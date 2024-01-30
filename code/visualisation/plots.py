@@ -275,6 +275,8 @@ def iterative_plot(sim: int):
     plt.title('Convergentie Maluspunten')
     ax.legend([line1, line2], ['Tabu', 'Anneal'])
 
+    plt.show()
+
 
 
 

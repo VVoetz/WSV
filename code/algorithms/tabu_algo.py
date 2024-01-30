@@ -4,8 +4,7 @@ import math, random, copy, time, csv
 
 class Tabu_search():
 
-    # found best settings so far: neihbours between 40-60, tabu_length = 250-1000
-    def __init__(self, data, iterations=1000, tabu_length=250, neighbour_ammount=25, create_solution=True, stop_time = None) -> None:
+    def __init__(self, data, iterations=1000, tabu_length=200, neighbour_ammount=25, create_solution=True, stop_time = None) -> None:
         """
         Tabu search algorithm constructor
         """

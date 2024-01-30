@@ -41,7 +41,7 @@ def run_simulation(algorithm_name: str, number_of_simulations: int, print_schedu
 
         elif algorithm_name == 'tabu':
             test = greedy_algo.Greedyalgo(data)
-            test = tabu_algo.Tabu_search(data, iterations=1000, neighbour_ammount=5, tabu_length=5000, create_solution=False, stop_time=15)
+            test = tabu_algo.Tabu_search(data, iterations=1000, neighbour_ammount=25, tabu_length=200, create_solution=False)
 
         elif algorithm_name == 'anneal':
             test = greedy_algo.Greedyalgo(data)

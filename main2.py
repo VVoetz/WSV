@@ -13,14 +13,14 @@ if __name__ == "__main__":
     if sys.argv[1] == "grid":
 
         if len(sys.argv) < 3:
-            print("Usage: grid \"algorithm to grid search\"")
+            print("Usage: main.py grid \"algorithm to grid search\"")
 
         elif sys.argv[2] == "tabu":
 
-            # tabu variables
-            tabu_lengths = [100, 200, 300, 400, 500]
-            neighbours = [20, 25, 30, 35, 40]
-            simulations = 5
+            # tabu variables (preferably constant intervals)
+            tabu_lengths = [100, 200, 300]
+            neighbours = [20, 25, 30]
+            simulations = 1
 
             # run tabu grid search
             grid.run_grid_search("tabu", number_of_simulations = simulations,\
@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
         elif sys.argv[2] == "anneal":
 
-            # anneal variables
+            # anneal variables (preferably constant intervals)
             student_acceptance = [1, 2]
             activity_acceptance = [1, 2]
             simulations = 1
@@ -42,7 +42,7 @@ if __name__ == "__main__":
             grid.run_grid_search("anneal", number_of_simulations = simulations,\
                  acceptance_rate_student = student_acceptance, acceptance_rate_activity = activity_acceptance)
                 
-            if len(sys.argv) >= 3:
+            if len(sys.argv) >= 4:
                 if sys.argv[3] == "plot":
                     plots.plot_3d("anneal_algo_3d_data.csv", simulations, "anneal")
     
@@ -54,8 +54,12 @@ if __name__ == "__main__":
         if len(sys.argv) >= 3:
             simulation_ammount = 2
             iterations.write_iterations_to_csv(sys.argv[2], simulation_ammount)
+
+            if len(sys.argv) >= 4:
+                if sys.argv[3] == "plot":
+                    plots.iterative_plot(simulation_ammount)
         else:
-            print("Usage: iteration \"algorithm to run\"")
+            print("Usage: main.py iteration \"algorithm to run\"")
 
     # --------------------------------------------------
     # code to run simulations of chosen algorithm
@@ -68,6 +72,6 @@ if __name__ == "__main__":
         if len(sys.argv) > 1:
             run_simulation.run_simulation(sys.argv[2], ammount_of_simulations)
         else:
-            print("Usage: algorithm \"algorithm to run\"")
+            print("Usage: main.py algorithm \"algorithm to run\"")
 
 
