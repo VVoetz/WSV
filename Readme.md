@@ -37,21 +37,9 @@ Op de plek van <algorithm> kan gekozen worden voor:
 Als er wordt gekozen voor het annealing algoritme dan wordt er gevraagd wat de gewenste duur is van de runs (kort, medium of lang).
 Er wordt daarna in de terminal gevraagd hoe vaak je het algoritme wil draaien. Vul daar het gewenste aantal runs in.
 Per run die gedaan wordt zal de tijd die het heeft geduurd om te draaien en het aantal maluspunten geprint worden in de terminal.
+Ook zal voor de 3 iteratieve algoritmes (hillclimber, tabu en anneal) zal er per N aantal iteraties (N verschilt per algoritme) de maluspunten + tijd wordt opgeslagen.
+Deze data kan gebruikt worden om iteration plots te maken zie daarvoor het 'plots' kopje. 
 
-### Iteration run:
-Bij een iteration run wordt per N aantal iteraties (verschillend per algoritme) opgeslagen wat de maluspunten zijn tijdens het algoritme. 
-Hiermee kunnen iteration plots gemaakt worden. Om de data te verzamelen om zulke plots te maken moeten er een aantal runs gedaan worden, gebruik hiervoor:
-
--`python3 main2.py iteration <algorithm>`
-
-Hier kan op de plek van <algorithm> alleen gekozen worden voor de iteratieve algoritmes:
-
--`hillclimber`
--`tabu`
--`anneal`
-
-Er zal daarna in de commandline gevraagd worden hoeveel runs je wil doen. Ook zal bij het simulated annealing algoritme gevraagd worden om de gewenste duur van de runs.
-De informatie zal worden opgeslagen en met behulp van de plot functie (hieronder uitgelegd) kunnen daar plots mee gemaakt worden.
 
 ### Plots (3d / iteratie):
 Om een iteratieplot te is het belangrijk om eerst een gelijk aantal runs te hebben gedaan voor de algoritmes die je wil meenemen in de plot.
