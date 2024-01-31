@@ -47,7 +47,8 @@ Ook zal voor de 3 iteratieve algoritmes (hillclimber, tabu en anneal) zal er per
 Deze data kan gebruikt worden om iteration plots te maken zie daarvoor het 'plots' kopje. 
 
 
-### Plots (3d / iteratie / histogram / stacked):
+## Plots (3d / iteratie / histogram / stacked):
+### iteratie plot
 Om een iteratieplot te is het belangrijk om eerst een gelijk aantal runs te hebben gedaan voor de algoritmes die je wil meenemen in de plot.
 Daarna run je de volgende command:
 
@@ -55,6 +56,7 @@ Daarna run je de volgende command:
 
 Er wordt dan gevraagd hoeveel runs per algoritme je wil meenemen in de plot. Vul hier het aantal runs in dat je per algoritme hebt gedaan. Als er verschillende hoeveelheden runs gedaan zijn per algoritme, vul het laagste aantal runs in dat je voor een van de algoritmes hebt gekozen. De iteratie-plot zal gegenereerd worden en wordt opgeslagen als: /code/visualisation/plot_pictures/iterative_plot.png
 
+### 3d plot
 Om een 3d plot te maken moet je eerst een grid search hebben gerund.
 Daarna run je de volgende command:
 
@@ -67,6 +69,7 @@ Op de plek van <algorithm> kan gekozen worden voor:
 
 De 3d plot wordt in 4 verschillende afbeeldingen opgeslagen in: code/visualisation/grid/3d*
 
+### histogram plot
 Om een histogram plot te maken is het belangrijk dat de algoritmen die je wilt gaan plotten hetzelfde aantal simulaties hebben gerund.
 Daarna run je de volgende command:
 
@@ -81,6 +84,7 @@ vervolgens wordt er gevraagd welke algoritmen je wilt plotten. Je hebt de keus u
 
 De histogram plot wordt opgeslagen als: code/visualisation/multihist.png
 
+### stacked plot
 Om een stacked plot te maken is het belangrijk dat je een algoritme van te voren hebt gerund.
 Daarna run je de volgende command:
 
