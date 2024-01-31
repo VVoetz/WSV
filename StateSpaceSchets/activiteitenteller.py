@@ -2,7 +2,7 @@ import csv
 import math
 
 # Specify the path to your CSV file
-csv_file_path = 'vakken.csv'
+csv_file_path = 'data/vakken.csv'
 
 # Open the CSV file
 with open(csv_file_path, 'r') as file:

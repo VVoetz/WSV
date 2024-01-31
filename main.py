@@ -1,130 +1,241 @@
-from code.classes import data_loader
-
-from code.algorithms import testalgo, random_algo, greedy_algo, tabu_algo, annealing, hillclimber
-
 from code.visualisation import print_schedule, make_google_calendar, plots
 
-from code.experiments import anneal_grid_search
+from code.experiments import anneal_grid_search, grid, run_simulation
 
-import copy
 import sys
-import time
-import csv
-
-
+# import time
 
 if __name__ == "__main__":
-    
-    start = time.time()
 
-    number_of_simulations = 1
+    # --------------------------------------------------
+    #
+    # code to run grid searches
+    #
+    # --------------------------------------------------
+    if sys.argv[1] == "grid":
 
-    malus_room_capacity = list()
-    malus_fifth_slot = list()
-    malus_double_acts = list()
-    malus_single_gaps = list()
-    malus_double_gaps = list()
-    malus_triple_gaps = list()
-    maluslist = list()
+        if len(sys.argv) < 3:
+            print("Invalide input, probeer opnieuw.")
 
+        elif sys.argv[2] == "tabu":
 
-    base = data_loader.Data_loader("vakken.csv", "zalen.csv", "studenten_en_vakken.csv")
-
-    for i in range(number_of_simulations):
-        
-        data = copy.deepcopy(base)
-
-        # runs chosen algorithm
-        if sys.argv[1] == 'greedy':
-            test = greedy_algo.Greedyalgo(data)
-        elif sys.argv[1] == 'test':
-            test = testalgo.Testalgo(data)
-        elif sys.argv[1] == 'random':
-            test = random_algo.RandomAlgo(data)
-        elif sys.argv[1] == 'tabu':
-            test = greedy_algo.Greedyalgo(data)
-            test = tabu_algo.Tabu_search(data, iterations=10000, neighbour_ammount=15, tabu_length=5000, create_solution=False, stop_time=15)
+            # Handle user input for tabu variables
+            tabu_start = input("Wat is de start waarde van de tabulijst lengte? ")
+            while not tabu_start.isdigit():
+                tabu_start = input("Voer een getal in... ")
             
-        elif sys.argv[1] == 'tabu_grid':
-            grid_search_tabu.run_grid_search()
-            test = tabu_algo.Tabu_search(data, iterations=0)
-        elif sys.argv[1] == 'anneal':
-            test = greedy_algo.Greedyalgo(data)
-            test = annealing.Annealing(data)
-        elif sys.argv[1] == 'anneal_grid':
-            anneal_grid_search.run_grid_search(int(sys.argv[2]), int(sys.argv[3]))
+            tabu_iteration = input("Wat is de stapgrootte van de tabulijst lengte? ")
+            while not tabu_iteration.isdigit():
+                tabu_iteration = input("Voer hier ook een getal in... ")
+
+            neighbour_start = input("Met hoeveel buren wil je beginnen? ")
+            while not neighbour_start.isdigit():
+                neighbour_start = input("Waarom snap je niet dat het een getal moet zijn? ")
+            
+            neighbour_iteration = input("Wat is de stapgrootte van het aantal buren? ")
+            while not neighbour_iteration.isdigit():
+                neighbour_iteration = input("Je hebt nu 3 keer een getal ingevoerd... één extra keer is niet zo'n grote moeite toch? ")
+            
+            simulations = input("Wat is het aantal simulaties dat je wilt runnen? ")
+            while not simulations.isdigit():
+                simulations = input("Kom op zeg... Ik beloof je dat dit de laatste keer is dat je een getal hoeft in te voeren :) ")
+            
+            # make lists based on input
+            tabu_lengths = []
+            neighbours = []
+
+            for i in range(abs(int(simulations))):
+                tabu_lengths.append(abs(int(tabu_start)) + i * abs(int(tabu_iteration)))
+                neighbours.append(abs(int(neighbour_start)) + i * abs(int(neighbour_iteration)))
+
+            # run tabu grid search
+            grid.run_grid_search("tabu", number_of_simulations = abs(int(simulations)),\
+                tabu_length_list = tabu_lengths, neighbour_ammount_list = neighbours)
+
+        elif sys.argv[2] == "anneal":
+
+            # anneal variables
+            input_test = True
+            while input_test:
+                input_axes = input("Hoeveel verschillende X en Y waardes wil je testen voor de gevoeligheid "
+                                    "van het algoritme op de temperatuur (minimaal 2)? ")
+                if input_axes.isdigit():
+                    if int(input_axes) > 1:
+                        input_test = False
+                if input_test:
+                    print("Invalide input, probeer opnieuw.")
+
+            input_test = True
+            while input_test:
+                simulation_input = input('Hoeveel simulaties wil je doen per combinatie? ')
+                if simulation_input.isdigit():
+                    if int(simulation_input) > 0:
+                        input_test = False
+                if input_test:
+                    print("Invalide input, probeer opnieuw.")
+                    
+            simulations = int(simulation_input)
+            student_acceptance = []
+            activity_acceptance = []
+            for i in range(1, int(input_axes) + 1):
+                student_acceptance.append(i)
+                activity_acceptance.append(i)
+            
+            input_test = True
+            while input_test == True:
+                input_duration = input("Hoe lang wil je de simulatie runnen? kort: (<1 min), medium: (~6 min), lang: (~60-80min)? ")
+                if input_duration == "Lang" or input_duration == "lang":
+                    length = 'long'
+                    input_test = False
+                elif input_duration == "Medium" or input_duration == "Medium":
+                    length = 'medium'
+                    input_test = False
+                elif input_duration == "Kort" or input_duration == "kort":
+                    length = 'short'
+                    input_test = False
+                else:
+                    print("Deze input wordt niet herkend, probeer opnieuw")
+
+            # run anneal grid search
+
+            grid.run_grid_search("anneal", number_of_simulations = simulations,\
+                 acceptance_rate_student = student_acceptance, acceptance_rate_activity = activity_acceptance, algo_duration=length)
+
+    # --------------------------------------------------
+    #
+    # code to run simulations of chosen algorithm
+    #
+    # --------------------------------------------------
+    if sys.argv[1] == "algorithm":
+        
+        length = ""
+
+        # handle user input
+        if len(sys.argv) == 2:
+            print("Invalide input, probeer opnieuw.")
             exit()
-        elif sys.argv[1] == "hillclimber":
-            test = hillclimber.Hillclimber(data)
+        elif sys.argv[2] == "anneal":
+            input_test = True
+            while input_test == True:
+                input_duration = input("Hoe lang wil je de simulatie runnen? kort: (<1 min), medium: (~6 min), lang: (~60-80min)? ")
+                if input_duration == "Lang" or input_duration == "lang":
+                    length = 'long'
+                    input_test = False
+                elif input_duration == "Medium" or input_duration == "medium":
+                    length = 'medium'
+                    input_test = False
+                elif input_duration == "Kort" or input_duration == "kort":
+                    length = 'short'
+                    input_test = False
+                else:
+                    print("Deze input wordt niet herkend, probeer opnieuw")
+
+        # ammount of simulations user input
+        input_test = True
+        while input_test:
+            simulation_input = input('Hoeveel simulaties wil je doen? ')
+            if simulation_input.isdigit():
+                if int(simulation_input) > 0:
+                    input_test = False
+            if input_test:
+                print("Invalide input, probeer opnieuw.")
+                
+        amount_of_simulations = int(simulation_input)
+
+        if sys.argv[2] != "anneal":
+            max_time = input("Hoeveel seconden wil je het algoritme maximaal laten runnen? ")
+            while not max_time.isdigit():
+                max_time = input("Geef alstublieft een getal mee... ")
+            
+            max_time = abs(int(max_time))
         else:
-            print("invalide input gegeven, probeer opnieuw")
+            max_time = 0
+
+        # run simulation
+        if len(sys.argv) > 1:
+            run_simulation.run_simulation(sys.argv[2], amount_of_simulations, False, length, max_time)
+        else:
+            print("Invalide input, probeer opnieuw.")
+    
+
+    # --------------------------------------------------
+    #
+    # code to plot with current data
+    #
+    # --------------------------------------------------
+
+    if sys.argv[1] == "plot":
+        if len(sys.argv) < 3:
+            print("Geef een soort plot mee")
             exit()
-        # print schedule in terminal
-        # for room in test.Rooms:
-        #    print_schedule.visualize_room_schedule(test.Rooms[room])    
+
+        elif sys.argv[2] == "3d":
+            
+            input_test = True
+            while input_test:
+                simulations = input('Over hoeveel simulaties is het gemiddelde genomen? ')
+                if simulations.isdigit():
+                    if int(simulations) > 0:
+                        input_test = False
+                if input_test:
+                    print("Invalide input, probeer opnieuw.")
+
+            if sys.argv[3] == "tabu":
+                plots.plot_3d("tabu_algo_3d_data.csv", simulations, "Tabu")
+            if sys.argv[3] == "anneal":
+                plots.plot_3d("anneal_algo_3d_data.csv", simulations, "Anneal")
         
-        # print the malus points of a course's activities
+        elif sys.argv[2] == "iteration":
 
-        room_capacity_points = 0
-        fifth_slot_points = 0
-        double_acts = 0
-        singlegaps = 0
-        doublegaps = 0
-        triplegaps = 0
-
-        for course in data.Courses:
-            for activity in data.Courses[course].activities:
-                room_capacity, fifth_slot = activity.get_detailed_malus()
-                room_capacity_points += room_capacity
-                fifth_slot_points += fifth_slot
-
-        for item in test.Students:
-            double_act_points, single_points, double_points, triple_points = test.Students[item].get_detailed_malus()
-            double_acts += double_act_points
-            singlegaps += single_points
-            doublegaps += double_points
-            triplegaps += triple_points
+            input_test = True
+            while input_test:
+                simulation_ammount = input('Hoevel iteratie simulaties zijn er gedaan? ')
+                if simulation_ammount.isdigit():
+                    if int(simulation_ammount) > 0:
+                        input_test = False
+                if input_test:
+                    print("Invalide input, probeer opnieuw.")
+            
+            plots.iterative_plot(int(simulation_ammount))
         
-        malus = room_capacity_points + fifth_slot_points + double_acts + singlegaps + doublegaps + triplegaps
+        elif sys.argv[2] == "histogram":
+            
+            available_algorithms = ["tabu", "anneal", "hillclimber", "random", "greedy"]
+            algorithms_to_plot = []
+            algorithm = ""
+
+            # ask for algorithms to plot
+            while algorithm != "x":
+                algorithm = input("Welk algoritme wil je plotten? (type x indien je klaar bent) ")
+                if algorithm not in available_algorithms and algorithm != "x":
+                    print("beschikbare algoritmen zijn: tabu, anneal, hillclimber, random and greedy")
+                else:
+                    if algorithm != "x":
+                        algorithms_to_plot.append(algorithm)
+            
+            if len(algorithms_to_plot) < 1:
+                print("Geef ten minste 1 algoritme mee")
+                exit()
+            
+            filenames = []
+            
+            for algorithm in algorithms_to_plot:
+                filenames.append(f"{algorithm}_algo_simulation_data.csv")
+            
+            plots.multi_hist(filenames, algorithms_to_plot)
         
-        # saving malus scores total & categories in lists
-        malus_room_capacity.append(room_capacity_points)
-        malus_fifth_slot.append(fifth_slot_points)
-        malus_double_acts.append(double_acts)
-        malus_single_gaps.append(singlegaps)
-        malus_double_gaps.append(doublegaps)
-        malus_triple_gaps.append(triplegaps)
-        maluslist.append(malus)
-
-        print(f"{i}: {malus}")
-
-        
-        #make_google_calendar.make_google_calendar_csv(data)
-        # make_google_calendar.make_student_calendar(data)
-
-    # writing csv file with malus lists
-    fields = ['Room Capacity', 'Fifth Slot Usage','Double Acts', 'Single Gaps', 'Double Gaps', 'Triple Gaps', 'Total']
-    rows = []
-    for i in range(number_of_simulations):
-        row = [malus_room_capacity[i], malus_fifth_slot[i], malus_double_acts[i], malus_single_gaps[i], malus_double_gaps[i], malus_triple_gaps[i], maluslist[i]]
-        rows.append(row)
-    with open(f'data/{sys.argv[1]}_algo_simulation_data.csv', mode='w') as csvfile:
-        write = csv.writer(csvfile)
-        write.writerow(fields)
-        write.writerows(rows)
-
-
-    print(f"room capacity: {room_capacity_points}   fifth: {fifth_slot_points}  courseconflict: {double_acts}   single: {singlegaps}    double: {doublegaps}")
-    # print(sorted(maluslist))
-    total = 0
-    for item in maluslist:
-        while item > 1000000:
-            item -= 1000000
-        total += item
-    # print(f"average: {total / len(maluslist)}")
-        
-
-    end = time.time()
-    print(f"time taken: {end - start}")
-
-
+        elif sys.argv[2] == "stacked":
+            
+            # handle user input
+            available_algorithms = ["tabu", "anneal", "random", "greedy", "test", "hillclimber"]
+            algorithm = input("Welk algoritme wil je plotten? ")
+            while algorithm not in available_algorithms:
+                algorithm = input("Beschikbare algoritmen zijn: tabu, anneal, random, greedy, test en hillclimber (greedy en test geven onbruikbare resultaten)")
+            
+            plots.stacked_plot(f"{algorithm}_algo_simulation_data.csv", algorithm)
+            
+        else:
+            print("valide plots zijn: 3d, iteration, histogram en stacked (case sensitive :o)")
+                
+                
+                
