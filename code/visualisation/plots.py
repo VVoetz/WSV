@@ -92,20 +92,21 @@ def stacked_plot(filename: str, algo: str):
 
     # loading data
     data = open_malus_csv(filename)
-    y1 = []
-    y2 = []
-    y3 = []
-    y4 = []
-    y5 = []
+    y1 = data[0]
+    y2 = data[1]
+    y3 = data[2]
+    y4 = data[3]
+    y5 = data[4]
     y6 = data[5]
 
-    # saving fractional data
-    for i in range(len(data[0])):
-        y1.append(data[0][i]/data[6][i])
-        y2.append(data[1][i]/data[6][i])
-        y3.append(data[2][i]/data[6][i])
-        y4.append(data[3][i]/data[6][i])
-        y5.append(data[4][i]/data[6][i])
+    # # saving fractional data
+    # for i in range(len(data[0])):
+    #     y1.append(data[0][i]/data[6][i])
+    #     y2.append(data[1][i]/data[6][i])
+    #     y3.append(data[2][i]/data[6][i])
+    #     y4.append(data[3][i]/data[6][i])
+    #     y5.append(data[4][i]/data[6][i])
+
     simulations = range(1, (len(y1)+1))
 
     #sorting data
@@ -141,7 +142,6 @@ def stacked_plot(filename: str, algo: str):
 
     # define axes limits
     plt.xlim([1, len(y1)])
-    plt.ylim([0, 1])
 
     # shrink axis's height by 20 %
     box = ax.get_position()
@@ -151,8 +151,8 @@ def stacked_plot(filename: str, algo: str):
     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 
     # define axes labels and title
-    plt.title(f'Percentages Maluspoints per Category for the {algo} Algorithm')
-    plt.ylabel('Percentage maluspunten per categorie %')
+    plt.title(f'Distribution of maluspoints of {algo} Algorithm')
+    plt.ylabel('Maluspoints per categorie')
     plt.xlabel('Simulaties')
 
     # plot text & line on top of figure
@@ -160,7 +160,7 @@ def stacked_plot(filename: str, algo: str):
     # plt.text(x-coordinate, y-coordinate, 'text')
 
     # reverse legend color
-    plt.savefig(f'code/visualisation/stacked_plot_{algo}_algo.png')
+    plt.savefig(f'code/visualisation/stacked_plots/stacked_plot_{algo}_algo.png')
 
 def plot_hist(filename: str, algo: str):
     """

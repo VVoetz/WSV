@@ -166,9 +166,10 @@ if __name__ == "__main__":
 
     if sys.argv[1] == "plot":
         if len(sys.argv) < 3:
-            print("valide plots zijn: 3d, iteration en histogram")
+            print("Geef een soort plot mee")
             exit()
-        if sys.argv[2] == "3d":
+
+        elif sys.argv[2] == "3d":
             
             input_test = True
             while input_test:
@@ -184,7 +185,7 @@ if __name__ == "__main__":
             if sys.argv[3] == "anneal":
                 plots.plot_3d("anneal_algo_3d_data.csv", simulations, "Anneal")
         
-        if sys.argv[2] == "iteration":
+        elif sys.argv[2] == "iteration":
 
             input_test = True
             while input_test:
@@ -197,7 +198,7 @@ if __name__ == "__main__":
             
             plots.iterative_plot(int(simulation_ammount))
         
-        if sys.argv[2] == "histogram":
+        elif sys.argv[2] == "histogram":
             
             available_algorithms = ["tabu", "anneal", "hillclimber", "random", "greedy"]
             algorithms_to_plot = []
@@ -222,6 +223,19 @@ if __name__ == "__main__":
                 filenames.append(f"{algorithm}_algo_simulation_data.csv")
             
             plots.multi_hist(filenames, algorithms_to_plot)
+        
+        elif sys.argv[2] == "stacked":
+            
+            # handle user input
+            available_algorithms = ["tabu", "anneal", "random", "greedy", "test", "hillclimber"]
+            algorithm = input("Welk algoritme wil je plotten? ")
+            while algorithm not in available_algorithms:
+                algorithm = input("Beschikbare algoritmen zijn: tabu, anneal, random, greedy, test en hillclimber (greedy en test geven onbruikbare resultaten)")
+            
+            plots.stacked_plot(f"{algorithm}_algo_simulation_data.csv", algorithm)
+            
+        else:
+            print("valide plots zijn: 3d, iteration, histogram en stacked (case sensitive :o)")
                 
                 
                 
