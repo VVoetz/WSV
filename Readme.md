@@ -71,7 +71,7 @@ Voor het draaien van een tabu_algo grid search:
 -`python3 main2.py grid tabu`
 --TODO--
 
-Als alle runs klaar zijn zullen er automatisch plots gegenereerd worden om de resultaten te visualiseren. Deze plots zijn te vinden in ???
+Als alle runs klaar zijn zullen er automatisch plots gegenereerd worden om de resultaten te visualiseren. Deze plots zijn te vinden in /code/visualisation/grid/
 # Algoritmen
 
 De algoritmen die worden getest om dit probleem op te lossen zijn
