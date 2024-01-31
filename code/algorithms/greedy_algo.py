@@ -4,7 +4,10 @@ import math, random
 
 class Greedyalgo(object):
 
-    def __init__(self, data):
+    def __init__(self, data) -> None:
+        """
+        Greedy algorithm constructor
+        """
         self.Courses = data.Courses
         self.Rooms = data.Rooms
         self.Students = data.Students
@@ -22,11 +25,19 @@ class Greedyalgo(object):
         self.Rooms["C0.110"].slots = 6
 
 def assign_all(activities, rooms: list) -> None:
+    """
+    Find for each activity the smallest room that it fits in and
+    plan the activity for the first available timeslot
+    """
     for activity in sorted(activities, key=lambda activity: activity.capacity):
 
         fill_smallest_room(activity, rooms)
 
 def fill_smallest_room(activity, rooms: list) -> None:
+    """
+    Find for an activity the smallest room that it fits in and
+    plan the activity for the first available timeslot
+    """
     for room in sorted(rooms, key=lambda room: room.capacity):
         if activity.capacity <= room.capacity:
             slots = room.return_availability()
@@ -35,7 +46,7 @@ def fill_smallest_room(activity, rooms: list) -> None:
                 room.add_activity(activity, chosen_slot)
                 activity.set_timeslot(chosen_slot)
                 activity.set_room(room)
-                return 0
+                return
 
     #  if no room available that fits capacity, take largest available room to minimise 'maluspunten'   
     for room in sorted(rooms, key=lambda room: room.capacity, reverse=True):
@@ -45,9 +56,13 @@ def fill_smallest_room(activity, rooms: list) -> None:
             room.add_activity(activity, chosen_slot)
             activity.set_timeslot(chosen_slot)
             activity.set_room(room)
-            return 1
+            return
 
-def assign_students(courses):
+def assign_students(courses) -> None:
+    """
+    
+    """
+    
     for course in courses:
         seminarlist = list() 
         practicalist = list()

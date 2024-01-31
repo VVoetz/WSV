@@ -6,7 +6,7 @@ import time
 class Annealing():
     def __init__(self, data, input1=7, input2=2, duration="long") -> None:
         """
-        Tabu search algorithm constructor
+        Annealing algorithm constructor
         """
         self.Courses = data.Courses
         self.Rooms = data.Rooms
@@ -278,9 +278,7 @@ class Annealing():
             self.move_activity(activity1, old_room, old_timeslot)
             return 0
         else:
-            return malus_diff
-
-        
+            return malus_diff     
 
     def random_swap_activity(self) -> int:
         """
@@ -465,7 +463,6 @@ class Annealing():
             return 0
         else:
             return malus_after - malus_before
-
     
     def swap_students(self, activity1, activity2, student1, student2=None) -> None:
         """
@@ -505,12 +502,3 @@ class Annealing():
         new_room.add_activity(activity1, new_timeslot)
 
         pass
-
-        
-
-
-
-
-
-        
-
