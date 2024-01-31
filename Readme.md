@@ -30,7 +30,7 @@ Er zal een histogram gemaakt worden en die staat opgeslagen als: code/visualisat
 
 ### Testrun per algoritme:
 Om een testrun te doen van een van de verschillende algoritmes voer je eerst de volgende command uit:
-- `python3 main2.py algorithm <algorithm>`
+- `python3 main.py algorithm <algorithm>`
 
 Op de plek van <algorithm> kan gekozen worden voor:
 
@@ -51,18 +51,18 @@ Deze data kan gebruikt worden om iteration plots te maken zie daarvoor het 'plot
 Om een iteratieplot te is het belangrijk om eerst een gelijk aantal runs te hebben gedaan voor de algoritmes die je wil meenemen in de plot.
 Daarna run je de volgende command:
 
--`python3 main2.py plot iteration`
+-`python3 main.py plot iteration`
 Er wordt dan gevraagd hoeveel runs per algoritme je wil meenemen in de plot. Vul hier het aantal runs in dat je per algoritme hebt gedaan. Als er verschillende hoeveelheden runs gedaan zijn per algoritme, vul het laagste aantal runs in dat je voor een van de algoritmes hebt gekozen. De iteratie-plot zal gegenereerd worden en wordt opgeslagen als: /code/visualisation/plot_pictures/iterative_plot.png
 
 ### Grid search:
 De grid search waarmee experimenten uitgevoerd kunnen worden is alleen bedoeld voor het simulated annealing & tabu algoritme.
 Voor het draaien van een simulated annealing grid search:
--`python3 main2.py grid anneal`
+-`python3 main.py grid anneal`
 Daarna wordt er gevraagd hoeveel x- en y-waardes je wil hebben en hoeveel runs je per combinatie wil doen.
 Ook wordt er gevraagd hoe lang elke run moet duren (kort, medium of lang).
 
 Voor het draaien van een tabu_algo grid search:
--`python3 main2.py grid tabu`
+-`python3 main.py grid tabu`
 --TODO--
 
 Als alle runs klaar zijn zullen er automatisch plots gegenereerd worden om de resultaten te visualiseren. Deze plots zijn te vinden in /code/visualisation/grid/
