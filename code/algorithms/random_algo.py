@@ -15,6 +15,23 @@ class RandomAlgo():
         random.shuffle(self.Activities)
         assign_all(self.Activities, self.Rooms)
         assign_students(self.Courses)
+    
+    def calculate_malus(self) -> int:
+        """
+        Function calculates total malus point of current solution
+
+        post:   returns malus points as an int
+        """
+
+        malus = 0
+
+        for student in self.Students.values():
+            malus += student.get_malus()
+        
+        for activity in self.Activities:
+            malus += activity.get_malus()
+        
+        return malus
 
 def assign_all(activities, rooms) -> None:
     for activity in activities:
@@ -74,3 +91,4 @@ def assign_students(courses):
                     if i == len(practicalist):
                         student.add_activity(practicalist[0])
                         break
+        

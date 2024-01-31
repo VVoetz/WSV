@@ -19,13 +19,37 @@ if __name__ == "__main__":
 
         elif sys.argv[2] == "tabu":
 
-            # tabu variables (preferably constant intervals)
-            tabu_lengths = [100, 200, 300, 400, 500, 600, 700]
-            neighbours = [20, 25, 30, 35, 40, 45, 50]
-            simulations = 10
+            # Handle user input for tabu variables
+            tabu_start = input("Wat is de start waarde van de tabulijst lengte? ")
+            while not tabu_start.isdigit():
+                tabu_start = input("Voer een getal in... ")
+            
+            tabu_iteration = input("Wat is de stapgrootte van de tabulijst lengte? ")
+            while not tabu_iteration.isdigit():
+                tabu_iteration = input("Voer hier ook een getal in... ")
+
+            neighbour_start = input("Met hoeveel buren wil je beginnen? ")
+            while not neighbour_start.isdigit():
+                neighbour_start = input("Waarom snap je niet dat het een getal moet zijn? ")
+            
+            neighbour_iteration = input("Wat is de stapgrootte van het aantal buren? ")
+            while not neighbour_iteration.isdigit():
+                neighbour_iteration = input("Je hebt nu 3 keer een getal ingevoerd... één extra keer is niet zo'n grote moeite toch? ")
+            
+            simulations = input("Wat is het aantal simulaties dat je wilt runnen? ")
+            while not simulations.isdigit():
+                simulations = input("Kom op zeg... Ik beloof je dat dit de laatste keer is dat je een getal hoeft in te voeren :) ")
+            
+            # make lists based on input
+            tabu_lengths = []
+            neighbours = []
+
+            for i in range(abs(int(simulations))):
+                tabu_lengths.append(abs(int(tabu_start)) + i * abs(int(tabu_iteration)))
+                neighbours.append(abs(int(neighbour_start)) + i * abs(int(neighbour_iteration)))
 
             # run tabu grid search
-            grid.run_grid_search("tabu", number_of_simulations = simulations,\
+            grid.run_grid_search("tabu", number_of_simulations = abs(int(simulations)),\
                 tabu_length_list = tabu_lengths, neighbour_ammount_list = neighbours)
 
         elif sys.argv[2] == "anneal":
@@ -226,7 +250,7 @@ if __name__ == "__main__":
             while algorithm != "x":
                 algorithm = input("Welk algoritme wil je plotten? (type x indien je klaar bent) ")
                 if algorithm not in available_algorithms and algorithm != "x":
-                    print("available algorithms are: tabu, anneal, hillclimber, random and greedy")
+                    print("beschikbare algoritmen zijn: tabu, anneal, hillclimber, random and greedy")
                 else:
                     if algorithm != "x":
                         algorithms_to_plot.append(algorithm)

@@ -39,6 +39,10 @@ def run_simulation(algorithm_name: str, number_of_simulations: int, print_schedu
         elif algorithm_name == 'random':
             test = random_algo.RandomAlgo(data)
 
+            while test.calculate_malus() > 100000:
+                data = copy.deepcopy(base)
+                test = random_algo.RandomAlgo(data)
+
         elif algorithm_name == 'tabu':
             test = greedy_algo.Greedyalgo(data)
             test = tabu_algo.Tabu_search(data, iterations=1000000, neighbour_ammount=25, tabu_length=300, create_solution=False, stop_time = max_time)

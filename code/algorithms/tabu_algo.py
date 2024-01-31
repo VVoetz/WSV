@@ -205,8 +205,8 @@ class Tabu_search():
             self.malus_per_iteration.append(current_score)
             self.time_per_iteration.append(time.time() - start_time)
 
-            if iteration % 100 == 0 and iteration != 0:
-                print(f"iteration: {iteration}    sim_best: {simulation_best}  current_score: {current_score}")
+            # if iteration % 100 == 0 and iteration != 0:
+            #     print(f"iteration: {iteration}    sim_best: {simulation_best}  current_score: {current_score}")
 
     def swap_activities(self, activity1, activity2) -> None:
 

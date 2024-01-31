@@ -74,7 +74,6 @@ def multi_hist(filenames, labels):
     for i in range(len(filenames)):
         data_ = open_malus_csv(filenames[i])
         data[f'{labels[i]}']=data_[5]
-        print(data_[5])
     data = pandas.DataFrame(data)
 
     plt.figure(figsize =(16, 9)) 
