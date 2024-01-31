@@ -1,6 +1,6 @@
 from code.visualisation import print_schedule, make_google_calendar, plots
 
-from code.experiments import anneal_grid_search, grid, iterations, run_simulation
+from code.experiments import anneal_grid_search, grid, run_simulation
 
 import sys
 # import time

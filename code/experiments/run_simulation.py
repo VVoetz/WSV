@@ -130,7 +130,7 @@ def run_simulation(algorithm_name: str, number_of_simulations: int, print_schedu
     for i in range(number_of_simulations):
         row = [malus_room_capacity[i], malus_fifth_slot[i], malus_double_acts[i], malus_single_gaps[i], malus_double_gaps[i], malus_triple_gaps[i], maluslist[i]]
         rows.append(row)
-    with open(f'data/{algorithm_name}_algo_simulation_data.csv', mode='w', newline="") as csvfile:
+    with open(f'data/simulations/{algorithm_name}_algo_simulation_data.csv', mode='w', newline="") as csvfile:
         write = csv.writer(csvfile)
         write.writerow(fields)
         write.writerows(rows)

@@ -16,13 +16,7 @@ if __name__ == "__main__":
         while sim:
 
             data = copy.deepcopy(base)
-            # runs chosen algorithm
-            if sys.argv[1] == 'greedy':
-                test = greedy_algo.Greedyalgo(data)
-            elif sys.argv[1] == 'test':
-                test = testalgo.Testalgo(data)
-            elif sys.argv[1] == 'random':
-                test = random_algo.Testalgo(data)
+            test = random_algo.RandomAlgo(data)
             
             # calculating malus points for activities
             malus = 0

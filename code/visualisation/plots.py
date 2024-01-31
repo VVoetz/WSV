@@ -17,7 +17,7 @@ def open_malus_csv(filename: str, method=1, algo=''):
         malus_single_gaps = list()
         malus_double_gaps = list()
         maluslist = list()
-        with open(f'data/{filename}', mode='r') as file:
+        with open(f'data/simulations/{filename}', mode='r') as file:
             next(file)
             csvFile = csv.reader(file)
             for line in csvFile:
@@ -33,7 +33,7 @@ def open_malus_csv(filename: str, method=1, algo=''):
         x_data = list()
         y_data = list()
         maluslist = list()
-        with open(f'data/{filename}', mode='r') as file:
+        with open(f'data/simulations/{filename}', mode='r') as file:
             next(file)
             csvFile = csv.reader(file)
             for line in csvFile:
