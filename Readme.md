@@ -21,6 +21,12 @@ Voer de volgende commands uit in je terminal:
 - `pip3 install -r requirements.txt`
 
 # Tutorial
+### Baseline naabootsen
+Onze baseline bestaat uit 10000 valide runs van het random-algoritme. Om de data en de bijbehorende grafiek te maken voer je de volgende command uit:
+
+-`python3 baseline.py`
+
+Er zal een histogram gemaakt worden en die staat opgeslagen als: code/visualisation/malus_point_plot.png
 
 ### Testrun per algoritme:
 Om een testrun te doen van een van de verschillende algoritmes voer je eerst de volgende command uit:
