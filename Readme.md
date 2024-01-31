@@ -126,7 +126,7 @@ Op de plek van <algorithm> kan je kiezen voor:
 -`anneal`
 
 Voor zowel 'anneal' als 'tabu' zal gevraagd worden om de lengte van de run. Als het algoritme klaar is zullen kalender csv's worden gemaakt die geimporteerd kunnen worden door verschillde kalerder-apps (zoals google calendar).
-De kalenders zullen te vinden zijn in /code/visualisation/calendar_csv
+De kalenders zullen te vinden zijn in /code/visualisation/calendar_csv. Het rooster voor alle activiteiten zal calendar.csv heten en voor elke student is een apart rooster gegenereerd die de studentnummer als naam heeft. ({studentnummer}.csv)
 # Algoritmen
 
 De algoritmen die worden getest om dit probleem op te lossen zijn
