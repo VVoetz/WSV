@@ -63,9 +63,10 @@ Ook wordt er gevraagd hoe lang elke run moet duren (kort, medium of lang).
 
 Voor het draaien van een tabu_algo grid search:
 -`python3 main.py grid tabu`
---TODO--
+Daarna wordt er gevraagd wat de startwaardes en stapgroottes zijn van de benodigde variabelen.
+Ook wordt er gevraag hoeveel simulaties je wilt doen en op basis daarvan wordt de grid search gedaan. Elke individuele simulatie duurt 60 seconden.
 
-Als alle runs klaar zijn zullen er automatisch plots gegenereerd worden om de resultaten te visualiseren. Deze plots zijn te vinden in /code/visualisation/grid/
+Als alle runs klaar zijn zal de data opgeslagen zijn in data/grid
 # Algoritmen
 
 De algoritmen die worden getest om dit probleem op te lossen zijn
