@@ -54,7 +54,7 @@ Er zal daarna in de commandline gevraagd worden hoeveel runs je wil doen. Ook za
 De informatie zal worden opgeslagen en met behulp van de plot functie (hieronder uitgelegd) kunnen daar plots mee gemaakt worden.
 
 ### Plots (3d / iteratie):
-Om een iteratieplot te is het belangrijk om eerst een gelijk?(--TODO--) aantal runs te hebben gedaan voor de algoritmes die je wil meenemen in de plot.
+Om een iteratieplot te is het belangrijk om eerst een gelijk aantal runs te hebben gedaan voor de algoritmes die je wil meenemen in de plot.
 Daarna run je de volgende command:
 
 -`python3 main2.py plot iteration`
@@ -66,6 +66,7 @@ Voor het draaien van een simulated annealing grid search:
 -`python3 main2.py grid anneal`
 Daarna wordt er gevraagd hoeveel x- en y-waardes je wil hebben en hoeveel runs je per combinatie wil doen.
 Ook wordt er gevraagd hoe lang elke run moet duren (kort, medium of lang).
+
 Voor het draaien van een tabu_algo grid search:
 -`python3 main2.py grid tabu`
 --TODO--
