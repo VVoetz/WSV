@@ -100,7 +100,7 @@ vervolgens wordt er gevraagd welk algoritme je wilt plotten. Je hebt de keus uit
 
 de stacked plot wordt opgeslagen als: code/visualisation/stacked_plots/stacked_plot_algoritme_algo.png
 
-## Grid search:
+### Grid search:
 De grid search waarmee experimenten uitgevoerd kunnen worden is alleen bedoeld voor het simulated annealing & tabu algoritme.
 Voor het draaien van een simulated annealing grid search:
 -`python3 main.py grid anneal`
@@ -113,6 +113,20 @@ Daarna wordt er gevraagd wat de startwaardes en stapgroottes zijn van de benodig
 Ook wordt er gevraag hoeveel simulaties je wilt doen en op basis daarvan wordt de grid search gedaan. Elke individuele simulatie duurt 60 seconden.
 
 Als alle runs klaar zijn zal de data opgeslagen zijn in data/grid
+
+### Kalender maken
+Als je een kalender wil maken dan moet je de volgende command runnen:
+-`python3 main.py calendar <algorithm>`
+
+Op de plek van <algorithm> kan je kiezen voor:
+-`random`
+-`greedy`
+-`hillclimber`
+-`tabu`
+-`anneal`
+
+Voor zowel 'anneal' als 'tabu' zal gevraagd worden om de lengte van de run. Als het algoritme klaar is zullen kalender csv's worden gemaakt die geimporteerd kunnen worden door verschillde kalerder-apps (zoals google calendar).
+De kalenders zullen te vinden zijn in /code/visualisation/calendar_csv. Het rooster voor alle activiteiten zal calendar.csv heten en voor elke student is een apart rooster gegenereerd die de studentnummer als naam heeft. ({studentnummer}.csv)
 # Algoritmen
 
 De algoritmen die worden getest om dit probleem op te lossen zijn
