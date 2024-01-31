@@ -40,7 +40,7 @@ if __name__ == "__main__":
         elif sys.argv[1] == 'test':
             test = testalgo.Testalgo(data)
         elif sys.argv[1] == 'random':
-            test = random_algo.Testalgo(data)
+            test = random_algo.RandomAlgo(data)
         elif sys.argv[1] == 'tabu':
             test = greedy_algo.Greedyalgo(data)
             test = tabu_algo.Tabu_search(data, iterations=10000, neighbour_ammount=15, tabu_length=5000, create_solution=False, stop_time=15)
