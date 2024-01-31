@@ -147,7 +147,7 @@ class Hillclimber():
                 current_time = time.time() - start_time
                 self.malus_per_iteration.append(current_score)
                 self.time_per_iteration.append(current_time)
-                
+
                 if current_time > self.stop_time:
                     break
             

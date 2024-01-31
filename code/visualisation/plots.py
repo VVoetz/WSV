@@ -273,10 +273,10 @@ def iterative_plot(sim: int):
         line3, = ax.plot(data[0], data[1], linewidth=0.5, color='blue', label="Hillclimber")
         
     plt.ylim(0, 1500)
-    plt.xlabel('Time')
+    plt.xlabel('Tijd in seconden')
     plt.ylabel('Malusscore')
     plt.title('Convergentie Maluspunten')
-    ax.legend(handles=[line1, line3])
+    ax.legend(handles=[line1, line2, line3])
     plt.savefig('code/visualisation/plot_pictures/iterative_plot.png')
 
 

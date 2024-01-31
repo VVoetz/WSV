@@ -40,7 +40,7 @@ if __name__ == "__main__":
         elif sys.argv[1] == 'test':
             test = testalgo.Testalgo(data)
         elif sys.argv[1] == 'random':
-            test = random_algo.Testalgo(data)
+            test = random_algo.RandomAlgo(data)
         elif sys.argv[1] == 'tabu':
             test = greedy_algo.Greedyalgo(data)
             test = tabu_algo.Tabu_search(data, iterations=10000, neighbour_ammount=15, tabu_length=5000, create_solution=False, stop_time=15)
@@ -55,7 +55,7 @@ if __name__ == "__main__":
             anneal_grid_search.run_grid_search(int(sys.argv[2]), int(sys.argv[3]))
             exit()
         elif sys.argv[1] == "hillclimber":
-            test = hillclimber.Hillclimber(data, iterations=100000, no_change_stop=1000)
+            test = hillclimber.Hillclimber(data)
         else:
             print("invalide input gegeven, probeer opnieuw")
             exit()
