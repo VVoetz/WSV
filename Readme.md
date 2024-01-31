@@ -1,3 +1,5 @@
+![cover foto](./coverfoto.PNG)
+
 # Lectures en Lesroosters
 De case lectures en lesroosters is een variant van het university timescheduling problem, waar er geprobeerd wordt een zo goed mogelijk rooster te maken. De kwaliteit van een rooster wordt bepaald door de hard en soft constraints rondom de variablen van het probleem.
 Dit is een project voor het vak Algoritmen en Heuristieken van de Minor Programmeren van de UvA.
