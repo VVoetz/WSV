@@ -4,7 +4,7 @@ from code.algorithms import testalgo, random_algo, greedy_algo, tabu_algo, annea
 
 from code.visualisation import print_schedule, make_google_calendar, plots
 
-from code.experiments import grid_search_tabu, anneal_grid_search
+from code.experiments import anneal_grid_search
 
 import copy
 import sys
