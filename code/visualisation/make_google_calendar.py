@@ -75,6 +75,12 @@ def make_student_calendar(data) -> None:
     descriptions = []
 
     for student in data.Students:
+        subjects = []
+        start_dates = []
+        start_times = []
+        end_times = []
+        descriptions = []
+
         for activity in data.Students[student].activities:
             # split day from time
             timeslot = activity.get_timeslot()
@@ -94,11 +100,10 @@ def make_student_calendar(data) -> None:
                 end_times.append(end_time)
                 descriptions.append(str(room))
         
-        break
     
-    # create dataframe
-    df = pd.DataFrame({"Subject": subjects, "Start Date": start_dates, "Start Time": start_times, 
-                        "End Time": end_times, "Description": descriptions})
+        # create dataframe
+        df = pd.DataFrame({"Subject": subjects, "Start Date": start_dates, "Start Time": start_times, 
+                            "End Time": end_times, "Description": descriptions})
 
-    # this line only works from main.py working directory
-    df.to_csv("code/visualisation/calendar_csv/test.csv")
+        # this line only works from main.py working directory
+        df.to_csv(f"code/visualisation/calendar_csv/{data.Students[student].studentnumber}.csv")

@@ -1,6 +1,7 @@
 from code.classes import data_loader
 from code.experiments import anneal_grid_search
 from code.algorithms import greedy_algo, testalgo, random_algo, hillclimber, annealing, tabu_algo
+from code.visualisation import make_google_calendar
 import copy
 import csv
 
@@ -49,7 +50,6 @@ def run_simulation(algorithm_name: str, number_of_simulations: int, print_schedu
 
         elif algorithm_name == 'anneal':
             
-            
             test = greedy_algo.Greedyalgo(data)
             if algo_duration == "":
                 test = annealing.Annealing(data)
@@ -63,11 +63,11 @@ def run_simulation(algorithm_name: str, number_of_simulations: int, print_schedu
             print("Invalid algorithm...")
             exit()
 
-        # print schedule in terminal
+        # generate calendar
         if print_schedule == True:
-            for room in test.Rooms:
-               print_schedule.visualize_room_schedule(test.Rooms[room])    
-        
+            make_google_calendar.make_google_calendar_csv(test)
+            make_google_calendar.make_student_calendar(test)
+               
         # count up diffent types of malus points
         room_capacity_points = 0
         fifth_slot_points = 0

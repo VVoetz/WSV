@@ -236,9 +236,47 @@ if __name__ == "__main__":
             
         else:
             print("valide plots zijn: 3d, iteration, histogram en stacked (case sensitive :o)")
+    
+    
+    # --------------------------------------------------
+    #
+    # code to generate google calendar 
+    #
+    # --------------------------------------------------
+    elif sys.argv[1] == "calendar":
+        if len(sys.argv) == 2:
+            print("Invalide input, probeer opnieuw.")
+            exit()
 
+        length=""
+        max_time = 0
+        amount_of_simulations = 1
+        # asking user for desired length of run for either tabu or anneal
+        if sys.argv[2] == "anneal":
+            input_test = True
+            while input_test == True:
+                input_duration = input("Hoe lang wil je de simulatie runnen? kort: (<1 min), medium: (~6 min), lang: (~60-80min)? ")
+                if input_duration == "Lang" or input_duration == "lang":
+                    length = 'long'
+                    input_test = False
+                elif input_duration == "Medium" or input_duration == "medium":
+                    length = 'medium'
+                    input_test = False
+                elif input_duration == "Kort" or input_duration == "kort":
+                    length = 'short'
+                    input_test = False
+                else:
+                    print("Deze input wordt niet herkend, probeer opnieuw")
+        elif sys.argv[2] == "tabu":
+            max_time = input("Hoeveel seconden wil je het algoritme maximaal laten runnen? ")
+            while not max_time.isdigit():
+                max_time = input("Geef alstublieft een getal mee... ")
+            max_time = abs(int(max_time))
+        
+        # run simulation
+        if len(sys.argv) > 1:
+            run_simulation.run_simulation(sys.argv[2], amount_of_simulations, True, length, max_time)
+        else:
+            print("Invalide input, probeer opnieuw.")
     else:
-        print("valide opties zijn: grid, algorithm en plot")
-                
-                
-                
+        print("valide opties zijn: grid, algorithm en plot")       

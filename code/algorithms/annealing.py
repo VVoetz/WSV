@@ -156,8 +156,7 @@ class Annealing():
                 self.malus_per_iteration.append(malus)
                 self.time_per_iteration.append(time.time() - start_time)
 
-            # if iteration % 1000 == 0:
-            #     print(f"{self.calculate_malus()} {no_change} {self.T}")
+            
             
             # stops running after specified amount of iterations without a change is reached
             if no_change > self.max_no_change:
@@ -304,9 +303,7 @@ class Annealing():
             return malus_diff
         
         prob = math.exp((-malus_diff / self.T) / (self.input2))
-        #print(f"{prob} {self.T} {malus_diff} {malus_before}")
         yesno = random.random() - prob
-        #print(yesno)
         
         if malus_after - malus_before > 10000:
             self.swap_activities(activity1, activity2)
