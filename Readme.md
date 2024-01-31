@@ -98,7 +98,7 @@ vervolgens wordt er gevraagd welk algoritme je wilt plotten. Je hebt de keus uit
 -`tabu`
 -`anneal`
 
-de stacked plot wordt opgeslagen als: code/visualisation/stacked_plots/stacked_plot_<algoritme>_algo.png
+de stacked plot wordt opgeslagen als: code/visualisation/stacked_plots/stacked_plot_algoritme_algo.png
 
 ### Grid search:
 De grid search waarmee experimenten uitgevoerd kunnen worden is alleen bedoeld voor het simulated annealing & tabu algoritme.
