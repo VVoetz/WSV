@@ -144,13 +144,13 @@ class Annealing():
             if random.random() < 0.1:
                 change += self.tripleswap_activity()
             
-            #print(f"{self.T} {malus_after}")
+            # checks if there has been a change in maluspoints and registers it if there was none            
             if change == 0:
-                no_change += 1
-                      
+                no_change += 1    
             else:
                 no_change = 0
 
+            # saves time and maluspoints per 100 iterations for iteration plot
             if iteration % 100 == 0:
                 malus = self.calculate_malus()
                 self.malus_per_iteration.append(malus)
@@ -159,6 +159,7 @@ class Annealing():
             # if iteration % 1000 == 0:
             #     print(f"{self.calculate_malus()} {no_change} {self.T}")
             
+            # stops running after specified amount of iterations without a change is reached
             if no_change > self.max_no_change:
                 return
 
@@ -183,10 +184,9 @@ class Annealing():
         if malus_after <= malus_before:
             return malus_diff
         
+        # calculating chance
         prob = math.exp((-malus_diff / self.T) / (self.input2))
-        #print(f"{prob} {self.T} {malus_diff} {malus_before}")
         yesno = random.random() - prob
-        #print(yesno)
         
         if malus_after - malus_before > 10000:
             self.swap_activities(activity2, activity3)
@@ -248,7 +248,6 @@ class Annealing():
         # loop until empty roomslot has been found
 
         found_timeslot = False
-
         while found_timeslot == False:
             
             # find random room and random available timeslot
@@ -258,6 +257,8 @@ class Annealing():
             if len(available) > 0:
                 new_timeslot = random.choice(available)
                 found_timeslot = True
+
+        # calculates malus-points before and after move
         malus_before = activity1.get_heuristics(self.Courses, self.input3)
         self.move_activity(activity1, new_room, new_timeslot)
         malus_after = activity1.get_heuristics(self.Courses, self.input3)
@@ -266,10 +267,9 @@ class Annealing():
         if malus_after <= malus_before:
             return malus_diff
         
-        prob = math.exp((-malus_diff / self.T) / (20 * self.input2))
-        #print(f"{prob} {self.T} {malus_diff} {malus_before}")
+        # calculates probability of accepting bad change
+        prob = math.exp((-malus_diff / self.T) / (self.input2))
         yesno = random.random() - prob
-        #print(yesno)
         
         if malus_after - malus_before > 10000:
             self.move_activity(activity1, old_room, old_timeslot)
@@ -360,6 +360,7 @@ class Annealing():
 
     def tripleswap_students(self, activities) -> int:
         
+        # finds three activities and select a random student from each
         random.shuffle(activities)
         activity1 = activities[0]
         activity2 = activities[1]
@@ -368,18 +369,18 @@ class Annealing():
         student2 = random.choice(activity2.students)
         student3 = random.choice(activity3.students)
 
+        # calculates maluspoints before and after change
         malus_before = student1.get_malus() + student2.get_malus() + student3.get_malus()
         self.swap_students(activity1, activity2, student1, student2)
         self.swap_students(activity3, activity1, student3, student2)
         malus_after = student1.get_malus() + student2.get_malus() + student3.get_malus()
-
         malus_diff = (malus_after - malus_before)
         
+        # making the decision based on the temperature and input coefficient
         if malus_after <= malus_before:
             return malus_after - malus_before
         
         prob = math.exp((-malus_diff / self.T) / (self.input1))
-        #print(f"{prob} {self.T} {malus_diff} {malus_before}")
         yesno = random.random() - prob
         
         if malus_after - malus_before > 10000:
@@ -437,10 +438,7 @@ class Annealing():
         
         student1malus = student1.get_malus()
         
-
-        before = activity1.get_malus() + activity2.get_malus()
-
-        # swap students and calculate scores before and after the swap
+        # swap students and calculate scores before and after the swap 
         malus_before = student1malus + student2malus + activity1malus + activity2malus
         self.swap_students(activity1, activity2, student1, student2)
         malus_after = student1.get_malus()
@@ -448,18 +446,17 @@ class Annealing():
             malus_after += student2.get_malus()
         else:
             malus_after += activity1.get_malus() + activity2.get_malus()
-               
-
-        malus_diff = (malus_after - malus_before)
         
+        # calculates difference in maluspoints and accepts or rejects change based on that
+        malus_diff = (malus_after - malus_before)
         if malus_after <= malus_before:
             return malus_after - malus_before
         
-        prob = math.exp((-malus_diff / self.T) / (self.input1))
-        #print(f"{prob} {self.T} {malus_diff} {malus_before}")
+        # calculates the chance that a 'bad' change is accepted based on the temperature and input coefficient
+        prob = math.exp((-malus_diff / self.T) / (self.input1)) 
         yesno = random.random() - prob
         
-        
+        # makes decision on wether or not to accept change
         if malus_after - malus_before > 10000:
             self.swap_students(activity2, activity1, student1, student2)
             return 0      
