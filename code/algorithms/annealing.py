@@ -132,7 +132,8 @@ class Annealing():
         no_change = 0
         self.T = 0.2
         start_time = time.time()
-        # change 2 random activities for iteration ammount of times
+
+        # change 2 random activities for iteration ammount of times 
         for iteration in range(0, iterations):
             
             
@@ -142,8 +143,6 @@ class Annealing():
             change += self.swap_student_in_course()
             if random.random() < 0.1:
                 change += self.tripleswap_activity()
-            
-            # update malus points
             
             #print(f"{self.T} {malus_after}")
             if change == 0:
@@ -358,6 +357,41 @@ class Annealing():
         
         # return false if no seperate work groups have been found
         return ""
+
+    def tripleswap_students(self, activities) -> int:
+        
+        random.shuffle(activities)
+        activity1 = activities[0]
+        activity2 = activities[1]
+        activity3 = activities[2]
+        student1 = random.choice(activity1.students)
+        student2 = random.choice(activity2.students)
+        student3 = random.choice(activity3.students)
+
+        malus_before = student1.get_malus() + student2.get_malus() + student3.get_malus()
+        self.swap_students(activity1, activity2, student1, student2)
+        self.swap_students(activity3, activity1, student3, student2)
+        malus_after = student1.get_malus() + student2.get_malus() + student3.get_malus()
+
+        malus_diff = (malus_after - malus_before)
+        
+        if malus_after <= malus_before:
+            return malus_after - malus_before
+        
+        prob = math.exp((-malus_diff / self.T) / (5 * self.input1))
+        #print(f"{prob} {self.T} {malus_diff} {malus_before}")
+        yesno = random.random() - prob
+        
+        if malus_after - malus_before > 10000:
+            self.swap_students(activity3, activity1, student2, student3)
+            self.swap_students(activity1, activity2, student2, student1)
+            return 0      
+        if yesno > 0:
+            self.swap_students(activity3, activity1, student2, student3)
+            self.swap_students(activity1, activity2, student2, student1)
+            return 0
+        else:
+            return malus_after - malus_before
         
     def swap_student_activity(self, course, activity_id) -> int:
         """
@@ -373,6 +407,11 @@ class Annealing():
         for activity in course.activities:
             if activity.id == activity_id:
                 swappable_activities.append(activity)
+                
+        if len(swappable_activities) > 2:
+            if random.random() < 0.1:
+                result = self.tripleswap_students(swappable_activities)
+                return result
 
         # choose random activities
         activity1 = random.choice(swappable_activities)
