@@ -56,11 +56,6 @@ def run_simulation(algorithm_name: str, number_of_simulations: int, print_schedu
             else:
                 test = annealing.Annealing(data, duration=algo_duration)
 
-        # MAYBE THIS SHOULD BE REMOVED
-        elif algorithm_name == 'anneal_grid':
-            anneal_grid_search.run_grid_search(int(algorithm_name), int(sys.argv[3]))
-            exit()
-
         elif algorithm_name == "hillclimber":
             test = hillclimber.Hillclimber(data, iterations=10000000, no_change_stop=100000, stop_time = max_time)
 
@@ -108,8 +103,26 @@ def run_simulation(algorithm_name: str, number_of_simulations: int, print_schedu
         malus_triple_gaps.append(triplegaps)
         maluslist.append(malus)
 
+        # save iteration data if possible
+        if algorithm_name in ["tabu", "anneal", "hillclimber"]:
+            maluslist = test.malus_per_iteration
+            time_list = test.time_per_iteration
+
+            # write results to a csv file
+            fields = ['malusscore', 'time']
+            rows = []
+            for j in range(0, len(maluslist) - 1):
+                rows.append([maluslist[j], time_list[j]])
+            with open(f'data/iterations/{algorithm_name}/iteration_scores_{algorithm_name}_simulation_{i+1}.csv', mode='w', newline="") as file:
+                write = csv.writer(file)
+                write.writerow(fields)
+                write.writerows(rows)
+
+            print(f'simulation {i} done and data written to csv')
+
+
         # print total malus points of this run
-        print(f"{i}: {malus}")
+        print(f"simulation {i} had a score of: {malus}")
 
     # writing csv file with malus lists
     fields = ['Room Capacity', 'Fifth Slot Usage','Double Acts', 'Single Gaps', 'Double Gaps', 'Triple Gaps', 'Total']

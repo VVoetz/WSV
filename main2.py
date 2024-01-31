@@ -100,49 +100,6 @@ if __name__ == "__main__":
 
             grid.run_grid_search("anneal", number_of_simulations = simulations,\
                  acceptance_rate_student = student_acceptance, acceptance_rate_activity = activity_acceptance, algo_duration=length)
-    
-    # --------------------------------------------------
-    #
-    # code to write simulations to iteration plot files
-    #
-    # --------------------------------------------------
-    if sys.argv[1] == "iteration":
-        
-        if len(sys.argv) >= 3:
-
-            # handle user input
-            input_test = True
-            while input_test:
-                simulation_input = input('Hoeveel simulaties wil je doen? ')
-                if simulation_input.isdigit():
-                    if int(simulation_input) > 0:
-                        input_test = False
-                if input_test:
-                    print("Invalide input, probeer opnieuw.")
-            length = ""
-            if sys.argv[2] == 'anneal':
-                input_test = True
-                while input_test == True:
-                    input_duration = input("Hoe lang wil je de simulatie runnen? kort: (<1 min), medium: (~6 min), lang: (~60-80min)? ")
-                    if input_duration == "Lang" or input_duration == "lang":
-                        length = 'long'
-                        input_test = False
-                    elif input_duration == "Medium" or input_duration == "medium":
-                        length = 'medium'
-                        input_test = False
-                    elif input_duration == "Kort" or input_duration == "kort":
-                        length = 'short'
-                        input_test = False
-                    else:
-                        print("Deze input wordt niet herkend, probeer opnieuw")
-
-            # run simulations
-            simulation_ammount = int(simulation_input)
-            iterations.write_iterations_to_csv(sys.argv[2], simulation_ammount, length)
-
-        else:
-            print("Invalide input, probeer opnieuw.")
-            print("valide keuzes zijn: tabu, anneal en hillclimber")
 
     # --------------------------------------------------
     #
