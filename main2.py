@@ -8,7 +8,9 @@ import sys
 if __name__ == "__main__":
 
     # --------------------------------------------------
+    #
     # code to run grid searches
+    #
     # --------------------------------------------------
     if sys.argv[1] == "grid":
 
@@ -18,17 +20,13 @@ if __name__ == "__main__":
         elif sys.argv[2] == "tabu":
 
             # tabu variables (preferably constant intervals)
-            tabu_lengths = [100, 200, 300]
-            neighbours = [20, 25, 30]
-            simulations = 1
+            tabu_lengths = [100, 200, 300, 400, 500, 600, 700]
+            neighbours = [20, 25, 30, 35, 40, 45, 50]
+            simulations = 10
 
             # run tabu grid search
             grid.run_grid_search("tabu", number_of_simulations = simulations,\
                 tabu_length_list = tabu_lengths, neighbour_ammount_list = neighbours)
-            
-            if len(sys.argv) >= 4:
-                if sys.argv[3] == "plot":
-                    plots.plot_3d("tabu_algo_3d_data.csv", simulations, "Tabu")
 
         elif sys.argv[2] == "anneal":
 
@@ -36,7 +34,7 @@ if __name__ == "__main__":
             input_test = True
             while input_test:
                 input_axes = input("Hoeveel verschillende X en Y waardes wil je testen voor de gevoeligheid "
-                                    "van het algoritme op de temperatuur (minimaal 2)?")
+                                    "van het algoritme op de temperatuur (minimaal 2)? ")
                 if input_axes.isdigit():
                     if int(input_axes) > 1:
                         input_test = False
@@ -45,7 +43,7 @@ if __name__ == "__main__":
 
             input_test = True
             while input_test:
-                simulation_input = input('Hoeveel simulaties wil je doen per combinatie?')
+                simulation_input = input('Hoeveel simulaties wil je doen per combinatie? ')
                 if simulation_input.isdigit():
                     if int(simulation_input) > 0:
                         input_test = False
@@ -78,17 +76,17 @@ if __name__ == "__main__":
 
             grid.run_grid_search("anneal", number_of_simulations = simulations,\
                  acceptance_rate_student = student_acceptance, acceptance_rate_activity = activity_acceptance, algo_duration=length)
-                
-            if len(sys.argv) >= 4:
-                if sys.argv[3] == "plot":
-                    plots.plot_3d("anneal_algo_3d_data.csv", simulations, "Anneal")
     
     # --------------------------------------------------
+    #
     # code to write simulations to iteration plot files
+    #
     # --------------------------------------------------
     if sys.argv[1] == "iteration":
         
         if len(sys.argv) >= 3:
+
+            # handle user input
             input_test = True
             while input_test:
                 simulation_input = input('Hoeveel simulaties wil je doen? ')
@@ -113,22 +111,25 @@ if __name__ == "__main__":
                         input_test = False
                     else:
                         print("Deze input wordt niet herkend, probeer opnieuw")
+
+            # run simulations
             simulation_ammount = int(simulation_input)
             iterations.write_iterations_to_csv(sys.argv[2], simulation_ammount, length)
 
-            if len(sys.argv) >= 4:
-                if sys.argv[3] == "plot":
-                    plots.iterative_plot(simulation_ammount)
         else:
             print("Invalide input, probeer opnieuw.")
             print("valide keuzes zijn: tabu, anneal en hillclimber")
 
     # --------------------------------------------------
+    #
     # code to run simulations of chosen algorithm
+    #
     # --------------------------------------------------
     if sys.argv[1] == "algorithm":
         
         length = ""
+
+        # handle user input
         if len(sys.argv) == 2:
             print("Invalide input, probeer opnieuw.")
             exit()
@@ -148,10 +149,10 @@ if __name__ == "__main__":
                 else:
                     print("Deze input wordt niet herkend, probeer opnieuw")
 
-        # ammount of simulations
+        # ammount of simulations user input
         input_test = True
         while input_test:
-            simulation_input = input('Hoeveel simulaties wil je doen?')
+            simulation_input = input('Hoeveel simulaties wil je doen? ')
             if simulation_input.isdigit():
                 if int(simulation_input) > 0:
                     input_test = False
@@ -160,19 +161,31 @@ if __name__ == "__main__":
                 
         amount_of_simulations = int(simulation_input)
 
+        if sys.argv[2] != "anneal":
+            max_time = input("Hoeveel seconden wil je het algoritme maximaal laten runnen? ")
+            while not max_time.isdigit():
+                max_time = input("Geef alstublieft een getal mee... ")
+            
+            max_time = abs(int(max_time))
+        else:
+            max_time = 0
+
+        # run simulation
         if len(sys.argv) > 1:
-            run_simulation.run_simulation(sys.argv[2], amount_of_simulations, False, length)
+            run_simulation.run_simulation(sys.argv[2], amount_of_simulations, False, length, max_time)
         else:
             print("Invalide input, probeer opnieuw.")
     
 
     # --------------------------------------------------
+    #
     # code to plot with current data
+    #
     # --------------------------------------------------
 
     if sys.argv[1] == "plot":
         if len(sys.argv) < 3:
-            print("valide plots zijn: 3d en iteration")
+            print("valide plots zijn: 3d, iteration en histogram")
             exit()
         if sys.argv[2] == "3d":
             
@@ -202,3 +215,32 @@ if __name__ == "__main__":
                     print("Invalide input, probeer opnieuw.")
             
             plots.iterative_plot(int(simulation_ammount))
+        
+        if sys.argv[2] == "histogram":
+            
+            available_algorithms = ["tabu", "anneal", "hillclimber", "random", "greedy"]
+            algorithms_to_plot = []
+            algorithm = ""
+
+            # ask for algorithms to plot
+            while algorithm != "x":
+                algorithm = input("Welk algoritme wil je plotten? (type x indien je klaar bent) ")
+                if algorithm not in available_algorithms and algorithm != "x":
+                    print("available algorithms are: tabu, anneal, hillclimber, random and greedy")
+                else:
+                    if algorithm != "x":
+                        algorithms_to_plot.append(algorithm)
+            
+            if len(algorithms_to_plot) < 1:
+                print("Geef ten minste 1 algoritme mee")
+                exit()
+            
+            filenames = []
+            
+            for algorithm in algorithms_to_plot:
+                filenames.append(f"{algorithm}_algo_simulation_data.csv")
+            
+            plots.multi_hist(filenames, algorithms_to_plot)
+                
+                
+                

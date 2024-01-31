@@ -5,7 +5,7 @@ import scipy.stats
 import time
 
 class Hillclimber():
-    def __init__(self, data, iterations=90000, no_change_stop = 90000) -> None:
+    def __init__(self, data, iterations=90000, no_change_stop = 90000, stop_time = 180) -> None:
         """
         Hillclimb search algorithm constructor
         """
@@ -19,6 +19,7 @@ class Hillclimber():
 
         self.malus_per_iteration = []
         self.time_per_iteration = []
+        self.stop_time = stop_time
 
         self.Course_list = list(self.Courses.values())
     
@@ -143,8 +144,12 @@ class Hillclimber():
                 no_change = 0
 
             if iteration % 100 == 0:
+                current_time = time.time() - start_time
                 self.malus_per_iteration.append(current_score)
-                self.time_per_iteration.append(time.time() - start_time)
+                self.time_per_iteration.append(current_time)
+                
+                if current_time > self.stop_time:
+                    break
             
             current_score += malus_change
             
@@ -277,21 +282,45 @@ class Hillclimber():
 
         # choose 2 random students and calculate their malus points
         student1 = random.choice(activity1.students)
-        student2 = random.choice(activity2.students)
-
-        # swap students and calculate scores
-        malus_before = student1.get_malus() + student2.get_malus()
-        self.swap_students(student1, student2, activity1, activity2)
-        malus_after = student1.get_malus() + student2.get_malus()
-
-        # revert bad changes and return 0
-        if malus_after > malus_before:
-            self.swap_students(student1, student2, activity2, activity1)
-            return 0
-
-        # return malus change
+        
+        if random.random() < (len(activity2.students) / activity2.capacity):
+            student2 = random.choice(activity2.students)
+            student2malus = student2.get_malus()
+            activity1malus = 0
+            activity2malus = 0
         else:
-            return malus_after - malus_before  
+            student2 = None
+            student2malus = 0
+            activity1malus = activity1.get_malus()
+            activity2malus = activity2.get_malus()
+        
+        student1malus = student1.get_malus()
+        
+
+        before = activity1.get_malus() + activity2.get_malus()
+
+        # swap students and calculate scores before and after the swap
+        malus_before = student1malus + student2malus + activity1malus + activity2malus
+        self.swap_students(activity1, activity2, student1, student2)
+        malus_after = student1.get_malus()
+        if student2:
+            malus_after += student2.get_malus()
+        else:
+            malus_after += activity1.get_malus() + activity2.get_malus()
+               
+
+        malus_diff = (malus_after - malus_before)
+        
+        if malus_after <= malus_before:
+            return malus_after - malus_before
+             
+        if malus_diff <= 0:
+            return malus_after - malus_before
+
+        else:
+            self.swap_students(activity2, activity1, student1, student2)
+            return 0
+            
     
     def swap_students(self, activity1, activity2, student1, student2=None) -> None:
         """

@@ -4,7 +4,7 @@ from code.algorithms import greedy_algo, testalgo, random_algo, hillclimber, ann
 import copy
 import csv
 
-def run_simulation(algorithm_name: str, number_of_simulations: int, print_schedule = False, algo_duration ="") -> None:
+def run_simulation(algorithm_name: str, number_of_simulations: int, print_schedule = False, algo_duration ="", max_time = 0) -> None:
     """
     Function runs algorithm a given ammount of times, prints relevent data to the terminal
     and saves relevant data in csv files in the data folder
@@ -41,7 +41,7 @@ def run_simulation(algorithm_name: str, number_of_simulations: int, print_schedu
 
         elif algorithm_name == 'tabu':
             test = greedy_algo.Greedyalgo(data)
-            test = tabu_algo.Tabu_search(data, iterations=1000, neighbour_ammount=25, tabu_length=200, create_solution=False)
+            test = tabu_algo.Tabu_search(data, iterations=1000000, neighbour_ammount=25, tabu_length=300, create_solution=False, stop_time = max_time)
 
         elif algorithm_name == 'anneal':
             
@@ -58,7 +58,7 @@ def run_simulation(algorithm_name: str, number_of_simulations: int, print_schedu
             exit()
 
         elif algorithm_name == "hillclimber":
-            test = hillclimber.Hillclimber(data, iterations=100000, no_change_stop=1000)
+            test = hillclimber.Hillclimber(data, iterations=10000000, no_change_stop=100000, stop_time = max_time)
 
         else:
             print("Invalid algorithm...")

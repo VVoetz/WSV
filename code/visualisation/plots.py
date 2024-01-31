@@ -172,7 +172,8 @@ def plot_hist(filename: str, algo: str):
     data = open_malus_csv(filename)
 
     # only secting total for histogram
-    data = data[6]
+    print(data)
+    data = data[5]
 
     # using new clear figure
     plt.figure()
