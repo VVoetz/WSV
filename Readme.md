@@ -67,7 +67,7 @@ Op de plek van <algorithm> kan gekozen worden voor:
 -`tabu`
 -`anneal`
 
-De 3d plot wordt in 4 verschillende afbeeldingen opgeslagen in: code/visualisation/grid/3d*
+De 3d plot wordt in 4 verschillende afbeeldingen opgeslagen in: code/visualisation/grid/
 
 ### histogram plot
 Om een histogram plot te maken is het belangrijk dat de algoritmen die je wilt gaan plotten hetzelfde aantal simulaties hebben gerund.
