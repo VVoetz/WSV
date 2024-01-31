@@ -200,7 +200,7 @@ if __name__ == "__main__":
         
         elif sys.argv[2] == "histogram":
             
-            available_algorithms = ["tabu", "anneal", "hillclimber", "random", "greedy"]
+            available_algorithms = ["tabu", "anneal", "hillclimber", "random"]
             algorithms_to_plot = []
             algorithm = ""
 

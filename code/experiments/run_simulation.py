@@ -111,7 +111,7 @@ def run_simulation(algorithm_name: str, number_of_simulations: int, print_schedu
             # write results to a csv file
             fields = ['malusscore', 'time']
             rows = []
-            for j in range(0, len(maluslist) - 1):
+            for j in range(0, len(maluslist_iteration) - 1):
                 rows.append([maluslist_iteration[j], time_list_iteration[j]])
             with open(f'data/iterations/{algorithm_name}/iteration_scores_{algorithm_name}_simulation_{i+1}.csv', mode='w', newline="") as file:
                 write = csv.writer(file)
