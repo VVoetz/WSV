@@ -21,14 +21,14 @@ Voer de volgende commands uit in je terminal:
 - `pip3 install -r requirements.txt`
 
 # Tutorial
-### Baseline naabootsen
+## Baseline naabootsen
 Onze baseline bestaat uit 10000 valide runs van het random-algoritme. Om de data en de bijbehorende grafiek te maken voer je de volgende command uit:
 
 -`python3 baseline.py`
 
 Er zal een histogram gemaakt worden en die staat opgeslagen als: code/visualisation/malus_point_plot.png
 
-### Testrun per algoritme:
+## Testrun per algoritme:
 Om een testrun te doen van een van de verschillende algoritmes voer je eerst de volgende command uit:
 - `python3 main.py algorithm <algorithm>`
 
@@ -100,7 +100,7 @@ vervolgens wordt er gevraagd welk algoritme je wilt plotten. Je hebt de keus uit
 
 de stacked plot wordt opgeslagen als: code/visualisation/stacked_plots/stacked_plot_algoritme_algo.png
 
-### Grid search:
+## Grid search:
 De grid search waarmee experimenten uitgevoerd kunnen worden is alleen bedoeld voor het simulated annealing & tabu algoritme.
 Voor het draaien van een simulated annealing grid search:
 -`python3 main.py grid anneal`
