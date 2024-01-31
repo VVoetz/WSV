@@ -47,12 +47,43 @@ Ook zal voor de 3 iteratieve algoritmes (hillclimber, tabu en anneal) zal er per
 Deze data kan gebruikt worden om iteration plots te maken zie daarvoor het 'plots' kopje. 
 
 
-### Plots (3d / iteratie):
+### Plots (3d / iteratie / histogram / stacked):
 Om een iteratieplot te is het belangrijk om eerst een gelijk aantal runs te hebben gedaan voor de algoritmes die je wil meenemen in de plot.
 Daarna run je de volgende command:
 
 -`python3 main.py plot iteration`
 Er wordt dan gevraagd hoeveel runs per algoritme je wil meenemen in de plot. Vul hier het aantal runs in dat je per algoritme hebt gedaan. Als er verschillende hoeveelheden runs gedaan zijn per algoritme, vul het laagste aantal runs in dat je voor een van de algoritmes hebt gekozen. De iteratie-plot zal gegenereerd worden en wordt opgeslagen als: /code/visualisation/plot_pictures/iterative_plot.png
+
+Om een 3d plot te maken moet je eerst een grid search hebben gerund.
+Daarna run je de volgende command:
+-`python3 main.py plot 3d <algorithm>`
+
+Op de plek van <algorithm> kan gekozen worden voor:
+-`tabu`
+-`anneal`
+De 3d plot wordt in 4 verschillende afbeeldingen opgeslagen in: code/visualisation/grid/3d*
+
+Om een histogram plot te maken is het belangrijk dat de algoritmen die je wilt gaan plotten hetzelfde aantal simulaties hebben gerund.
+Daarna run je de volgende command:
+-`python3 main.py plot histogram`
+vervolgens wordt er gevraagd welke algoritmen je wilt plotten. Je hebt de keus uit:
+-`random`
+-`hillclimber`
+-`tabu`
+-`anneal`
+De histogram plot wordt opgeslagen als: code/visualisation/multihist.png
+
+Om een stacked plot te maken is het belangrijk dat je een algoritme van te voren hebt gerund.
+Daarna run je de volgende command:
+-`python3 main.py plot stacked`
+vervolgens wordt er gevraagd welk algoritme je wilt plotten. Je hebt de keus uit:
+-`random`
+-`greedy`
+-`hillclimber`
+-`tabu`
+-`anneal`
+-`test`
+de stacked plot wordt opgeslagen als: code/visualisation/stacked_plots/stacked_plot_<algoritme>_algo.png
 
 ### Grid search:
 De grid search waarmee experimenten uitgevoerd kunnen worden is alleen bedoeld voor het simulated annealing & tabu algoritme.
