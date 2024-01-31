@@ -93,7 +93,6 @@ vervolgens wordt er gevraagd welk algoritme je wilt plotten. Je hebt de keus uit
 -`hillclimber`
 -`tabu`
 -`anneal`
--`test`
 
 de stacked plot wordt opgeslagen als: code/visualisation/stacked_plots/stacked_plot_<algoritme>_algo.png
 
