@@ -71,11 +71,16 @@ def open_malus_csv(filename: str, method=1, algo=''):
 
 def multi_hist(filenames, labels):
     data = {}
+    test = 0
     for i in range(len(filenames)):
         data_ = open_malus_csv(filenames[i])
-        data[f'{labels[i]}']=data_[5]
+        data[f'{labels[i]} N={len(data_[0])}']=data_[5]
+        if len(data_[0]) < 2:
+            print(f"{labels[i]} heeft niet genoeg data voor een histogram. Er moeten minstens 2 runs per algoritme zijn")
+            test += 1
+    if test > 0:
+        exit()
     data = pandas.DataFrame(data)
-
     plt.figure(figsize =(16, 9)) 
     sns.set(rc={'figure.figsize':(10,8.27)})
     ax = sns.displot(data, kind='kde', fill='True').set(title="Distributies Maluspunten Algoritmes")

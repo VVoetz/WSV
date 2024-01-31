@@ -208,7 +208,7 @@ if __name__ == "__main__":
             while algorithm != "x":
                 algorithm = input("Welk algoritme wil je plotten? (type x indien je klaar bent) ")
                 if algorithm not in available_algorithms and algorithm != "x":
-                    print("beschikbare algoritmen zijn: tabu, anneal, hillclimber, random and greedy")
+                    print("beschikbare algoritmen zijn: tabu, anneal, hillclimber en random")
                 else:
                     if algorithm != "x":
                         algorithms_to_plot.append(algorithm)
