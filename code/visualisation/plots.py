@@ -265,11 +265,11 @@ def iterative_plot(sim: int):
 
     for i in range(sim):
         data = open_malus_csv(f'iteration_scores_tabu_simulation_{i+1}.csv', algo='tabu', method=4)
-        line1, = ax.plot(data[0], data[1], linewidth=0.5, color='green', label='Tabu')
+        line1, = ax.plot(data[0], data[1], linewidth=0.5, color='green', label='Tabu', alpha=0.5)
         data = open_malus_csv(f'iteration_scores_anneal_simulation_{i+1}.csv', algo='anneal', method=4)
-        line2, = ax.plot(data[0], data[1], linewidth=0.5, color='red', label='Anneal')
+        line2, = ax.plot(data[0], data[1], linewidth=0.5, color='red', label='Anneal', alpha=0.5)
         data = open_malus_csv(f'iteration_scores_hillclimber_simulation_{i+1}.csv', algo='hillclimber', method=4)
-        line3, = ax.plot(data[0], data[1], linewidth=0.5, color='blue', label="Hillclimber")
+        line3, = ax.plot(data[0], data[1], linewidth=0.5, color='blue', label="Hillclimber", alpha=0.5)
         
     plt.ylim(0, 1500)
     plt.xlabel('Tijd in seconden')

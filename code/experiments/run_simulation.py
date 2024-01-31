@@ -105,14 +105,14 @@ def run_simulation(algorithm_name: str, number_of_simulations: int, print_schedu
 
         # save iteration data if possible
         if algorithm_name in ["tabu", "anneal", "hillclimber"]:
-            maluslist = test.malus_per_iteration
-            time_list = test.time_per_iteration
+            maluslist_iteration = test.malus_per_iteration
+            time_list_iteration = test.time_per_iteration
 
             # write results to a csv file
             fields = ['malusscore', 'time']
             rows = []
             for j in range(0, len(maluslist) - 1):
-                rows.append([maluslist[j], time_list[j]])
+                rows.append([maluslist_iteration[j], time_list_iteration[j]])
             with open(f'data/iterations/{algorithm_name}/iteration_scores_{algorithm_name}_simulation_{i+1}.csv', mode='w', newline="") as file:
                 write = csv.writer(file)
                 write.writerow(fields)

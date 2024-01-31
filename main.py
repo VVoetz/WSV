@@ -106,7 +106,7 @@ if __name__ == "__main__":
     # code to run simulations of chosen algorithm
     #
     # --------------------------------------------------
-    if sys.argv[1] == "algorithm":
+    elif sys.argv[1] == "algorithm":
         
         length = ""
 
@@ -164,7 +164,7 @@ if __name__ == "__main__":
     #
     # --------------------------------------------------
 
-    if sys.argv[1] == "plot":
+    elif sys.argv[1] == "plot":
         if len(sys.argv) < 3:
             print("Geef een soort plot mee")
             exit()
@@ -236,6 +236,9 @@ if __name__ == "__main__":
             
         else:
             print("valide plots zijn: 3d, iteration, histogram en stacked (case sensitive :o)")
+
+    else:
+        print("valide opties zijn: grid, algorithm en plot")
                 
                 
                 
